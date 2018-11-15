@@ -10,9 +10,6 @@ const router = express.Router();
 router.get("/", async (req, res) => {
     // Find
     const receipts = await Receipt.find()
-        .populate("album")
-        .populate("music")
-        .populate("user")
         .sort("time");
 
     // Response
@@ -22,9 +19,10 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
     // Find
     const receipt = await Receipt.findById(req.params.id)
-        .populate("album")
-        .populate("music")
-        .populate("user")
+        .populate('from')
+        .populate('to')
+        .populate('product');
+
     if (!receipt)
         return res
             .status(404)
