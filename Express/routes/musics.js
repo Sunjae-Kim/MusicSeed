@@ -1,4 +1,5 @@
 const { Music, validate } = require("../models/music");
+const { Album } = require("../models/album");
 const { User } = require("../models/user");
 const express = require("express");
 const router = express.Router();
@@ -8,9 +9,7 @@ const router = express.Router();
 router.get("/", async (req, res) => {
     // Find
     const musics = await Music.find()
-        .populate("album")
-        .populate("user")
-        .populate("comment")
+        .populate("album_id")
         .sort("title");
 
     // Response
@@ -20,9 +19,8 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
     // Find
     const music = await Music.findById(req.params.id)
-        .populate("album");
-    // .populate("user")
-    // .populate("comment");
+        .populate("album_id")
+        .populate("main_artist_id");
     if (!music)
         return res
             .status(404)
@@ -32,7 +30,10 @@ router.get("/:id", async (req, res) => {
     res.send(music);
 });
 
-/* Create */
+/*
+  Create
+  기존의 앨범에 새로운 노래를 추가할 때
+*/
 router.post("/", async (req, res) => {
     // Validation test
     const { error } = validate(req.body);
@@ -43,14 +44,27 @@ router.post("/", async (req, res) => {
     if (!user)
         return res
             .status(404)
-            .send(`The user with given ID(${req.body.main_artist_id}) was not found.`);
+            .send(`The user with given ID(${req.body.main_artist_id}) was not found.`)
+
+    // Find Album
+    let album = await Album.findById(req.body.album_id);
+    if (!album)
+        return res
+            .status(404)
+            .send(`The album with given ID(${req.body.album_id}) was not found.`);
 
     // Make Music
     let music = new Music(req.body);
+
+    // Find Album and update music info
+    album.musics.push(music._id);
+
+    // Save Album and Music
+    album = await album.save();
     music = await music.save();
 
     // Response
-    res.send(music);
+    res.send({ album, music });
 });
 
 /* Update */
@@ -60,11 +74,11 @@ router.patch("/:id", async (req, res) => {
     if (error) return res.status(400).send(error.message);
 
     // Find User
-    const user = await User.findById(req.body.album.user_id);
+    const user = await User.findById(req.body.main_artist_id);
     if (!user)
         return res
             .status(404)
-            .send(`The user with given ID(${req.body.album.user_id}) was not found.`);
+            .send(`The user with given ID(${req.body.main_artist_id}) was not found.`);
 
     // Find Music and Update
     const music = await Music.findByIdAndUpdate(
@@ -79,11 +93,17 @@ router.patch("/:id", async (req, res) => {
 
 /* Delete */
 router.delete("/:id", async (req, res) => {
-    // Find and Delete
-    const music = await Music.findByIdAndDelete(req.params.id);
+    // Find
+    const music = await Music.findById(req.params.id);
+    let album = await Album.findById(music.album_id);
+
+    // Delete music_id from the album
+    const index = album.musics.indexOf(req.params.id);
+    album.musics.splice(index, 1);
+    album = await album.save();
 
     // Response
-    res.send(music);
+    res.send({ music, album });
 });
 
 module.exports = router;
