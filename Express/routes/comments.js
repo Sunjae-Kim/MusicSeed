@@ -10,7 +10,6 @@ const router = express.Router();
 router.get("/", async (req, res) => {
     // Find
     const comments = await Comment.find()
-        .populate("user")
         .sort("time");
 
     // Response
@@ -20,7 +19,8 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
     // Find
     const comment = await Comment.findById(req.params.id)
-        .populate("user")
+        .populate("commenter_id")
+        .populate("comment_to");
     if (!comment)
         return res
             .status(404)
@@ -36,15 +36,9 @@ router.post("/", async (req, res) => {
     const { error } = validate(req.body);
     if (error) return res.status(400).send(error.message);
 
-    // Set target
-    let Target;
-    if(req.body.comment_type === 1) Target = User;
-    if(req.body.comment_type === 2) Target = Album;
-    if(req.body.comment_type === 3) Target = Music;
-
     // Find target
-    let object = await Target.findById(req.body.comment_to);
-    if (!object)
+    let target = await findTarget(req.body.comment_type).findById(req.body.comment_to);
+    if (!target)
         return res
             .status(404)
             .send(`The target with given ID(${req.body.comment_to}) was not found.`);
@@ -54,12 +48,18 @@ router.post("/", async (req, res) => {
     comment = await comment.save();
 
     // Comment_id save
-    object.comment.push(comment._id);
-    object = await object.save();
+    target.comment.push(comment._id);
+    await target.save();
 
     // Response
     res.send(comment);
 });
+
+function findTarget(targetName){
+    if(targetName === "User") return User;
+    if(targetName === "Album") return Album;
+    if(targetName === "Music") return Music;
+}
 
 /* Update */
 router.patch("/:id", async (req, res) => {
