@@ -81,16 +81,21 @@ router.patch("/:id", async (req, res) => {
     if (error) return res.status(400).send(error.message);
 
     // Find User
-    const user = await User.findById(req.body.album.user_id);
-    if (!user)
-        return res.status(404).send(`The user with given ID(${req.body.album.user_id}) was not found.`);
+    const user = await User.findById(req.body.user_id);
+    if (!user) return res.status(404).send(`The user with given ID(${req.body.user_id}) was not found.`);
 
-    // Find Album and Update
-    const album = await Album.findByIdAndUpdate(
-        req.params.id,
-        req.body,
-        { new: true }
-    );
+    // Find
+    const album = await Album.findById(req.params.id);
+
+    const keys = Object.keys(req.body);
+
+    keys.forEach(async (key, index) => {
+        if(req.body[key]) {
+            console.log(`Key: ${key}, Value: ${req.body[key]}`);
+            album[key] = req.body[key];
+        };
+        if((index+1) === keys.length) await album.save();
+    });
 
     // Response
     res.send(album);
