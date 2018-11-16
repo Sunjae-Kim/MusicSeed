@@ -4,8 +4,8 @@ const mongoose = require("mongoose");
 const user_schema = new mongoose.Schema({
   email: { type: String, required: true },
   pw: { type: String, required: true },
-  name: { type: String, required: true },
-  nickname: { type: String },
+  name: { type: String, required: true, lowercase: true },
+  nickname: { type: String, lowercase: true },
   seed: { type: Number, default: 0 },
   description: String,
   albums: [{type: mongoose.Schema.Types.ObjectId, ref: "Album" }],

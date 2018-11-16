@@ -2,7 +2,7 @@ const Joi = require("joi");
 const mongoose = require("mongoose");
 
 const music_schema = new mongoose.Schema({
-  title: { type: String, required: true },
+  title: { type: String, required: true, lowercase: true },
   music_path: { type: String, required: true },
   artwork_path: String,
   genre: String,
