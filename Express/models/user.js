@@ -2,15 +2,15 @@ const Joi = require("joi");
 const mongoose = require("mongoose");
 
 const user_schema = new mongoose.Schema({
-  email: { type: String, required: true },
-  pw: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  pw: { type: String, required: true, trim: true },
   name: { type: String, required: true, lowercase: true },
   nickname: { type: String, lowercase: true },
   seed: { type: Number, default: 0 },
   description: String,
-  albums: [{type: mongoose.Schema.Types.ObjectId, ref: "Album" }],
-  playlist: [{type: mongoose.Schema.Types.ObjectId, ref: "Music" }],
-  comment: [{type: mongoose.Schema.Types.ObjectId, ref: "Comment" }]
+  albums: { type: [mongoose.Schema.Types.ObjectId], ref: "Album" },
+  playlist: { type: [mongoose.Schema.Types.ObjectId], ref: "Music", index: true },
+  comment: { type: [mongoose.Schema.Types.ObjectId], ref: "Comment" }
 });
 
 const User = mongoose.model("User", user_schema);

@@ -5,10 +5,10 @@ const { Music } = require("./music")
 const album_schema = new mongoose.Schema({
   title: { type: String, required: true, maxlength: 30, lowercase: true },
   upload_date: { type: Date, default: Date.now() },
-  musics: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Music' }],
+  musics: { [type: mongoose.Schema.Types.ObjectId], ref: 'Music' },
   user_id: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   description: String,
-  comment: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }]
+  comment: { [type: mongoose.Schema.Types.ObjectId], ref: "Comment" }
 });
 
 const Album = mongoose.model("Album", album_schema);

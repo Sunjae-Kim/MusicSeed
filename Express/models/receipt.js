@@ -5,14 +5,8 @@ const receipt_schema = new mongoose.Schema({
   from: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   to: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   amount: { type: Number, required: true },
-  product: {
-      type: mongoose.Schema.Types.ObjectId,
-      refPath: 'onModel'
-  },
-  onModel: {
-      type: String,
-      enum: ['Album', 'Music']
-  },
+  product: { type: mongoose.Schema.Types.ObjectId, refPath: 'onModel' },
+  onModel: { type: String, enum: ['Album', 'Music'] },
   time: { type: Date, default: Date.now() }
 });
 
