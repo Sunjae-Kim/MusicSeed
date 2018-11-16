@@ -37,7 +37,7 @@ router.post("/", async (req, res) => {
     if (error) return res.status(400).send(error.message);
 
     // Find target
-    let target = await findTarget(req.body.comment_type).findById(req.body.comment_to);
+    let target = await findTarget(req.body.onModel).findById(req.body.comment_to);
     if (!target)
         return res
             .status(404)

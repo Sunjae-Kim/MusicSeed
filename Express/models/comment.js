@@ -3,8 +3,8 @@ const mongoose = require("mongoose");
 
 const comment_schema = new mongoose.Schema({
   commenter_id: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" },
-  comment_type: { type: String, enum: ['Album', 'Music', 'User'] },
-  comment_to: { type: mongoose.Schema.Types.ObjectId, required: true, refPath: "comment_type" },
+  onModel: { type: String, enum: ['Album', 'Music', 'User'] },
+  comment_to: { type: mongoose.Schema.Types.ObjectId, required: true, refPath: "onModel" },
   body: { type: String, required: true },
   date: { type: Date, default: Date.now() }
 });
@@ -14,7 +14,7 @@ const Comment = mongoose.model('Comment', comment_schema);
 function validate_comment(comment) {
   const schema = {
     commenter_id: Joi.string().required(),
-    comment_type: Joi.string().required(),
+    onModel: Joi.string().required(),
     comment_to: Joi.string().required(),
     body: Joi.string().required(),
     date: Joi.date()
