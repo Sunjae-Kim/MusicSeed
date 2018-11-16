@@ -5,8 +5,8 @@ const comment_schema = new mongoose.Schema({
   commenter_id: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" },
   comment_type: { type: String, enum: ['Album', 'Music', 'User'] },
   comment_to: { type: mongoose.Schema.Types.ObjectId, required: true, refPath: "comment_type" },
-  content: { type: String, required: true },
-  time: { type: Date, default: Date.now() }
+  body: { type: String, required: true },
+  date: { type: Date, default: Date.now() }
 });
 
 const Comment = mongoose.model('Comment', comment_schema);
@@ -16,8 +16,8 @@ function validate_comment(comment) {
     commenter_id: Joi.string().required(),
     comment_type: Joi.string().required(),
     comment_to: Joi.string().required(),
-    content: Joi.string().required(),
-    time: Joi.date()
+    body: Joi.string().required(),
+    date: Joi.date()
   };
   return Joi.validate(comment, schema);
 }
