@@ -21,7 +21,7 @@ const Music = mongoose.model("Music", music_schema, 'Musics ');
 
 function validate_music(music) {
   const schema = {
-    title: Joi.string().required(),
+    title: Joi.string().required().lowercase(),
     music_path: Joi.string().required(),
     artwork_path: Joi.string(),
     genre: Joi.string(),

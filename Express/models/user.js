@@ -19,8 +19,8 @@ function validate_user(user) {
   const schema = {
     email: Joi.string().required(),
     pw: Joi.string().required(),
-    name: Joi.string().required(),
-    nickname: Joi.string(),
+    name: Joi.string().required().lowercase(),
+    nickname: Joi.string().lowercase(),
     seed: Joi.number().default(0),
     description: Joi.string(),
     albums: Joi.array(),

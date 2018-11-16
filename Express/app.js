@@ -16,18 +16,18 @@ const receipts = require('./routes/receipts');
 
 /* DB Connect */
 mongoose
-    .connect(
-        "mongodb://localhost/MusicSeedTest",
-        { useNewUrlParser: true }
-    )
-    .then(() => console.log("Connected to MongoDB"))
-    .catch(error => console.error(error));
+  .connect(
+    "mongodb://localhost/MusicSeedTest",
+    { useNewUrlParser: true }
+  )
+  .then(() => console.log("Connected to MongoDB"))
+  .catch(error => console.error(error));
 
 /* Middleware */
 app.use(helmet());
 if(app.get('env') === 'development'){
-    debug('MORGAN을 실행합니다.')
-    app.use(morgan('dev'));
+  debug('MORGAN을 실행합니다.')
+  app.use(morgan('dev'));
 }
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -42,5 +42,5 @@ app.use('/api/receipts', receipts);
 /* Server */
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-    console.log(`Listening on port ${port}`);
+  console.log(`Listening on port ${port}`);
 });

@@ -1,21 +1,21 @@
 const Joi = require("joi");
 const mongoose = require("mongoose");
-const { Music } = require("./music")
+const { Music } = require("./music");
 
 const album_schema = new mongoose.Schema({
   title: { type: String, required: true, maxlength: 30, lowercase: true },
-  upload_date: { type: Date, default: Date.now() },
-  musics: { [type: mongoose.Schema.Types.ObjectId], ref: 'Music' },
+  upload_date: { type: Date, default: Date.now },
+  musics: { type: [mongoose.Schema.Types.ObjectId], ref: 'Music', index: true },
   user_id: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   description: String,
-  comment: { [type: mongoose.Schema.Types.ObjectId], ref: "Comment" }
+  comment: { type: [mongoose.Schema.Types.ObjectId], ref: "Comment" }
 });
 
 const Album = mongoose.model("Album", album_schema);
 
 function validate_album(album) {
   const schema = {
-    title: Joi.string().required(),
+    title: Joi.string().required().lowercase().max(30),
     upload_date: Joi.date(),
     musics: Joi.array(),
     user_id: Joi.string().required(),

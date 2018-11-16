@@ -3,10 +3,10 @@ const mongoose = require("mongoose");
 
 const comment_schema = new mongoose.Schema({
   commenter_id: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" },
-  onModel: { type: String, enum: ['Album', 'Music', 'User'] },
+  onModel: { type: String, enum: ['Album', 'Music', 'User'], required: true },
   comment_to: { type: mongoose.Schema.Types.ObjectId, required: true, refPath: "onModel" },
   body: { type: String, required: true },
-  date: { type: Date, default: Date.now() }
+  date: { type: Date, default: Date.now }
 });
 
 const Comment = mongoose.model('Comment', comment_schema);
