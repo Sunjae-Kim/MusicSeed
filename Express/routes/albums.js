@@ -1,4 +1,5 @@
 const { Album, validate } = require("../models/album");
+const { Comment } = require("../models/comment");
 const { Music } = require("../models/music");
 const { User } = require("../models/user");
 const express = require("express");
@@ -103,11 +104,34 @@ router.patch("/:id", async (req, res) => {
 
 /* Delete */
 router.delete("/:id", async (req, res) => {
-  // Find and Delete
-  const album = await Album.findByIdAndDelete(req.params.id);
+  // Find Album
+  let album = await Album.findById(req.params.id);
+
+  // Delete album from user
+  let user = await User.findById(album.user_id);
+  user.albums.splice(user.albums.indexOf(album._id), 1);
+
+  // Find and delete comments on the album
+  album.comment.forEach( async comment_id => {
+    await Comment.findByIdAndDelete(comment_id);
+  });
+
+  // Find and delete musics in the album
+  album.musics.forEach( async music_id => {
+    const music = await Music.findByIdAndDelete(music_id);
+    music.comment.forEach( async comment_id => {
+      await Comment.findByIdAndDelete(comment_id);
+    })
+  });
+
+  // Delete the album
+  album = await album.delete();
+
+  // Save user
+  user = await user.save();
 
   // Response
-  res.send(album);
+  res.send([ user.albums, album ]);
 });
 
 module.exports = router;

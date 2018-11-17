@@ -1,5 +1,4 @@
-const { Music, validate } = require("../models/music");
-const { Album } = require("../models/album");
+const { Music } = require("../models/music");
 const { User } = require("../models/user");
 const express = require("express");
 const router = express.Router();
@@ -67,7 +66,7 @@ router.patch("/:user_id/:index_1/:index_2", async (req, res) => {
 
 /* Delete */
 router.delete("/:user_id/:index", async (req, res) => {
-// Find User
+  // Find User
   let user = await User.findById(req.params.user_id);
   if (!user)
     return res

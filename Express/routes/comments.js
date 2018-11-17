@@ -80,11 +80,28 @@ router.patch("/:id", async (req, res) => {
 
 /* Delete */
 router.delete("/:id", async (req, res) => {
-  // Find and Delete
-  const comment = await Comment.findByIdAndDelete(req.params.id);
+  // Find Comment
+  let comment = await Comment.findById(req.params.id);
+
+  // Find target
+  let target = await findTarget(comment.onModel).findById(comment.comment_to);
+  if (!target){
+    // Delete comment
+    comment = await comment.delete();
+    return res.send(`Target not found but the comment(${comment._id}) is successfully deleted.`);
+  }
+
+  // Delete comment from target
+  target.comment.splice(target.comment.indexOf(comment._id), 1);
+
+  // Delete comment
+  comment = await comment.delete();
+
+  // Save target
+  target = await target.save();
 
   // Response
-  res.send(comment);
+  res.send([ target.comment, comment ]);
 });
 
 module.exports = router;

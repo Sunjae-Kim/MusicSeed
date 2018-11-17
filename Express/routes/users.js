@@ -67,7 +67,32 @@ router.patch("/:id", async (req, res) => {
 /* Delete */
 router.delete("/:id", async (req, res) => {
   // Find and Delete
-  const user = await User.findByIdAndDelete(req.params.id);
+  let user = await User.findById(req.params.id);
+
+  // Delete comments on the user
+  user.comment.forEach( async comment_id => {
+    await Comment.findByIdAndDelete(comment_id);
+  });
+
+  // Find Album and delete logic
+  user.albums.forEach( async album_id => {
+    let album = await Album.findByIdAndDelete(album_id);
+
+    // Find and delete comments on the album
+    album.comment.forEach( async comment_id => {
+      await Comment.findByIdAndDelete(comment_id);
+    });
+
+    // Find and delete musics in the album
+    album.musics.forEach( async music_id => {
+      const music = await Music.findByIdAndDelete(music_id);
+      music.comment.forEach( async comment_id => {
+        await Comment.findByIdAndDelete(comment_id);
+      })
+    });
+  });
+
+  user = await user.delete();
 
   // Response
   res.send(user);

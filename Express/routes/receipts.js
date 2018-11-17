@@ -1,7 +1,4 @@
 const { Receipt, validate } = require("../models/receipt");
-const { User } = require("../models/user");
-const { Album } = require("../models/album");
-const { Music } = require("../models/music");
 const express = require("express");
 const router = express.Router();
 

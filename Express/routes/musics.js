@@ -94,16 +94,25 @@ router.patch("/:id", async (req, res) => {
 /* Delete */
 router.delete("/:id", async (req, res) => {
   // Find
-  const music = await Music.findById(req.params.id);
-  let album = await Album.findById(music.album_id);
+  let music = await Music.findById(req.params.id);
 
   // Delete music_id from the album
-  const index = album.musics.indexOf(req.params.id);
-  album.musics.splice(index, 1);
+  let album = await Album.findById(music.album_id);
+  album.musics.splice(album.musics.indexOf(music._id), 1);
+
+  // Delete comments on music
+  music.comment.forEach( async comment_id => {
+    await Comment.findByIdAndDelete(comment_id);
+  });
+
+  // Delete Music
+  music = await music.delete();
+
+  // Save album
   album = await album.save();
 
   // Response
-  res.send({ music, album });
+  res.send([ music, album ]);
 });
 
 module.exports = router;

@@ -1,11 +1,9 @@
 const { Album } = require("../models/album");
 const { Music } = require("../models/music");
 const { User } = require("../models/user");
-const { Receipt } = require("../models/receipt");
-const { Comment } = require("../models/comment");
 
 const dumpdata = {
-  random_num: 0000,
+  random_num: -1,
   generate_random_num(){
     this.random_num = Math.floor(Math.random() * 9000) + 1000;
   },
@@ -18,12 +16,13 @@ const dumpdata = {
       pw: 1234
     }).save();
   },
-  async insert_music(user_id, index){
+  async insert_music(album_id=null, user_id, index){
     console.log(`PUT DUMP DATA : track${this.random_num}_${index} inserted`);
     return await new Music({
       title: `track${this.random_num}_${index}`,
       music_path: "path",
-      main_artist_id: user_id
+      main_artist_id: user_id,
+      album_id: album_id
     }).save();
   },
   async insert_dump_data() {
@@ -37,6 +36,8 @@ const dumpdata = {
       user_id: user._id,
       musics: [music1._id, music2._id]
     }).save();
+    music1.album_id = album._id; await music1.save();
+    music2.album_id = album._id; await music2.save();
     user.albums.push(album._id);
     await user.save();
     console.log('PUT DUMP DATA : FINISHED!!!!!!');
