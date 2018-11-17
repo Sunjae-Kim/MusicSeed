@@ -14,7 +14,7 @@ const music_schema = new mongoose.Schema({
   artist_info: [{ job: String, name: String, user_id: { type: mongoose.Schema.Types.ObjectId, ref: "User" } }],
   score: { type: Number, default: 0 },
   score_count: { type: Number, default: 0 },
-  comment: { type: [mongoose.Schema.Types.ObjectId], ref: "Comment" }
+  comment: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }]
 });
 
 const Music = mongoose.model("Music", music_schema, 'Musics ');

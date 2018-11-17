@@ -8,12 +8,12 @@ const user_schema = new mongoose.Schema({
   nickname: { type: String, lowercase: true },
   seed: { type: Number, default: 0 },
   description: String,
-  albums: { type: [mongoose.Schema.Types.ObjectId], ref: "Album" },
-  playlist: { type: [mongoose.Schema.Types.ObjectId], ref: "Music", index: true },
-  comment: { type: [mongoose.Schema.Types.ObjectId], ref: "Comment" }
+  albums: [{ type: mongoose.Schema.Types.ObjectId, ref: "Album" }],
+  playlist: [{ type: mongoose.Schema.Types.ObjectId, ref: "Music" }],
+  comment: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }]
 });
 
-const User = mongoose.model("User", user_schema);
+const User = mongoose.model("User", user_schema)
 
 function validate_user(user) {
   const schema = {
