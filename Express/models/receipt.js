@@ -7,6 +7,7 @@ const receipt_schema = new mongoose.Schema({
   amount: { type: Number, required: true },
   product: { type: mongoose.Schema.Types.ObjectId, refPath: 'onModel' },
   onModel: { type: String, enum: ['Album', 'Music'] },
+  details: String,
   time: { type: Date, default: Date.now }
 });
 
@@ -19,6 +20,7 @@ function validate_receipt(receipt) {
     amount: Joi.number().required(),
     product: Joi.string(),
     onModel: Joi.string(),
+    details: Joi.string(),
     time: Joi.date()
   };
   return Joi.validate(receipt, schema);
