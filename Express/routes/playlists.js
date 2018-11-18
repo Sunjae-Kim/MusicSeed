@@ -6,8 +6,10 @@ const router = express.Router();
 /* CRUD Operation */
 /* Read */
 router.get("/:user_id", async (req, res) => {
-  // Find and check the music doesn't exist
+  // Find user
   let user = await User.findById(req.params.user_id);
+
+  // Delete the song from the list if a song in the playlist doesn't exist
   user.playlist.forEach( async (song, index) => {
     const music = await Music.findById(song);
     if(!music) user.playlist.splice(user.playlist.indexOf(song), 1);
@@ -55,7 +57,7 @@ router.patch("/:user_id/:selected/:target", async (req, res) => {
       .status(404)
       .send(`The user with given ID(${req.params.user_id}) was not found.`);
 
-  // insert selected song before target
+  // Insert selected song before target
   const music = user.playlist[req.params.selected];
   user.playlist.splice(req.params.selected, 1);
   user.playlist.splice(req.params.target, 0, music);

@@ -94,7 +94,7 @@ router.patch("/:id", async (req, res) => {
 /* Delete */
 router.delete("/:id", async (req, res) => {
   // Find
-  let music = await Music.findById(req.params.id);
+  let music = await Music.findByIdAndDelete(req.params.id);
 
   // Delete music_id from the album
   let album = await Album.findById(music.album_id);
@@ -104,9 +104,6 @@ router.delete("/:id", async (req, res) => {
   music.comment.forEach( async comment_id => {
     await Comment.findByIdAndDelete(comment_id);
   });
-
-  // Delete Music
-  music = await music.delete();
 
   // Save album
   album = await album.save();
