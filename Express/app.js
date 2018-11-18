@@ -48,7 +48,7 @@ app.use('/api/receipts', receipts);
   2 Songs
   1 Album
 */
-// dumpdata.insert_dump_data();
+dumpdata.insert_dump_data();
 
 /* Server */
 const port = process.env.PORT || 3000;
