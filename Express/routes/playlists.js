@@ -8,10 +8,14 @@ const router = express.Router();
 router.get("/:user_id", async (req, res) => {
   // Find user
   let user = await User.findById(req.params.user_id);
+  if (!user)
+    return res
+      .status(404)
+      .send(`The user with given ID(${req.params.user_id}) was not found.`);
 
   // Delete the song from the list if a song in the playlist doesn't exist
   user.playlist.forEach( async (song, index) => {
-    const music = await Music.findById(song);
+    const music = await Music.findById(song).populate('playlist');
     if(!music) user.playlist.splice(user.playlist.indexOf(song), 1);
     if((index+1) === user.playlist.length) {
       user = await user.save();

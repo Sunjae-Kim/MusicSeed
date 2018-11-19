@@ -9,7 +9,6 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   // Find
   const musics = await Music.find()
-    .populate("album_id")
     .sort("title");
 
   // Response
