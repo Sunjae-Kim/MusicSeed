@@ -1,6 +1,5 @@
 import React from 'react';
 import '../styles/Navigation.css';
-import {Container} from "semantic-ui-react";
 
 class Navigation extends React.Component {
   constructor(props){
@@ -33,7 +32,7 @@ class Navigation extends React.Component {
   renderContent(){
     return (
         <div className="navigation ui large secondary pointing menu">
-          <a href="#" className="item">
+          <a href="#" className="item active">
             Player
           </a>
           <a href="#" className="item">

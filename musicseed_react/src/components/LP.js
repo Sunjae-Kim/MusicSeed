@@ -1,11 +1,10 @@
 import React from 'react';
-import {Header, Image, Segment} from 'semantic-ui-react';
 import "../styles/LP.css";
 
-const SegmentExampleCircular = () => {
+const LP = () => {
   return(
-    <img className="lp" src='LP.png'></img>
-    )
+    <img className="lp" src='images/LP.png'></img>
+  )
 }
 
-export default SegmentExampleCircular;
+export default LP;
