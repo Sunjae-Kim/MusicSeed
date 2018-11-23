@@ -6,6 +6,7 @@ import LP from "../components/LP";
 import SideBar from "../components/SideBar";
 import BarPlayer from "../components/BarPlayer";
 import Logo from "../components/Logo";
+import Player from "./Player";
 
 
 class App extends React.Component {
@@ -13,10 +14,11 @@ class App extends React.Component {
     return(
       <div className="pusher">
         <Logo />
-        <Navigation />
-        <SideBar />
         <LP />
+        <SideBar />
+        <Navigation />
         <BarPlayer/>
+        <Player/>
       </div>
     )
   }

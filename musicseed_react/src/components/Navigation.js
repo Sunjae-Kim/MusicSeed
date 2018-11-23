@@ -1,63 +1,67 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {selectMenu} from '../actions';
 import '../styles/Navigation.css';
 
 class Navigation extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      actived_item: null
-    };
-  }
 
-  getChildNodes(){
+  getChildNodes() {
     const siblings = Array.prototype.slice.call(document.querySelector('.navigation').parentNode.children);
-    const [{ childNodes }] = siblings;
+    const [{childNodes}] = siblings;
     return childNodes;
   }
 
-  componentDidMount(){
-    this.getChildNodes().forEach(item => {
-      item.addEventListener('click', () => this.setState({ actived_item: item })
-      );
+  componentDidMount() {
+    this.getChildNodes().forEach(menu => {
+      menu.addEventListener('click', () => this.props.selectMenu(menu));
     })
   }
 
-  componentDidUpdate(){
-    this.state.actived_item.classList.add('active');
+  componentDidUpdate() {
+    this.props.selectedMenu.classList.add('active');
     this.getChildNodes().forEach(item => {
-      if(item !== this.state.actived_item) item.classList.remove('active');
+      if (item !== this.props.selectedMenu) item.classList.remove('active');
     })
   }
 
-  renderContent(){
+  renderContent() {
     return (
-        <div className="navigation ui large secondary pointing menu">
-          <a href="#" className="item active">
-            Player
-          </a>
-          <a href="#" className="item">
-            Music
-          </a>
-          <a href="#" className="item">
-            Help
-          </a>
-          <a href="#" className="item">
-            Login
-          </a>
-          <a href="#" className="item">
-            Register
-          </a>
-        </div>
+      <div className="navigation ui large secondary pointing menu">
+        <a href="#" className="item active">
+          Player
+        </a>
+        <a href="#" className="item">
+          Music
+        </a>
+        <a href="#" className="item">
+          Help
+        </a>
+        <a href="#" className="item">
+          Login
+        </a>
+        <a href="#" className="item">
+          Register
+        </a>
+      </div>
     )
   }
 
-  render(){
-    return(
+  render() {
+    return (
       <div className="container">
-        { this.renderContent() }
+        {this.renderContent()}
       </div>
     )
   }
 }
 
-export default Navigation;
+const mapStateToProps = state => {
+  return {
+    selectedMenu: state.selectedMenu
+  }
+};
+
+export default connect(
+  mapStateToProps,
+  {selectMenu}
+)(Navigation);
