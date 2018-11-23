@@ -3,6 +3,14 @@
     bottom: 0;
     height: 5vh;
     width: 100%;
-    opacity: 0.8;
-    background-color: #0A0919;
+    background-color: #131524;
+}
+
+.barplayer.container {
+    padding: 0 2vh;
+    padding-top: 0;
+}
+
+#barPlayerRow {
+    padding-bottom: 0px;
 }
