@@ -1,5 +1,5 @@
 import React from "react";
-import "../../styles/RightSideDiv.css";
+import "../../styles/RightDiv.css";
 import {SidePlayer, Login, Register} from '../';
 import { Route, Switch } from 'react-router-dom';
 

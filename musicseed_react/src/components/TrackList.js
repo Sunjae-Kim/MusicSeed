@@ -7,16 +7,13 @@ import MediaButtons from "./MediaButtons";
 class TrackList extends React.Component {
 
   songs;
-  button;
 
   setPlayer(){
     switch (this.props.playerState) {
       case true:
-        this.songs = this.props.searchedSongs;
-        this.button = 'playlist'; break;
+        this.songs = this.props.searchedSongs; break;
       case false:
-        this.songs = this.props.playlist;
-        this.button = 'search'; break;
+        this.songs = this.props.playlist; break;
       default:
         this.props.changePlayerState(true); return;
     }
@@ -52,24 +49,10 @@ class TrackList extends React.Component {
     })
   }
 
-  renderButton(){
-    return(
-      <div className={'switch_button'}>
-        <a
-          href={'#'}
-          onClick={() => this.props.changePlayerState(!this.props.playerState)}
-        >
-          <img src="images/mediabuttons/switch.png" alt="switch button"/> <span>&nbsp; {this.button} </span>
-        </a>
-      </div>
-    )
-  }
-
   render() {
     return (
       <Fragment>
         {this.renderList()}
-        {this.renderButton()}
       </Fragment>
     )
   }

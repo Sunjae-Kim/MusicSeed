@@ -2,6 +2,7 @@ import React, {Fragment} from "react";
 import {connect} from 'react-redux';
 import SearchInput from "../../components/SearchInput";
 import TrackList from "../../components/TrackList";
+import '../../styles/SidePlayer.css';
 
 class SidePlayer extends React.Component {
   render() {
@@ -14,10 +15,12 @@ class SidePlayer extends React.Component {
 
   renderList(){
     return(
-      <div className={'player'}>
-        <SearchInput/>
-        <TrackList/>
-      </div>
+        <div>
+          <SearchInput/>
+          <div className={'sideplayer'}>
+            <TrackList/>
+          </div>
+        </div>
     )
   }
 }

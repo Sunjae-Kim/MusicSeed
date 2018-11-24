@@ -1,0 +1,25 @@
+.switch_button {
+    position: absolute;
+    bottom: 15vh;
+    left: 30vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.switch_button img{
+    margin-top: 2vh ;
+    margin-bottom: 1vh;
+    width: 3vh;
+}
+
+.switch_button a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.switch_button a:hover {
+    color: #D4D4E2;
+}
