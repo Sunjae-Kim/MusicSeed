@@ -1,14 +1,14 @@
 import React from "react";
-import "../styles/RightSideDiv.css";
-import {Player, Login, Register} from "../pages";
+import "../../styles/RightSideDiv.css";
+import {SidePlayer, Login, Register} from '../';
 import { Route, Switch } from 'react-router-dom';
 
-class RightSideDiv extends React.Component {
+class RightDiv extends React.Component {
   render() {
     return (
       <div className={'rightsidediv'}>
         <Switch>
-          <Route exact path={'/'} component={Player}/>
+          <Route exact path={'/'} component={SidePlayer}/>
           <Route path={'/login'} component={Login}/>
           <Route path={'/register'} component={Register}/>
         </Switch>
@@ -17,4 +17,4 @@ class RightSideDiv extends React.Component {
   }
 }
 
-export default RightSideDiv;
+export default RightDiv;

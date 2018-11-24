@@ -1,8 +1,8 @@
 import React from "react";
-import { Route, Switch } from 'react-router-dom';
-import {LPPlayer} from "../pages";
+import {Route, Switch} from 'react-router-dom';
+import {LPPlayer} from "../";
 
-class LPDiv extends React.Component {
+class LeftDiv extends React.Component {
   render() {
     return (
       <div className={'lpdiv'}>
@@ -16,4 +16,4 @@ class LPDiv extends React.Component {
   }
 }
 
-export default LPDiv;
+export default LeftDiv;

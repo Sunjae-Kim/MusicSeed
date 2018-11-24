@@ -102,7 +102,7 @@ const playerStateReducer = (playerState = true, action) => {
 };
 
 export default combineReducers({
-  songs: songsReducer,
+  searchedSongs: songsReducer,
   selectedSong: selectedSongReducer,
   searchedKeyword: searchedKeywordReducer,
   playlist: playlistReducer,

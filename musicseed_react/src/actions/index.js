@@ -35,7 +35,7 @@ export const confirmPassword = password => {
   };
 };
 
-// Player
+// SidePlayer
 export const selectSong = song => {
   return {
     type: 'SONG_SELECTED',

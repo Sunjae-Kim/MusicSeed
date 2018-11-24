@@ -14,11 +14,11 @@ class Navigation extends React.Component {
 
   componentDidMount() {
     const path = window.location.pathname.substring(1) || 'player';
-    console.log(path);
+    this.props.setPath(path);
     document.querySelector(`#${path}`).classList.add('active');
     this.getChildNodes().forEach(menu => {
       menu.addEventListener('click', async () => await this.props.setPath(menu.id));
-    })
+    });
   }
 
   componentDidUpdate() {

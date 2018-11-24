@@ -2,12 +2,17 @@ import React, {Fragment} from 'react';
 import { connect } from 'react-redux';
 import "../styles/BarPlayer.css";
 
-const BarPlayer = ({song}) => {
-  return(
-    <div>
-      { renderSong(song) }
-    </div>
-  )
+const BarPlayer = (props) => {
+  switch (props.path) {
+    case 'player':
+      return <Fragment></Fragment>;
+    default:
+      return (
+        <Fragment>
+          { renderSong(props.song) }
+        </Fragment>
+      );
+  }
 };
 
 const renderButtons = () => {
@@ -40,15 +45,10 @@ const renderButtons = () => {
       </a>
     </div>
   )
-}
+};
 
 const renderSong = song => {
-  if(!song){
-    return(
-      <div className={'barplayer container'}>
-      </div>
-    )
-  } else{
+  if(song){
     return(
       <div className={'barplayer container'}>
         <div className={'ui grid'}>
@@ -73,8 +73,11 @@ const renderSong = song => {
 
 const mapStateToProps = state => {
   return {
-    song : state.playedSong
+    song : state.playedSong,
+    path : state.getPath
   }
 };
 
-export default connect(mapStateToProps)(BarPlayer);;
+export default connect(
+  mapStateToProps
+)(BarPlayer);
