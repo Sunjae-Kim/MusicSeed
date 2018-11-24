@@ -6,6 +6,13 @@ export const selectMenu = menu => {
   };
 };
 
+export const setPath = path => {
+  return {
+    type: 'SET_PATH',
+    payload: path,
+  }
+};
+
 // Player
 export const searchKeyword = keyword => {
   return {
@@ -21,7 +28,7 @@ export const selectSong = song => {
   };
 };
 
-// Buttons
+// Searched Media
 export const addSongToPlaylist = song => {
   return {
     type: 'SONG_ADDED_TO_PLAYLIST',
@@ -42,4 +49,3 @@ export const playSong = song => {
     payload: song,
   }
 };
-

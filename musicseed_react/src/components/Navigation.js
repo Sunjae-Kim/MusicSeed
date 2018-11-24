@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {selectMenu} from '../actions';
+import {setPath} from '../actions';
 import {Link} from 'react-router-dom';
 import '../styles/Navigation.css';
 
@@ -13,34 +13,35 @@ class Navigation extends React.Component {
   }
 
   componentDidMount() {
+    document.querySelector(`#${window.location.pathname.substring(1)}`).classList.add('active');
     this.getChildNodes().forEach(menu => {
-      menu.addEventListener('click', () => this.props.selectMenu(menu));
+      menu.addEventListener('click', async () => await this.props.setPath(menu.id));
     })
   }
 
   componentDidUpdate() {
-    this.props.selectedMenu.classList.add('active');
+    document.querySelector(`#${this.props.getPath}`).classList.add('active');
     this.getChildNodes().forEach(item => {
-      if (item !== this.props.selectedMenu) item.classList.remove('active');
+      if (item.id !== this.props.getPath) item.classList.remove('active');
     })
   }
 
   renderContent() {
     return (
       <div className="navigation ui large secondary pointing menu">
-        <Link to={'/'} className="item active">
+        <Link id={'player'} to={'/player'} className="item">
           Player
         </Link>
-        <a href="#" className="item">
-          Music
+        <a id={'upload'} href="#" className="item">
+          Upload Album
         </a>
-        <a href="#" className="item">
+        <a id={'help'} href="#" className="item">
           Help
         </a>
-        <Link to={'/login'} className="item">
+        <Link id={'login'} to={'/login'} className="item">
           Login
         </Link>
-        <Link to="/register" className="item">
+        <Link id={'register'} to={"/register"} className="item">
           Register
         </Link>
       </div>
@@ -58,11 +59,11 @@ class Navigation extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    selectedMenu: state.selectedMenu
+    getPath: state.getPath
   }
 };
 
 export default connect(
   mapStateToProps,
-  {selectMenu}
+  {setPath}
 )(Navigation);

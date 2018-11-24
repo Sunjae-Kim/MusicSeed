@@ -57,6 +57,14 @@ const playedSongReducer = (playedSong = null, action) => {
   }
 };
 
+const getPathReducer = (getPath = '', action) => {
+  if(action.type === 'SET_PATH'){
+    return action.payload;
+  } else {
+    return getPath;
+  }
+};
+
 export default combineReducers({
   songs: songsReducer,
   selectedSong: selectedSongReducer,
@@ -65,4 +73,5 @@ export default combineReducers({
   addedSongToPlaylist: addedSongToPlaylistReducer,
   downloadedSong: downloadedSongReducer,
   playedSong: playedSongReducer,
+  getPath: getPathReducer
 });

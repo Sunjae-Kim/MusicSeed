@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { setPath } from "../actions";
 import '../styles/Login.css';
 
 class Login extends Component {
@@ -15,7 +17,7 @@ class Login extends Component {
         </div>
         <button className="ui button" type="submit">LOGIN</button>
         <hr/>
-        <p>Music Seed 회원이 아닌가요? <strong><Link to={'/register'} className={'a'}>지금 가입하세요.</Link></strong></p>
+        <p>Music Seed 회원이 아닌가요? <strong><Link to={'/register'} className={'a'} onClick={ () => this.props.setPath('register')} >지금 가입하세요.</Link></strong></p>
       </form>
     );
   }
@@ -25,4 +27,12 @@ const onFormSubmit = (event) => {
   event.preventDefault();
 };
 
-export default Login;
+const mapStateToProps = state => {
+  return {
+  }
+};
+
+export default connect(
+  mapStateToProps,
+  {setPath}
+)(Login);
