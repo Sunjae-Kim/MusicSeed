@@ -40,9 +40,9 @@ class Navigation extends React.Component {
         <Link to={'/login'} className="item">
           Login
         </Link>
-        <a href="#" className="item">
+        <Link to="/register" className="item">
           Register
-        </a>
+        </Link>
       </div>
     )
   }
