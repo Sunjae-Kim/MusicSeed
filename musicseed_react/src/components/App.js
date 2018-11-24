@@ -6,8 +6,8 @@ import LP from "../components/LP";
 import SideBar from "../components/SideBar";
 import BarPlayer from "../components/BarPlayer";
 import Logo from "../components/Logo";
-import Player from "./Player";
-
+import { Player, Login } from "../pages";
+import RightSideDiv from "./RightSideDiv";
 
 class App extends React.Component {
   render() {
@@ -18,7 +18,7 @@ class App extends React.Component {
         <SideBar />
         <Navigation />
         <BarPlayer/>
-        <Player/>
+        <RightSideDiv/>
       </div>
     )
   }

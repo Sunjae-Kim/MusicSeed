@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {selectMenu} from '../actions';
+import {Link} from 'react-router-dom';
 import '../styles/Navigation.css';
 
 class Navigation extends React.Component {
@@ -27,18 +28,18 @@ class Navigation extends React.Component {
   renderContent() {
     return (
       <div className="navigation ui large secondary pointing menu">
-        <a href="#" className="item active">
+        <Link to={'/'} className="item active">
           Player
-        </a>
+        </Link>
         <a href="#" className="item">
           Music
         </a>
         <a href="#" className="item">
           Help
         </a>
-        <a href="#" className="item">
+        <Link to={'/login'} className="item">
           Login
-        </a>
+        </Link>
         <a href="#" className="item">
           Register
         </a>
