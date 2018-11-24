@@ -8,7 +8,7 @@ class RightSideDiv extends React.Component {
     return (
       <div className={'playerrightsidediv'}>
         <Switch>
-          <Route exact path={'/player'} component={Player}/>
+          <Route exact path={'/'} component={Player}/>
           <Route path={'/login'} component={Login}/>
           <Route path={'/register'} component={Register}/>
         </Switch>

@@ -1,11 +1,4 @@
 // Main
-export const selectMenu = menu => {
-  return {
-    type: 'MENU_SELECTED',
-    payload: menu,
-  };
-};
-
 export const setPath = path => {
   return {
     type: 'SET_PATH',
@@ -13,13 +6,36 @@ export const setPath = path => {
   }
 };
 
-// Player
+// Controlled Element
 export const searchKeyword = keyword => {
   return {
     type: 'KEYWORD_SEARCHED',
     payload: keyword,
   };
 };
+
+export const checkEmail = email => {
+  return {
+    type :'CHECKED_EMAIL',
+    payload: email,
+  };
+};
+
+export const checkPassword = password => {
+  return {
+    type : 'CHECKED_PASSWORD',
+    payload: password,
+  };
+};
+
+export const confirmPassword = password => {
+  return {
+    type : 'CONFIRMED_PASSWORD',
+    payload: password,
+  };
+};
+
+// Player
 
 export const selectSong = song => {
   return {

@@ -17,14 +17,6 @@ const selectedSongReducer = (selectedSong = null, action) => {
   }
 };
 
-const selectedMenuReducer = (selectedMenu = 'player', action) => {
-  if (action.type === 'MENU_SELECTED') {
-    return action.payload;
-  } else {
-    return selectedMenu;
-  }
-};
-
 const searchedKeywordReducer = (searchedKeyword = '', action) => {
   if (action.type === 'KEYWORD_SEARCHED') {
     return action.payload;
@@ -57,7 +49,7 @@ const playedSongReducer = (playedSong = null, action) => {
   }
 };
 
-const getPathReducer = (getPath = '', action) => {
+const getPathReducer = (getPath = null, action) => {
   if(action.type === 'SET_PATH'){
     return action.payload;
   } else {
@@ -65,13 +57,39 @@ const getPathReducer = (getPath = '', action) => {
   }
 };
 
+const checkedEmailReducer = (checkedEmail = '', action) => {
+  if(action.type === 'CHECKED_EMAIL'){
+    return action.payload;
+  } else {
+    return checkedEmail;
+  }
+};
+
+const checkedPasswordReducer = (checkedPassword = '', action) => {
+  if(action.type === 'CHECKED_PASSWORD'){
+    return action.payload;
+  } else {
+    return checkedPassword;
+  }
+};
+
+const confirmedPasswordReducer = (confirmedPassword = '', action) => {
+  if(action.type === 'CONFIRMED_PASSWORD'){
+    return action.payload;
+  } else {
+    return confirmedPassword;
+  }
+};
+
 export default combineReducers({
   songs: songsReducer,
   selectedSong: selectedSongReducer,
-  selectedMenu: selectedMenuReducer,
   searchedKeyword: searchedKeywordReducer,
   addedSongToPlaylist: addedSongToPlaylistReducer,
   downloadedSong: downloadedSongReducer,
   playedSong: playedSongReducer,
-  getPath: getPathReducer
+  getPath: getPathReducer,
+  checkedEmail: checkedEmailReducer,
+  checkedPassword: checkedPasswordReducer,
+  confirmedPassword: confirmedPasswordReducer,
 });

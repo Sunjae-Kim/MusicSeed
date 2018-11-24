@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { setPath } from "../actions";
+import { setPath, checkEmail, checkPassword } from "../actions";
 import '../styles/Login.css';
 
 class Login extends Component {
@@ -10,10 +10,22 @@ class Login extends Component {
       <form className="login ui form" onSubmit={e => onFormSubmit(e) }>
         <div className="field">
           <h1>Login</h1>
-          <input type="text" name="first-name" placeholder="Email"/>
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            onChange={ e => this.props.checkEmail(e.target.value) }
+            value={ this.props.checkedEmail }
+          />
         </div>
         <div className="field">
-          <input type="text" name="last-name" placeholder="Password"/>
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            onChange={ e => this.props.checkPassword(e.target.value) }
+            value={ this.props.checkedPassword }
+          />
         </div>
         <button className="ui button" type="submit">LOGIN</button>
         <hr/>
@@ -29,10 +41,12 @@ const onFormSubmit = (event) => {
 
 const mapStateToProps = state => {
   return {
+    checkedEmail: state.checkedEmail,
+    checkedPassword: state.checkedPassword,
   }
 };
 
 export default connect(
   mapStateToProps,
-  {setPath}
+  {setPath, checkEmail, checkPassword}
 )(Login);
