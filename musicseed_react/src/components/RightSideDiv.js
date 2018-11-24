@@ -6,7 +6,7 @@ import { Route, Switch } from 'react-router-dom';
 class RightSideDiv extends React.Component {
   render() {
     return (
-      <div className={'playerrightsidediv'}>
+      <div className={'rightsidediv'}>
         <Switch>
           <Route exact path={'/'} component={Player}/>
           <Route path={'/login'} component={Login}/>

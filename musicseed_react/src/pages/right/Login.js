@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { setPath, checkEmail, checkPassword } from "../actions";
-import '../styles/Login.css';
+import { setPath, checkEmail, checkPassword } from "../../actions/index";
+import '../../styles/Login.css';
 
 class Login extends Component {
   render() {

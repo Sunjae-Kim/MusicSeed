@@ -1,11 +1,11 @@
-.playerrightsidediv {
+.rightsidediv {
     display: flex;
     position: absolute;
     right: 8vh;
     align-items: center;
-    height: 100vh;
+    height: 95vh;
 }
 
-.playerrightsidediv h1, h2, h3, h4, p {
+.rightsidediv h1, h2, h3, h4, p {
     color: #D4D4E2;
 }

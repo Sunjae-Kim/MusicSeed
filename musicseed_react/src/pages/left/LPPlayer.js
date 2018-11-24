@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from 'react-redux';
-import '../styles/LPPlayer.css';
+import '../../styles/LPPlayer.css';
 
 class LPDiv extends React.Component {
   render() {

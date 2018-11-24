@@ -7,7 +7,7 @@ import SideBar from "../components/SideBar";
 import BarPlayer from "../components/BarPlayer";
 import Logo from "../components/Logo";
 import RightSideDiv from "./RightSideDiv";
-import LPDiv from "./LPPlayer";
+import LPDiv from "../pages/left/LPPlayer";
 
 class App extends React.Component {
   render() {
@@ -15,11 +15,11 @@ class App extends React.Component {
       <div className="pusher">
         <Logo />
         <LP />
-        <SideBar />
         <Navigation />
-        <BarPlayer/>
         <LPDiv/>
+        <SideBar />
         <RightSideDiv/>
+        <BarPlayer/>
       </div>
     )
   }

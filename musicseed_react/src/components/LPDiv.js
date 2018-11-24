@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Switch } from 'react-router-dom';
-import LPPlayer from "./LPPlayer";
+import {LPPlayer} from "../pages";
 
 class LPDiv extends React.Component {
   render() {

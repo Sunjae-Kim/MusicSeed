@@ -1,7 +1,7 @@
 import React from "react";
-import SearchInput from "../components/SearchInput";
-import SearchedTrackList from "../components/SearchedTrackList";
-import '../styles/Player.css';
+import SearchInput from "../../components/SearchInput";
+import SearchedTrackList from "../../components/SearchedTrackList";
+import '../../styles/Player.css';
 
 class Player extends React.Component {
   render() {

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { checkEmail, checkPassword, confirmPassword } from "../actions";
+import { checkEmail, checkPassword, confirmPassword } from "../../actions/index";
 
 class Register extends Component {
 

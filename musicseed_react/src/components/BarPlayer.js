@@ -1,7 +1,6 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import { connect } from 'react-redux';
 import "../styles/BarPlayer.css";
-import MediaButtons from "./MediaButtons";
 
 const BarPlayer = ({song}) => {
   return(
@@ -10,6 +9,38 @@ const BarPlayer = ({song}) => {
     </div>
   )
 };
+
+const renderButtons = () => {
+  return(
+    <div className="three wide column">
+      <a
+        href={'#'}
+      >
+        <img src="images/mediabuttons/prev.png" alt="previous button"/>
+      </a>
+      <a
+        href={'#'}
+      >
+        <img src="images/mediabuttons/pause.png" alt="pause button"/>
+      </a>
+      <a
+        href={'#'}
+      >
+        <img src="images/mediabuttons/stop.png" alt="stop button"/>
+      </a>
+      <a
+        href={'#'}
+      >
+        <img src="images/mediabuttons/next.png" alt="next button"/>
+      </a>
+      <a
+        href={'#'}
+      >
+        <img src="images/mediabuttons/list.png" alt="list button"/>
+      </a>
+    </div>
+  )
+}
 
 const renderSong = song => {
   if(!song){
@@ -22,7 +53,7 @@ const renderSong = song => {
       <div className={'barplayer container'}>
         <div className={'ui grid'}>
           <div id="barPlayerRow" className="row">
-            <div className="ten wide column">
+            <div className="thirteen wide column">
               <div className="content">
                 <h3>{ song.title }</h3>
               </div>
@@ -30,6 +61,9 @@ const renderSong = song => {
                 <h4>{ song.artist }</h4>
               </div>
             </div>
+            <Fragment>
+              { renderButtons() }
+            </Fragment>
           </div>
         </div>
       </div>
