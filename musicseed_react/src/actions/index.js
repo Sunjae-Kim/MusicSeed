@@ -36,7 +36,6 @@ export const confirmPassword = password => {
 };
 
 // Player
-
 export const selectSong = song => {
   return {
     type: 'SONG_SELECTED',
@@ -44,10 +43,24 @@ export const selectSong = song => {
   };
 };
 
+export const changePlayerState = playerState => {
+  return {
+    type: 'CHANGE_PLAYER_STATE',
+    payload: playerState,
+  }
+};
+
 // Searched Media
 export const addSongToPlaylist = song => {
   return {
-    type: 'SONG_ADDED_TO_PLAYLIST',
+    type: 'ADD_TO_PLAYLIST',
+    payload: song,
+  }
+};
+
+export const deleteSongFromPlaylist = song => {
+  return {
+    type: 'DELETE_FROM_PLAYLIST',
     payload: song,
   }
 };

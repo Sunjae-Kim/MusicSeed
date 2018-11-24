@@ -1,15 +1,14 @@
 import React, {Fragment} from 'react';
 import {connect} from 'react-redux';
-import { changePlayerState } from "../actions";
 import '../styles/TrackList.css';
-import MediaButtons from "./MediaButtons";
+import {changePlayerState, deleteSongFromPlaylist} from "../actions";
 
-class SearchedTrackList extends React.Component {
+class Playlist extends React.Component {
 
   renderList(){
-    return this.props.songs.map(song => {
+    return this.props.playlist.map(song => {
       return(
-        <div className="tracklist ui divided list">
+        <div className="tracklist ui divided list" >
           <div key={ song.title } className="item">
             <div className={'ui grid'}>
               <div className="row">
@@ -21,7 +20,11 @@ class SearchedTrackList extends React.Component {
                     <h4>{ song.artist }</h4>
                   </div>
                 </div>
-                <MediaButtons song={ song }/>
+                <a
+                  onClick={() => this.props.deleteSongFromPlaylist(song)}
+                >
+                  <img src="images/mediabuttons/deletefromplaylist.png" alt="delete button"/>
+                </a>
               </div>
             </div>
           </div>
@@ -46,12 +49,12 @@ class SearchedTrackList extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    songs: state.songs,
+    playlist: state.playlist,
     playerState: state.playerState,
   }
 };
 
 export default connect(
   mapStateToProps,
-  {changePlayerState}
-)(SearchedTrackList);
+  {changePlayerState, deleteSongFromPlaylist}
+)(Playlist);
