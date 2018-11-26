@@ -1,7 +1,7 @@
 .under_div {
     padding-top: 100vh;
     margin: 0 auto;
-    width: 80%;
+    width: 70%;
 }
 
 .under_field {
@@ -15,10 +15,17 @@
 
 .ui.grid.track {
     margin: 0 5vw;
+    padding: 7.5vh 0;
 }
 
 .under_div .column > img {
     max-height: 276px;
+}
+
+.track_header{
+    padding-top: 5vh;
+    margin: 0 5vw 10vh 5vw;
+    border-bottom: 1px solid rgba(56,56,90,.87);
 }
 
 div.ui.grid.track > div:nth-child(3) {
@@ -30,4 +37,29 @@ div.ui.grid.track > div:nth-child(3) {
 div.ui.grid.track input {
     width: 100%;
     background: #B6B5DB;
+}
+
+div.ui.grid.track .custom-file-label {
+    background: #B6B5DB;
+    color: rgba(56,56,90,.87);
+}
+
+div.ui.grid.track ::placeholder {
+    color: rgba(56,56,90,.87);
+}
+
+div.ui.grid.track .ui.selection.dropdown {
+    min-width: 0;
+}
+
+div.ui.grid.track .ui.search.selection.dropdown {
+    background: #B6B5DB;
+}
+
+div.ui.grid.track .ui.search.selection.dropdown div {
+    color: rgba(56,56,90,.87);
+}
+
+div.ui.grid.track .ui.dropdown .menu>.item span{
+    color: rgba(56,56,90,.87);
 }
