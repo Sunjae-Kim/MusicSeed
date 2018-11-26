@@ -12,7 +12,6 @@ class Login extends Component {
           <h1>Login</h1>
           <input
             type="email"
-            name="email"
             placeholder="Email"
             onChange={ e => this.props.checkEmail(e.target.value) }
             value={ this.props.checkedEmail }
@@ -21,7 +20,6 @@ class Login extends Component {
         <div className="field">
           <input
             type="password"
-            name="password"
             placeholder="Password"
             onChange={ e => this.props.checkPassword(e.target.value) }
             value={ this.props.checkedPassword }

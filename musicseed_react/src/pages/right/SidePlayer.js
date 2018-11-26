@@ -5,6 +5,16 @@ import TrackList from "../../components/TrackList";
 import '../../styles/SidePlayer.css';
 
 class SidePlayer extends React.Component {
+
+  renderHeader(){
+    switch (this.props.playerState) {
+      case true:
+        return (<h1>Search</h1>);
+      default:
+        return (<h1>Playlist</h1>);
+    }
+  }
+
   render() {
     return (
       <Fragment>
@@ -16,6 +26,7 @@ class SidePlayer extends React.Component {
   renderList(){
     return(
         <div>
+          { this.renderHeader() }
           <SearchInput/>
           <div className={'sideplayer'}>
             <TrackList/>

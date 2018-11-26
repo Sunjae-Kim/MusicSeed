@@ -34,9 +34,9 @@ class Navigation extends React.Component {
         <Link id={'player'} to={'/'} className="item">
           Player
         </Link>
-        <a id={'upload'} href="#" className="item">
+        <Link id={'uploadAlbum'} to={'/uploadAlbum'} className="item">
           Upload Album
-        </a>
+        </Link>
         <a id={'help'} href="#" className="item">
           Help
         </a>
