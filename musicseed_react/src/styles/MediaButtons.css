@@ -1,0 +1,11 @@
+.mediabuttons.six.wide.column {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.mediabuttons.playlist.six.wide.column {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}

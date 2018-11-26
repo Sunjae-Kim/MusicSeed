@@ -1,0 +1,7 @@
+.side_bar {
+    pointer-events: none;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    right: 0;
+}

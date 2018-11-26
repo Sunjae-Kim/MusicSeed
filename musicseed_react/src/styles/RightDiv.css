@@ -1,0 +1,11 @@
+.rightsidediv {
+    display: flex;
+    position: absolute;
+    right: 8vh;
+    align-items: center;
+    height: 100vh;
+}
+
+.rightsidediv h1, h2, h3, h4, p, div {
+    color: #D4D4E2;
+}
