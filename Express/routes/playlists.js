@@ -6,13 +6,22 @@ const router = express.Router();
 /* CRUD Operation */
 /* Read */
 router.get("/:user_id", async (req, res) => {
-  // Find
-  const playlists = await User.findById(req.params.user_id)
-    .select("playlist")
-    .populate("playlist");
+  // Find user
+  let user = await User.findById(req.params.user_id);
+  if (!user)
+    return res
+      .status(404)
+      .send(`The user with given ID(${req.params.user_id}) was not found.`);
 
-  // Response
-  res.send(playlists);
+  // Delete the song from the list if a song in the playlist doesn't exist
+  user.playlist.forEach( async (song, index) => {
+    const music = await Music.findById(song).populate('playlist');
+    if(!music) user.playlist.splice(user.playlist.indexOf(song), 1);
+    if((index+1) === user.playlist.length) {
+      user = await user.save();
+      res.send(user.playlist);
+    }
+  });
 });
 
 /*
@@ -43,7 +52,7 @@ router.post("/:user_id/:music_id", async (req, res) => {
 });
 
 /* Update */
-router.patch("/:user_id/:index_1/:index_2", async (req, res) => {
+router.patch("/:user_id/:selected/:target", async (req, res) => {
 
   // Find User
   let user = await User.findById(req.params.user_id);
@@ -52,10 +61,10 @@ router.patch("/:user_id/:index_1/:index_2", async (req, res) => {
       .status(404)
       .send(`The user with given ID(${req.params.user_id}) was not found.`);
 
-  // Switch Order
-  const tmp_song = user.playlist[req.params.index_1];
-  user.playlist.splice(req.params.index_1, 1, user.playlist[req.params.index_2]);
-  user.playlist.splice(req.params.index_2, 1, tmp_song);
+  // Insert selected song before target
+  const music = user.playlist[req.params.selected];
+  user.playlist.splice(req.params.selected, 1);
+  user.playlist.splice(req.params.target, 0, music);
 
   // Save the playlist
   user = await user.save();

@@ -16,7 +16,7 @@ const dumpdata = {
       pw: 1234
     }).save();
   },
-  async insert_music(album_id=null, user_id, index){
+  async insert_music(user_id, index, album_id=null){
     console.log(`PUT DUMP DATA : track${this.random_num}_${index} inserted`);
     return await new Music({
       title: `track${this.random_num}_${index}`,

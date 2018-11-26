@@ -105,7 +105,7 @@ router.patch("/:id", async (req, res) => {
 /* Delete */
 router.delete("/:id", async (req, res) => {
   // Find Album
-  let album = await Album.findById(req.params.id);
+  let album = await Album.findByIdAndDelete(req.params.id);
 
   // Delete album from user
   let user = await User.findById(album.user_id);
@@ -123,9 +123,6 @@ router.delete("/:id", async (req, res) => {
       await Comment.findByIdAndDelete(comment_id);
     })
   });
-
-  // Delete the album
-  album = await album.delete();
 
   // Save user
   user = await user.save();

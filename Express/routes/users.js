@@ -67,7 +67,7 @@ router.patch("/:id", async (req, res) => {
 /* Delete */
 router.delete("/:id", async (req, res) => {
   // Find and Delete
-  let user = await User.findById(req.params.id);
+  let user = await User.findByIdAndDelete(req.params.id);
 
   // Delete comments on the user
   user.comment.forEach( async comment_id => {
@@ -91,8 +91,6 @@ router.delete("/:id", async (req, res) => {
       })
     });
   });
-
-  user = await user.delete();
 
   // Response
   res.send(user);
