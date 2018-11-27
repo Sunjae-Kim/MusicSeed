@@ -29,10 +29,15 @@ class App extends React.Component {
   render() {
     return(
       <div className="pusher">
-        { this.renderFixedForm() }
+        <Logo />
+        <LP />
+        <LeftDiv/>
+        <SideBar />
+        <RightDiv/>
         <BarPlayer/>
         <SwitchButton/>
         <UnderDiv/>
+        <Navigation />
       </div>
     )
   }

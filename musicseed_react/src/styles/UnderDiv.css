@@ -4,12 +4,16 @@
     width: 70%;
 }
 
+.under_div span, div, h1, h2, h3, h4, p{
+    color: rgba(56,56,90,.87);
+}
+
 .under_field {
     margin: 10vh 0;
     background-color: rgba(255,255,255,0.2);
 }
 
-.under_field h1 {
+.under_field h1, h2 {
     color: #141525;
 }
 
@@ -18,14 +22,14 @@
     padding: 7.5vh 0;
 }
 
-.under_div .column > img {
+.under_div .column img {
     max-height: 276px;
+    cursor:pointer;
 }
 
-.track_header{
+.upload_header{
     padding-top: 5vh;
-    margin: 0 5vw 10vh 5vw;
-    border-bottom: 1px solid rgba(56,56,90,.87);
+    margin: 0 5vw 2vh 5.5vw;
 }
 
 div.ui.grid.track > div:nth-child(3) {
@@ -36,11 +40,15 @@ div.ui.grid.track > div:nth-child(3) {
 
 div.ui.grid.track input {
     width: 100%;
-    background: #B6B5DB;
+    background: rgba(255,255,255,0.5);
+}
+
+div.ui.grid.track input:focus {
+    background: rgba(255,255,255,0.5);
 }
 
 div.ui.grid.track .custom-file-label {
-    background: #B6B5DB;
+    background: rgba(255,255,255,0.5);
     color: rgba(56,56,90,.87);
 }
 
@@ -53,7 +61,7 @@ div.ui.grid.track .ui.selection.dropdown {
 }
 
 div.ui.grid.track .ui.search.selection.dropdown {
-    background: #B6B5DB;
+    background: rgba(255,255,255,0.5);
 }
 
 div.ui.grid.track .ui.search.selection.dropdown div {
@@ -62,4 +70,23 @@ div.ui.grid.track .ui.search.selection.dropdown div {
 
 div.ui.grid.track .ui.dropdown .menu>.item span{
     color: rgba(56,56,90,.87);
+}
+
+.description {
+    max-width: 85%;
+    margin: 0 auto;
+    padding-bottom: 5vh;
+    min-height: 30vh;
+}
+
+.ui.form .description textarea{
+    min-height: 30vh;
+    background-color: rgba(255,255,255,0.5);
+}
+
+.under_button_area {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 7vh;
 }

@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react';
-import {Form, Grid, Image, Select, Dropdown} from 'semantic-ui-react';
+import {Form, Grid, Image, Select, Dropdown, Button, Confirm } from 'semantic-ui-react';
 import '../../styles/UnderDiv.css';
 
 const roleOptions = [
@@ -21,24 +21,45 @@ const genreOptions = [
 class UnderDiv extends Component {
   render() {
     return (
-      <div className={'under_div'}>
+      <Form className={'under_div'} onSubmit={e => onSubmit(e) }>
         <div className={'under_field'}>
-          { this.renderTrack() }
-          { this.renderTrack() }
-          { this.renderTrack() }
-          { this.renderTrack() }
+          { this.renderTrack(1) }
+          { this.renderTrack(2) }
+          { this.renderTrack(3) }
         </div>
-        <button className="ui button" type="submit">LOGIN</button>
-      </div>
+        <div className={'under_field'}>
+          { this.renderDescription() }
+        </div>
+        <div className={'under_button_area'}>
+          <Button className="ui large button" onClick={this.open}>UPLOAD</Button>
+          <Confirm open={this.state.open} onCancel={this.close} onConfirm={this.close} />
+        </div>
+      </Form>
     );
   }
 
-  renderTrack(){
+  state = { open: false, titleSong: '' };
+  open = () => this.setState({ open: true });
+  close = () => this.setState({ open: false });
+  onLPClick = async (event, index) => {
+    await this.setState({ titleSong: index });
+    console.log(this.state.titleSong);
+  };
+
+  setLP(index) {
+    if(index === this.state.titleSong ){
+      return 'images/LP_selected.png';
+    } else {
+      return 'images/LP.png';
+    }
+  }
+
+  renderTrack(index){
+
     return(
-      <Form onSubmit={e => onSubmit(e) }>
       <Grid className={'track'} >
         <Grid.Column width={5}>
-          <Image src='images/LP.png' />
+          <Image src={ this.setLP(index) } onClick={ e => this.onLPClick(e, index) }/>
         </Grid.Column>
         <Grid.Column width={3} className={'track_label'}>
           <h1>Title</h1>
@@ -71,10 +92,27 @@ class UnderDiv extends Component {
           </Grid>
         </Grid.Column>
       </Grid>
-      </Form>
     )
   }
+
+  renderDescription = () => {
+    return(
+      <Fragment>
+        <h2 className={'upload_header'}>Album Description</h2>
+          <div className={'description'}>
+            <Form.TextArea className={'text_area'}/>
+          </div>
+      </Fragment>
+    )
+  };
 }
+
+
+
+
+const setTitleSong = (event) => {
+  console.log(`Set Title Song ${event}`)
+};
 
 const onSubmit = (event) => {
   event.preventDefault();
