@@ -9,6 +9,7 @@ import BarPlayer from "../components/BarPlayer";
 import Logo from "../components/Logo";
 import { LeftDiv, RightDiv } from "../pages/";
 import SwitchButton from "./SwitchButton";
+import UnderDiv from "../pages/under/UnderDiv";
 
 class App extends React.Component {
 
@@ -31,6 +32,7 @@ class App extends React.Component {
         { this.renderFixedForm() }
         <BarPlayer/>
         <SwitchButton/>
+        <UnderDiv/>
       </div>
     )
   }

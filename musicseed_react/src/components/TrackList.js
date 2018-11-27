@@ -12,10 +12,8 @@ class TrackList extends React.Component {
     switch (this.props.playerState) {
       case true:
         this.songs = this.props.searchedSongs; break;
-      case false:
-        this.songs = this.props.playlist; break;
       default:
-        this.props.changePlayerState(true); return;
+        this.songs = this.props.playlist; break;
     }
   }
 

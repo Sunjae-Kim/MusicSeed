@@ -21,7 +21,6 @@ class Register extends Component {
           <h1>Register</h1>
           <input
             type="email"
-            name="first-name"
             placeholder="Email"
             onChange={ e => this.props.checkEmail(e.target.value) }
             value={ this.props.checkedEmail }
@@ -30,7 +29,6 @@ class Register extends Component {
         <div className="field">
           <input
             type="password"
-            name="last-name"
             placeholder="Password"
             onChange={ e => this.props.checkPassword(e.target.value) }
             value={ this.props.checkedPassword }
@@ -39,17 +37,16 @@ class Register extends Component {
         <div className="field">
           <input
             type="password"
-            name="last-name"
             placeholder="Password Confirm"
             onChange={ e => this.props.confirmPassword(e.target.value) }
             value={ this.props.confirmedPassword }
           />
         </div>
         <div className="field">
-          <input type="text" name="last-name" placeholder="Name"/>
+          <input type="text"placeholder="Name"/>
         </div>
         <div className="field">
-          <input type="text" name="last-name" placeholder="Nick Name"/>
+          <input type="text" placeholder="Nick Name"/>
         </div>
         <button className="ui button" type="submit">REGISTER</button>
       </form>
