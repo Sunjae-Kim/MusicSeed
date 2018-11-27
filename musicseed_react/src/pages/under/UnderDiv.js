@@ -1,31 +1,40 @@
 import React, {Component, Fragment} from 'react';
-import {Form, Grid, Image, Select, Dropdown, Button, Confirm } from 'semantic-ui-react';
+import {Form, Button, Confirm } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import {addTrackInAlbum} from "../../actions";
+
 import '../../styles/UnderDiv.css';
-
-const roleOptions = [
-  { key: 'f', text: 'Featuring', value: 'featuring' },
-  { key: 'p', text: 'Producer', value: 'producer' },
-  { key: 'r', text: 'Rapping', value: 'rapping' },
-];
-
-const genreOptions = [
-  { key: 'hh', text: 'Hip-hop', value: 'hiphop' },
-  { key: 'bld', text: 'Ballad', value: 'ballad' },
-  { key: 'jzz', text: 'Jazz', value: 'jazz' },
-  { key: 'acst', text: 'Acoustic', value: 'acoustic' },
-  { key: 'rck', text: 'Rock', value: 'rock' },
-  { key: 'lf', text: 'Lo-fi', value: 'lo-fi' },
-  { key: 'bnd', text: 'Band', value: 'band' },
-];
+import Track from "../../components/Track";
 
 class UnderDiv extends Component {
+
+  state = { open: false, titleSong: '' };
+  open = () => this.setState({ open: true });
+  close = () => this.setState({ open: false });
+
+  onSubmit = (event) => {
+    event.preventDefault();
+  };
+
+  addTrack = () => {
+    this.props.addTrackInAlbum(this.props.numberOfTracks+1);
+  };
+
   render() {
+    console.log(this.props.numberOfTracks);
+    const children = [];
+
+    for (let i = 0; i < this.props.numberOfTracks; i += 1) {
+      children.push(<Track key={i} number={i} />);
+    }
+
     return (
-      <Form className={'under_div'} onSubmit={e => onSubmit(e) }>
-        <div className={'under_field'}>
-          { this.renderTrack(1) }
-          { this.renderTrack(2) }
-          { this.renderTrack(3) }
+      <Form className={'under_div'} onSubmit={e => this.onSubmit(e) }>
+        <div className={'under_field tracks'}>
+          { children }
+          <div className="under_button_area">
+            <strong onClick={ this.addTrack } >+</strong>
+          </div>
         </div>
         <div className={'under_field'}>
           { this.renderDescription() }
@@ -36,63 +45,6 @@ class UnderDiv extends Component {
         </div>
       </Form>
     );
-  }
-
-  state = { open: false, titleSong: '' };
-  open = () => this.setState({ open: true });
-  close = () => this.setState({ open: false });
-  onLPClick = async (event, index) => {
-    await this.setState({ titleSong: index });
-    console.log(this.state.titleSong);
-  };
-
-  setLP(index) {
-    if(index === this.state.titleSong ){
-      return 'images/LP_selected.png';
-    } else {
-      return 'images/LP.png';
-    }
-  }
-
-  renderTrack(index){
-
-    return(
-      <Grid className={'track'} >
-        <Grid.Column width={5}>
-          <Image src={ this.setLP(index) } onClick={ e => this.onLPClick(e, index) }/>
-        </Grid.Column>
-        <Grid.Column width={3} className={'track_label'}>
-          <h1>Title</h1>
-          <h1>Artist</h1>
-          <h1>Genre</h1>
-          <h1>File</h1>
-          <h1>Participants</h1>
-        </Grid.Column>
-        <Grid.Column width={8}>
-            <input placeholder={'Track Title'} />
-            <input placeholder={'Artist Name'} />
-            <Dropdown placeholder='Genre' fluid multiple search selection options={genreOptions} />
-            <div className="custom-file">
-              <input type="file" className="custom-file-input" id="customFile"/>
-              <label className="custom-file-label" htmlFor="customFile">&nbsp;&nbsp;Click to choose the file</label>
-            </div>
-          <Grid>
-            <Grid.Column width={8}>
-              <input placeholder={'Name'}/>
-            </Grid.Column>
-            <Grid.Column width={8}>
-              <Form.Field
-                control={Select}
-                options={roleOptions}
-                placeholder='Role'
-                search
-                searchInput={{ id: 'form-select-control-gender' }}
-              />
-            </Grid.Column>
-          </Grid>
-        </Grid.Column>
-      </Grid>
-    )
   }
 
   renderDescription = () => {
@@ -107,15 +59,13 @@ class UnderDiv extends Component {
   };
 }
 
-
-
-
-const setTitleSong = (event) => {
-  console.log(`Set Title Song ${event}`)
+const mapStateToProps = state => {
+  return {
+    numberOfTracks: state.numberOfTracks,
+  }
 };
 
-const onSubmit = (event) => {
-  event.preventDefault();
-};
-
-export default UnderDiv;
+export default connect(
+  mapStateToProps,
+  { addTrackInAlbum }
+)(UnderDiv);

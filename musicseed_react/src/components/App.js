@@ -13,31 +13,19 @@ import UnderDiv from "../pages/under/UnderDiv";
 
 class App extends React.Component {
 
-  renderFixedForm(){
-    return(
-      <Fragment>
-        <Logo />
-        <LP />
-        <Navigation />
-        <LeftDiv/>
-        <SideBar />
-        <RightDiv/>
-      </Fragment>
-    );
-  }
-
   render() {
     return(
       <div className="pusher">
-        <Logo />
-        <LP />
-        <LeftDiv/>
-        <SideBar />
-        <RightDiv/>
-        <BarPlayer/>
-        <SwitchButton/>
+        <div className={'main_page'}>
+          <Logo />
+          <LP />
+          <LeftDiv/>
+          <SideBar />
+          <RightDiv/>
+          <BarPlayer/>
+          <Navigation />
+        </div>
         <UnderDiv/>
-        <Navigation />
       </div>
     )
   }

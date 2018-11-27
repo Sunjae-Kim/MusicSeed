@@ -101,6 +101,15 @@ const playerStateReducer = (playerState = true, action) => {
   }
 };
 
+const addTrackInAlbumReducer = (numberOfTracks=1, action) => {
+  switch (action.type) {
+    case 'ADD_TRACK':
+      return action.payload;
+    default:
+      return numberOfTracks;
+  }
+};
+
 export default combineReducers({
   searchedSongs: songsReducer,
   selectedSong: selectedSongReducer,
@@ -113,4 +122,5 @@ export default combineReducers({
   checkedPassword: checkedPasswordReducer,
   confirmedPassword: confirmedPasswordReducer,
   playerState: playerStateReducer,
+  numberOfTracks: addTrackInAlbumReducer,
 });

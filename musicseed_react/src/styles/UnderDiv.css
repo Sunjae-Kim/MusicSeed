@@ -1,10 +1,9 @@
 .under_div {
-    padding-top: 100vh;
     margin: 0 auto;
     width: 70%;
 }
 
-.under_div span, div, h1, h2, h3, h4, p{
+.under_div span,.under_div div,.under_div h1,.under_div h2,.under_div h3,.under_div h4,.under_div p{
     color: rgba(56,56,90,.87);
 }
 
@@ -13,7 +12,7 @@
     background-color: rgba(255,255,255,0.2);
 }
 
-.under_field h1, h2 {
+.under_field h1, .under_field h2 {
     color: #141525;
 }
 
@@ -89,4 +88,9 @@ div.ui.grid.track .ui.dropdown .menu>.item span{
     display: flex;
     justify-content: center;
     padding-bottom: 7vh;
+}
+
+.under_button_area strong{
+    cursor: pointer;
+    font-size: 7vh;
 }

@@ -78,3 +78,10 @@ export const playSong = song => {
     payload: song,
   }
 };
+
+export const addTrackInAlbum = number => {
+  return {
+    type: 'ADD_TRACK',
+    payload: number,
+  }
+};
