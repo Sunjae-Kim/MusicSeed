@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react';
 import {connect} from 'react-redux';
-import {addSongToPlaylist, downloadSong, playSong, deleteSongFromPlaylist} from "../actions";
-import '../styles/MediaButtons.css';
+import {addSongToPlaylist, downloadSong, playSong, deleteSongFromPlaylist} from "../../actions/index";
+import '../../styles/MediaButtons.css';
 
 class MediaButtons extends React.Component {
 

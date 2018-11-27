@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react';
 import {connect} from 'react-redux';
-import {changePlayerState} from "../actions";
-import '../styles/TrackList.css';
+import {changePlayerState} from "../../actions/index";
+import '../../styles/TrackList.css';
 import MediaButtons from "./MediaButtons";
 
 class TrackList extends React.Component {

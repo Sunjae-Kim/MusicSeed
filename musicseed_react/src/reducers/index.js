@@ -110,6 +110,26 @@ const addTrackInAlbumReducer = (numberOfTracks=1, action) => {
   }
 };
 
+const setTitleSongReducer = (index=null, action) => {
+  switch (action.type) {
+    case 'SET_TITLE_SONG':
+      return action.payload;
+    default:
+      return index;
+  }
+};
+
+const commentsReducer = (comment = [], action) => {
+  switch (action.type) {
+    case 'ADD_COMMENT':
+      return comment.concat([action.payload]);
+    case 'DELETE_COMMENT':
+      return comment;
+    default:
+      return comment;
+  }
+};
+
 export default combineReducers({
   searchedSongs: songsReducer,
   selectedSong: selectedSongReducer,
@@ -123,4 +143,6 @@ export default combineReducers({
   confirmedPassword: confirmedPasswordReducer,
   playerState: playerStateReducer,
   numberOfTracks: addTrackInAlbumReducer,
+  titleSong: setTitleSongReducer,
+  comments: commentsReducer,
 });

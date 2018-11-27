@@ -1,10 +1,10 @@
 import React, {Fragment} from "react";
 import {connect} from 'react-redux';
-import SearchInput from "../../components/SearchInput";
-import TrackList from "../../components/TrackList";
+import SearchInput from "../../components/right/SearchInput";
+import TrackList from "../../components/right/TrackList";
 import '../../styles/SidePlayer.css';
 
-class SidePlayer extends React.Component {
+class PlayerRight extends React.Component {
 
   renderHeader(){
     switch (this.props.playerState) {
@@ -44,4 +44,4 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps
-)(SidePlayer);
+)(PlayerRight);

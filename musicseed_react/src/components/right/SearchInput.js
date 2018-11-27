@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {searchKeyword} from "../actions";
-import "../styles/Input.css";
+import {searchKeyword} from "../../actions/index";
+import "../../styles/Input.css";
 
 class SearchInput extends React.Component {
 

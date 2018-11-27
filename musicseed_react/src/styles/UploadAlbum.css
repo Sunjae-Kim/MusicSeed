@@ -1,7 +1,3 @@
-#root > div > div.rightsidediv > form > div > div > div {
-    background: #4A496F;
-}
-
 div.rightsidediv > form > div > div > div > div.visible.menu.transition {
     background: #4A496F;
 }
@@ -36,5 +32,10 @@ div.rightsidediv > form > div > div > div > div.visible.menu.transition {
     line-height: 1.5;
     color: rgba(191,191,191,.87);
     border-radius: .25rem;
+    background: #4A496F;
+}
+
+
+.upload_album div.field .ui.selection.dropdown {
     background: #4A496F;
 }

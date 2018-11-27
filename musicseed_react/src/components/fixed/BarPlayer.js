@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
 import { connect } from 'react-redux';
-import "../styles/BarPlayer.css";
+import "../../styles/BarPlayer.css";
 
 const BarPlayer = (props) => {
   switch (props.path) {

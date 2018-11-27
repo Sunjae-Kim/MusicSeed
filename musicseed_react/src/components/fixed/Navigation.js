@@ -1,8 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {setPath} from '../actions';
+import {setPath} from '../../actions/index';
 import {Link} from 'react-router-dom';
-import '../styles/Navigation.css';
+import '../../styles/Navigation.css';
 
 class Navigation extends React.Component {
 
@@ -15,17 +15,27 @@ class Navigation extends React.Component {
   componentDidMount() {
     const path = window.location.pathname.substring(1) || 'player';
     this.props.setPath(path);
-    document.querySelector(`#${path}`).classList.add('active');
-    this.getChildNodes().forEach(menu => {
-      menu.addEventListener('click', async () => await this.props.setPath(menu.id));
-    });
+    switch (path) {
+      case 'albumDetail':
+        document.querySelector(`#player`).classList.add('active'); break;
+      default:
+        document.querySelector(`#${path}`).classList.add('active');
+        this.getChildNodes().forEach(menu => {
+          menu.addEventListener('click', async () => await this.props.setPath(menu.id));
+        });
+    }
   }
 
   componentDidUpdate() {
-    document.querySelector(`#${this.props.getPath}`).classList.add('active');
-    this.getChildNodes().forEach(item => {
-      if (item.id !== this.props.getPath) item.classList.remove('active');
-    })
+    switch (this.props.getPath) {
+      case 'albumDetail':
+        document.querySelector(`#player`).classList.add('active'); break;
+      default:
+        document.querySelector(`#${this.props.getPath}`).classList.add('active');
+        this.getChildNodes().forEach(item => {
+          if (item.id !== this.props.getPath) item.classList.remove('active');
+        })
+    }
   }
 
   renderContent() {
@@ -45,6 +55,9 @@ class Navigation extends React.Component {
         </Link>
         <Link id={'register'} to={"/register"} className="item">
           Register
+        </Link>
+        <Link id={'mypage'} to={"/mypage"} className="item">
+          My Page
         </Link>
       </div>
     )

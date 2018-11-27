@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import { changePlayerState, setPath } from "../actions";
+import { changePlayerState, setPath } from "../../actions/index";
 import {connect} from 'react-redux';
-import '../styles/SwitchButton.css';
+import '../../styles/SwitchButton.css';
 
 class SwitchButton extends Component {
   button;
@@ -49,6 +49,7 @@ class SwitchButton extends Component {
 
   render() {
     const path = this.props.path || 'player';
+    console.log(path);
     switch (path) {
       case 'player':
         return (this.renderSwitchButton());

@@ -1,5 +1,5 @@
 import React from 'react';
-import "../styles/LP.css";
+import "../../styles/LP.css";
 
 const LP = () => {
   return(

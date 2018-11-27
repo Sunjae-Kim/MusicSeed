@@ -1,17 +1,12 @@
 import React, {Component, Fragment} from 'react';
 import {Dropdown, Grid, Image, Select, Form} from "semantic-ui-react";
+import {connect} from 'react-redux';
+import {setTitleSong} from '../../actions/index'
 
 class Track extends Component {
 
-  state = { titleSong: '' };
-
-  onLPClick = async (event, index) => {
-    await this.setState({ titleSong: index });
-    console.log(this.state.titleSong);
-  };
-
   setLP(index) {
-    if(index === this.state.titleSong ){
+    if(index === this.props.titleSong ){
       return 'images/LP_selected.png';
     } else {
       return 'images/LP.png';
@@ -38,7 +33,7 @@ class Track extends Component {
     return(
       <Grid className={'track'} >
         <Grid.Column width={5}>
-          <Image src={ this.setLP(index) } onClick={ e => this.onLPClick(e, index) }/>
+          <Image src={ this.setLP(index) } onClick={ () => this.props.setTitleSong(index) }/>
         </Grid.Column>
         <Grid.Column width={3} className={'track_label'}>
           <h1>Title</h1>
@@ -83,4 +78,13 @@ class Track extends Component {
   }
 }
 
-export default Track;
+const mapStateToProps = state => {
+  return {
+    titleSong: state.titleSong,
+  }
+};
+
+export default connect(
+  mapStateToProps,
+  {setTitleSong}
+)(Track);

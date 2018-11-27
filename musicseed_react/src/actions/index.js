@@ -85,3 +85,17 @@ export const addTrackInAlbum = number => {
     payload: number,
   }
 };
+
+export const setTitleSong = index => {
+  return {
+    type: 'SET_TITLE_SONG',
+    payload: index,
+  }
+};
+
+export const addComment = comment => {
+  return {
+    type: 'ADD_COMMENT',
+    payload: comment,
+  }
+};

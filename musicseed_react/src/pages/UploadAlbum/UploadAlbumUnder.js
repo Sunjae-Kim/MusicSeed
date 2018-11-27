@@ -1,16 +1,12 @@
 import React, {Component, Fragment} from 'react';
-import {Form, Button, Confirm } from 'semantic-ui-react';
+import {Form, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import {addTrackInAlbum} from "../../actions";
+import {addTrackInAlbum} from "../../actions/index";
 
 import '../../styles/UnderDiv.css';
-import Track from "../../components/Track";
+import Track from "../../components/under/Track";
 
-class UnderDiv extends Component {
-
-  state = { open: false, titleSong: '' };
-  open = () => this.setState({ open: true });
-  close = () => this.setState({ open: false });
+class UploadAlbumUnder extends Component {
 
   onSubmit = (event) => {
     event.preventDefault();
@@ -21,11 +17,10 @@ class UnderDiv extends Component {
   };
 
   render() {
-    console.log(this.props.numberOfTracks);
     const children = [];
 
-    for (let i = 0; i < this.props.numberOfTracks; i += 1) {
-      children.push(<Track key={i} number={i} />);
+    for (let i = 1; i < this.props.numberOfTracks+1; i += 1) {
+      children.push(<Track key={i} index={i} />);
     }
 
     return (
@@ -40,8 +35,7 @@ class UnderDiv extends Component {
           { this.renderDescription() }
         </div>
         <div className={'under_button_area'}>
-          <Button className="ui large button" onClick={this.open}>UPLOAD</Button>
-          <Confirm open={this.state.open} onCancel={this.close} onConfirm={this.close} />
+          <Button className="ui large button" >UPLOAD</Button>
         </div>
       </Form>
     );
@@ -50,7 +44,7 @@ class UnderDiv extends Component {
   renderDescription = () => {
     return(
       <Fragment>
-        <h2 className={'upload_header'}>Album Description</h2>
+        <h2>Album Description</h2>
           <div className={'description'}>
             <Form.TextArea className={'text_area'}/>
           </div>
@@ -68,4 +62,4 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   { addTrackInAlbum }
-)(UnderDiv);
+)(UploadAlbumUnder);
