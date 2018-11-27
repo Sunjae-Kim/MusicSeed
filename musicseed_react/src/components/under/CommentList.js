@@ -6,6 +6,7 @@ import moment from 'moment';
 import {addComment, typeComment} from "../../actions";
 import MsComment from "./MSComment";
 import {commentsSort} from "../../utility/";
+import '../../styles/Comments.css';
 
 class CommentList extends Component {
   render() {
@@ -25,7 +26,7 @@ class CommentList extends Component {
     return(
       <div className={'under_field'}>
         <h1>Comments</h1>
-        <Comment.Group size={'large'}>
+        <Comment.Group size={'large'} >
 
           { comments }
 

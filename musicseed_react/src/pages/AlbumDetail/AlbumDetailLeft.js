@@ -10,8 +10,8 @@ class AlbumDetailLeft extends React.Component {
       return (
         <Fragment>
           <TextOnLp
-            first={ faker.name.firstName() }
-            second={ faker.lorem.word() }
+            first={ faker.lorem.words() }
+            second={ faker.name.firstName() }
             secondLink={'mypage'}
           />
           <ImgOnLp image={'images/album1.jpg'}/>
@@ -27,5 +27,5 @@ const mapStateToProps = state => {
 };
 
 export default connect(
-  mapStateToProps
+  mapStateToProps,
 )(AlbumDetailLeft);

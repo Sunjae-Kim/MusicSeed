@@ -1,7 +1,6 @@
 import React, {Fragment} from "react";
 import {connect} from 'react-redux';
 import '../../styles/PlayerLeft.css';
-import {Link} from "react-router-dom";
 import {setPath} from "../../actions";
 import ImgOnLp from "../../components/left/ImgOnLP";
 import TextOnLp from "../../components/left/TextOnLP";
@@ -18,9 +17,10 @@ class LPDiv extends React.Component {
       return (
         <Fragment>
           <TextOnLp
-            first={ faker.name.firstName() }
+            first={ faker.lorem.words() }
             firstLink={'albumDetail'}
-            second={ faker.lorem.word() }
+            second={ faker.name.firstName() }
+            secondLink={'mypage'}
           />
           <ImgOnLp image={'images/album1.jpg'}/>
         </Fragment>

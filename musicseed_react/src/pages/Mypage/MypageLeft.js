@@ -9,7 +9,9 @@ class MypageLeft extends React.Component {
   render() {
     return (
       <Fragment>
-        <TextOnLp  first={ faker.name.firstName() } second={ faker.lorem.word() } />
+        <TextOnLp
+          first={ faker.name.firstName() }
+        />
         <ImgOnLp image={'images/album1.jpg'}/>
       </Fragment>
     )

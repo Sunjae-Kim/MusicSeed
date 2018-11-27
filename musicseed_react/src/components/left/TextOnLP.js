@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import '../../styles/OnLP.css';
+import {setPath} from "../../actions";
 
 class TextOnLp extends Component {
 
@@ -9,7 +11,10 @@ class TextOnLp extends Component {
       return (<h1> { this.props.first } </h1>);
     } else {
       return(
-        <Link to={this.props.firstLink}>
+        <Link
+          to={`/${this.props.firstLink}`}
+          onClick={() => this.props.setPath(this.props.firstLink)}
+        >
           <h1> { this.props.first } </h1>
         </Link>
       )
@@ -21,7 +26,10 @@ class TextOnLp extends Component {
       return (<h2> { this.props.second } </h2>);
     } else {
       return(
-        <Link to={this.props.secondLink}>
+        <Link
+          to={`/${this.props.secondLink}`}
+          onClick={() => this.props.setPath(this.props.secondLink)}
+        >
           <h2> { this.props.second } </h2>
         </Link>
       )
@@ -38,4 +46,12 @@ class TextOnLp extends Component {
   }
 }
 
-export default TextOnLp;
+const mapStateToProps = state => {
+  return {
+  }
+};
+
+export default connect(
+  mapStateToProps,
+  {setPath}
+)(TextOnLp);
