@@ -1,25 +1,29 @@
-import React from "react";
+import React, {Fragment} from "react";
 import {connect} from 'react-redux';
-import '../../styles/LPPlayer.css';
+import '../../styles/PlayerLeft.css';
 import {Link} from "react-router-dom";
 import {setPath} from "../../actions";
+import ImgOnLp from "../../components/left/ImgOnLP";
+import TextOnLp from "../../components/left/TextOnLP";
+import faker from "faker";
 
 class LPDiv extends React.Component {
   render() {
     if (!this.props.playedSong) {
       return (
-        <div className={'lpplayer'}>
+        <div className={'on_lp'}>
         </div>
       )
     } else {
       return (
-        <div className={'lpplayer'}>
-          <Link to={"/albumDetail"} className="item" onClick={() => this.props.setPath('albumDetail')}>
-            <h1>{this.props.playedSong.title}</h1>
-          </Link>
-          <h2>{this.props.playedSong.artist}</h2>
-          <img className="ui medium circular image" alt="artwork" src="images/album1.jpg"/>
-        </div>
+        <Fragment>
+          <TextOnLp
+            first={ faker.name.firstName() }
+            firstLink={'albumDetail'}
+            second={ faker.lorem.word() }
+          />
+          <ImgOnLp image={'images/album1.jpg'}/>
+        </Fragment>
       )
     }
   }

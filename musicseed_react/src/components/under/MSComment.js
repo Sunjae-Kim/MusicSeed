@@ -16,7 +16,7 @@ class MsComment extends Component {
           </Comment.Metadata>
           <Comment.Text>{ body }</Comment.Text>
           <Comment.Actions>
-            <Comment.Action>Reply</Comment.Action>
+            <Comment.Action>Delete</Comment.Action>
           </Comment.Actions>
         </Comment.Content>
       </Comment>

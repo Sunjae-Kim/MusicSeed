@@ -1,15 +1,17 @@
-import React from "react";
+import React, {Fragment} from "react";
 import { connect } from 'react-redux';
-import '../../styles/LPPlayer.css';
+import faker from 'faker';
+import '../../styles/PlayerLeft.css';
+import ImgOnLp from "../../components/left/ImgOnLP";
+import TextOnLp from "../../components/left/TextOnLP";
 
 class MypageLeft extends React.Component {
   render() {
     return (
-      <div className={'lpplayer'}>
-        <h1> Artist Name </h1>
-        <h2> Singer </h2>
-        <img className="ui medium circular image" src="images/album1.jpg" />
-      </div>
+      <Fragment>
+        <TextOnLp  first={ faker.name.firstName() } second={ faker.lorem.word() } />
+        <ImgOnLp image={'images/album1.jpg'}/>
+      </Fragment>
     )
   }
 }

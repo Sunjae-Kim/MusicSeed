@@ -14,10 +14,11 @@ class Navigation extends React.Component {
 
   componentDidMount() {
     const path = window.location.pathname.substring(1) || 'player';
-    this.props.setPath(path);
     switch (path) {
       case 'albumDetail':
-        document.querySelector(`#player`).classList.add('active'); break;
+        document.querySelector(`#player`).classList.add('active');
+        this.props.setPath(path);
+        break;
       default:
         document.querySelector(`#${path}`).classList.add('active');
         this.getChildNodes().forEach(menu => {
@@ -41,22 +42,22 @@ class Navigation extends React.Component {
   renderContent() {
     return (
       <div className="navigation ui large secondary pointing menu">
-        <Link id={'player'} to={'/'} className="item">
+        <Link id={'player'} to={'/'} className="item" onClick={() => this.props.setPath('player')}>
           Player
         </Link>
-        <Link id={'uploadAlbum'} to={'/uploadAlbum'} className="item">
+        <Link id={'uploadAlbum'} to={'/uploadAlbum'} className="item" onClick={() => this.props.setPath('uploadAlbum')}>
           Upload Album
         </Link>
         <a id={'help'} href="#" className="item">
           Help
         </a>
-        <Link id={'login'} to={'/login'} className="item">
+        <Link id={'login'} to={'/login'} className="item" onClick={() => this.props.setPath('login')}>
           Login
         </Link>
-        <Link id={'register'} to={"/register"} className="item">
+        <Link id={'register'} to={"/register"} className="item" onClick={() => this.props.setPath('register')}>
           Register
         </Link>
-        <Link id={'mypage'} to={"/mypage"} className="item">
+        <Link id={'mypage'} to={"/mypage"} className="item" onClick={() => this.props.setPath('mypage')}>
           My Page
         </Link>
       </div>

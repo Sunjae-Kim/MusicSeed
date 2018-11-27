@@ -49,7 +49,6 @@ class SwitchButton extends Component {
 
   render() {
     const path = this.props.path || 'player';
-    console.log(path);
     switch (path) {
       case 'player':
         return (this.renderSwitchButton());

@@ -65,6 +65,7 @@ const getPathReducer = (getPath = null, action) => {
   }
 };
 
+// ********************* USER
 const checkedEmailReducer = (checkedEmail = '', action) => {
   switch (action.type) {
     case 'CHECKED_EMAIL':
@@ -92,6 +93,26 @@ const confirmedPasswordReducer = (confirmedPassword = '', action) => {
   }
 };
 
+const checkNameReducer = (checkedName = '', action) => {
+  switch (action.type) {
+    case 'CHECKED_NAME':
+      return action.payload;
+    default:
+      return checkedName;
+  }
+};
+
+const checkNicknameReducer = (checkedNickname = '', action) => {
+  switch (action.type) {
+    case 'CHECKED_NICKNAME':
+      return action.payload;
+    default:
+      return checkedNickname;
+  }
+};
+
+
+// ********************* PLAYER
 const playerStateReducer = (playerState = true, action) => {
   switch (action.type) {
     case 'CHANGE_PLAYER_STATE':
@@ -150,6 +171,8 @@ export default combineReducers({
   checkedEmail: checkedEmailReducer,
   checkedPassword: checkedPasswordReducer,
   confirmedPassword: confirmedPasswordReducer,
+  checkedName: checkNameReducer,
+  checkedNickname: checkNicknameReducer,
   playerState: playerStateReducer,
   numberOfTracks: addTrackInAlbumReducer,
   titleSong: setTitleSongReducer,

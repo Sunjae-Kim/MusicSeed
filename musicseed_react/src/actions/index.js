@@ -35,6 +35,20 @@ export const confirmPassword = password => {
   };
 };
 
+export const checkName = name=> {
+  return {
+    type : 'CHECKED_NAME',
+    payload: name,
+  };
+};
+
+export const checkNickname = nickname=> {
+  return {
+    type : 'CHECKED_NICKNAME',
+    payload: nickname,
+  };
+};
+
 // SidePlayer
 export const selectSong = song => {
   return {
