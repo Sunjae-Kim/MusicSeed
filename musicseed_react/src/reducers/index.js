@@ -130,6 +130,15 @@ const commentsReducer = (comment = [], action) => {
   }
 };
 
+const typeCommentReducer = (text = '', action) =>  {
+  switch (action.type) {
+    case 'TYPE_COMMENT':
+      return action.payload;
+    default:
+      return text;
+  }
+};
+
 export default combineReducers({
   searchedSongs: songsReducer,
   selectedSong: selectedSongReducer,
@@ -145,4 +154,5 @@ export default combineReducers({
   numberOfTracks: addTrackInAlbumReducer,
   titleSong: setTitleSongReducer,
   comments: commentsReducer,
+  commentTyped: typeCommentReducer,
 });

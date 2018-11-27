@@ -99,3 +99,10 @@ export const addComment = comment => {
     payload: comment,
   }
 };
+
+export const typeComment = text => {
+  return {
+    type: 'TYPE_COMMENT',
+    payload: text
+  }
+};
