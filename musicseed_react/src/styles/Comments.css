@@ -1,0 +1,5 @@
+.under_field .ui.large.comments {
+    max-height: 30vh;
+    overflow: scroll;
+    max-width: 100%;
+}

@@ -65,6 +65,7 @@ const getPathReducer = (getPath = null, action) => {
   }
 };
 
+// ********************* USER
 const checkedEmailReducer = (checkedEmail = '', action) => {
   switch (action.type) {
     case 'CHECKED_EMAIL':
@@ -92,12 +93,70 @@ const confirmedPasswordReducer = (confirmedPassword = '', action) => {
   }
 };
 
+const checkNameReducer = (checkedName = '', action) => {
+  switch (action.type) {
+    case 'CHECKED_NAME':
+      return action.payload;
+    default:
+      return checkedName;
+  }
+};
+
+const checkNicknameReducer = (checkedNickname = '', action) => {
+  switch (action.type) {
+    case 'CHECKED_NICKNAME':
+      return action.payload;
+    default:
+      return checkedNickname;
+  }
+};
+
+
+// ********************* PLAYER
 const playerStateReducer = (playerState = true, action) => {
   switch (action.type) {
     case 'CHANGE_PLAYER_STATE':
       return action.payload;
     default:
       return playerState;
+  }
+};
+
+const addTrackInAlbumReducer = (numberOfTracks=1, action) => {
+  switch (action.type) {
+    case 'ADD_TRACK':
+      return action.payload;
+    default:
+      return numberOfTracks;
+  }
+};
+
+const setTitleSongReducer = (index=null, action) => {
+  switch (action.type) {
+    case 'SET_TITLE_SONG':
+      return action.payload;
+    default:
+      return index;
+  }
+};
+
+const commentsReducer = (comment = [], action) => {
+  switch (action.type) {
+    case 'ADD_COMMENT':
+      return comment.concat([action.payload]);
+    case 'DELETE_COMMENT':
+      return comment;
+    default:
+      return comment;
+  }
+};
+
+const typeCommentReducer = (text = '', action) =>  {
+  switch (action.type) {
+    case 'TYPE_COMMENT':
+      return action.payload;
+    default:
+      return text;
   }
 };
 
@@ -112,5 +171,11 @@ export default combineReducers({
   checkedEmail: checkedEmailReducer,
   checkedPassword: checkedPasswordReducer,
   confirmedPassword: confirmedPasswordReducer,
+  checkedName: checkNameReducer,
+  checkedNickname: checkNicknameReducer,
   playerState: playerStateReducer,
+  numberOfTracks: addTrackInAlbumReducer,
+  titleSong: setTitleSongReducer,
+  comments: commentsReducer,
+  commentTyped: typeCommentReducer,
 });
