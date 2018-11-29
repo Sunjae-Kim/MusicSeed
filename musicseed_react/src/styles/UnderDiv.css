@@ -1,0 +1,107 @@
+.under_div {
+    margin: 0 auto;
+    width: 70%;
+}
+
+.under_div span,.under_div div,.under_div h1,.under_div h2,.under_div h3,.under_div h4{
+    color: rgba(56,56,90,.87);
+}
+
+.under_div p {
+    color: black;
+}
+
+.under_field {
+    margin: 10vh 0;
+    padding: 5vh 5vw;
+    background-color: rgba(255,255,255,0.2);
+}
+
+.under_field h1, .under_field h2 {
+    color: #141525;
+}
+
+.ui.grid.track {
+    padding: 7.5vh 0;
+}
+
+.under_div .column img {
+    max-height: 276px;
+    cursor:pointer;
+}
+
+div.ui.grid.track > div:nth-child(3) {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+div.ui.grid.track input {
+    width: 100%;
+    background: rgba(255,255,255,0.5);
+}
+
+div.ui.grid.track input:focus {
+    background: rgba(255,255,255,0.5);
+}
+
+div.ui.grid.track .custom-file-label {
+    background: rgba(255,255,255,0.5);
+    color: rgba(56,56,90,.87);
+}
+
+div.ui.grid.track ::placeholder {
+    color: rgba(56,56,90,.87);
+}
+
+div.ui.grid.track .ui.selection.dropdown {
+    min-width: 0;
+}
+
+div.ui.grid.track .ui.search.selection.dropdown {
+    background: rgba(255,255,255,0.5);
+}
+
+div.ui.grid.track .ui.search.selection.dropdown div {
+    color: rgba(56,56,90,.87);
+}
+
+div.ui.grid.track .ui.dropdown .menu>.item span{
+    color: rgba(56,56,90,.87);
+}
+
+.description {
+    margin: 0 auto;
+    padding-bottom: 5vh;
+    min-height: 30vh;
+}
+
+.ui.form .description textarea{
+    min-height: 30vh;
+    background-color: rgba(255,255,255,0.5);
+}
+
+.under_button_area {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 7vh;
+}
+
+.under_button_area strong{
+    cursor: pointer;
+    font-size: 7vh;
+}
+
+.under_field .ui.single.line.table {
+    background-color: rgba(255,255,255,0.5);
+    border: none;
+}
+
+.under_field .table thead th {
+    background: rgba(255,255,255,0.5);
+}
+
+.under_div > .under_field > table > tfoot > tr > th {
+    background: none;
+}

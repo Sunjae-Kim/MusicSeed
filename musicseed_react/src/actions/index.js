@@ -35,6 +35,20 @@ export const confirmPassword = password => {
   };
 };
 
+export const checkName = name=> {
+  return {
+    type : 'CHECKED_NAME',
+    payload: name,
+  };
+};
+
+export const checkNickname = nickname=> {
+  return {
+    type : 'CHECKED_NICKNAME',
+    payload: nickname,
+  };
+};
+
 // SidePlayer
 export const selectSong = song => {
   return {
@@ -76,5 +90,33 @@ export const playSong = song => {
   return {
     type: 'SONG_PLAYED',
     payload: song,
+  }
+};
+
+export const addTrackInAlbum = number => {
+  return {
+    type: 'ADD_TRACK',
+    payload: number,
+  }
+};
+
+export const setTitleSong = index => {
+  return {
+    type: 'SET_TITLE_SONG',
+    payload: index,
+  }
+};
+
+export const addComment = comment => {
+  return {
+    type: 'ADD_COMMENT',
+    payload: comment,
+  }
+};
+
+export const typeComment = text => {
+  return {
+    type: 'TYPE_COMMENT',
+    payload: text
   }
 };

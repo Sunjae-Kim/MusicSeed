@@ -1,4 +1,11 @@
 .pusher {
     background: linear-gradient( to right, #BDC3C7, #2C3E50 );
+}
+
+.main_page {
     height: 100vh;
+}
+
+body ::-webkit-scrollbar {
+    height: 0;
 }
