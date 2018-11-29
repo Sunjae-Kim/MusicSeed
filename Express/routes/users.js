@@ -1,6 +1,9 @@
+const passport = require('passport');
+
 const { User, validate } = require("../models/user");
 const { Album } = require("../models/album");
 const { Music } = require("../models/music");
+
 const express = require("express");
 const router = express.Router();
 
@@ -94,6 +97,20 @@ router.delete("/:id", async (req, res) => {
 
   // Response
   res.send(user);
+});
+
+router.get('/login', async (req, res) => {
+    //show login page
+
+});
+
+
+router.post('/login', async (req, res) => {
+
+});
+
+router.get('/logout', async (req, res) => {
+
 });
 
 module.exports = router;
