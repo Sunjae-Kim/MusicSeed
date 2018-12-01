@@ -1,4 +1,8 @@
 import {combineReducers} from 'redux';
+import {
+  setTitleSongReducer
+} from "./uploadAlbum";
+import {setArtist} from "../actions";
 
 const songsReducer = () => {
   return [
@@ -131,15 +135,6 @@ const addTrackInAlbumReducer = (numberOfTracks=1, action) => {
   }
 };
 
-const setTitleSongReducer = (index=null, action) => {
-  switch (action.type) {
-    case 'SET_TITLE_SONG':
-      return action.payload;
-    default:
-      return index;
-  }
-};
-
 const commentsReducer = (comment = [], action) => {
   switch (action.type) {
     case 'ADD_COMMENT':
@@ -160,6 +155,14 @@ const typeCommentReducer = (text = '', action) =>  {
   }
 };
 
+// ********************* UPLOAD SONG
+
+
+
+
+
+
+
 export default combineReducers({
   searchedSongs: songsReducer,
   selectedSong: selectedSongReducer,
@@ -175,7 +178,7 @@ export default combineReducers({
   checkedNickname: checkNicknameReducer,
   playerState: playerStateReducer,
   numberOfTracks: addTrackInAlbumReducer,
-  titleSong: setTitleSongReducer,
   comments: commentsReducer,
   commentTyped: typeCommentReducer,
+  titleSong: setTitleSongReducer,
 });

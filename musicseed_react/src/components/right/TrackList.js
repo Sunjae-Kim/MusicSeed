@@ -9,7 +9,7 @@ class TrackList extends React.Component {
 
   songs;
 
-  setPlayer(){
+  setSonglist(){
     switch (this.props.playerState) {
       case true:
         this.songs =
@@ -23,15 +23,14 @@ class TrackList extends React.Component {
             ? filterSonglist(this.props.playlist, this.props.searchedKeyword)
             : this.props.playlist;
     }
-
   }
 
   componentDidUpdate(){
-    this.setPlayer();
+    this.setSonglist();
   }
 
   renderList() {
-    this.setPlayer();
+    this.setSonglist();
     return this.songs.map((song, index) => {
       return (
         <div key={index} className={'tracklist ui grid'}>

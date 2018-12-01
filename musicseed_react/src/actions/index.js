@@ -103,12 +103,14 @@ export const addTrackInAlbum = number => {
   }
 };
 
+// upload song
 export const setTitleSong = index => {
   return {
     type: 'SET_TITLE_SONG',
-    payload: index,
+    payload: index
   }
 };
+
 
 export const addComment = comment => {
   return {
