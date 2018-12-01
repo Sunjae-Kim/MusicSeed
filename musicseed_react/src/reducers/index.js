@@ -47,12 +47,12 @@ const downloadedSongReducer = (downloadedSong = null, action) => {
   }
 };
 
-const playedSongReducer = (playedSong = null, action) => {
+const orderSongReducer = (order = null, action) => {
   switch (action.type) {
-    case 'SONG_PLAYED':
+    case 'SONG_ORDERED':
       return action.payload;
     default:
-      return playedSong;
+      return order;
   }
 };
 
@@ -166,7 +166,7 @@ export default combineReducers({
   searchedKeyword: searchedKeywordReducer,
   playlist: playlistReducer,
   downloadedSong: downloadedSongReducer,
-  playedSong: playedSongReducer,
+  songOrdered: orderSongReducer,
   getPath: getPathReducer,
   checkedEmail: checkedEmailReducer,
   checkedPassword: checkedPasswordReducer,

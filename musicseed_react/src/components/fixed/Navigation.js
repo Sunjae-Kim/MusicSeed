@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {setPath} from '../../actions/index';
 import {Link} from 'react-router-dom';
 import '../../styles/Navigation.css';
+import _ from 'underscore';
 
 class Navigation extends React.Component {
 
@@ -12,30 +13,26 @@ class Navigation extends React.Component {
     return childNodes;
   }
 
+  navMenus = ['player', 'uploadAlbum', 'help', 'login', 'mypage', 'register'];
+
   componentDidMount() {
-    const path = window.location.pathname.substring(1) || 'player';
-    switch (path) {
-      case 'albumDetail':
-        document.querySelector(`#player`).classList.add('active');
-        this.props.setPath(path);
-        break;
-      default:
-        document.querySelector(`#${path}`).classList.add('active');
-        this.getChildNodes().forEach(menu => {
-          menu.addEventListener('click', async () => await this.props.setPath(menu.id));
-        });
-    }
+    const pathName = window.location.pathname.substring(1);
+    const path = _.contains(pathName, '/') ? pathName.substring(0, (pathName.indexOf('/', 2))) : pathName || 'player';
+    this.props.setPath(path);
   }
 
   componentDidUpdate() {
-    switch (this.props.getPath) {
-      case 'albumDetail':
-        document.querySelector(`#player`).classList.add('active'); break;
-      default:
-        document.querySelector(`#${this.props.getPath}`).classList.add('active');
-        this.getChildNodes().forEach(item => {
-          if (item.id !== this.props.getPath) item.classList.remove('active');
-        })
+    const path = this.props.getPath;
+    if(_.contains(this.navMenus, path)){
+      document.querySelector(`#${this.props.getPath}`).classList.add('active');
+      this.getChildNodes().forEach(item => {
+        if (item.id !== path) item.classList.remove('active');
+      });
+    }else {
+      document.querySelector(`#player`).classList.add('active');
+      this.getChildNodes().forEach(item => {
+        if (item.id !== 'player') item.classList.remove('active');
+      });
     }
   }
 
@@ -48,9 +45,9 @@ class Navigation extends React.Component {
         <Link id={'uploadAlbum'} to={'/uploadAlbum'} className="item" onClick={() => this.props.setPath('uploadAlbum')}>
           Upload Album
         </Link>
-        <a id={'help'} href="#" className="item">
-          Help
-        </a>
+        {/*<a id={'help'} href="#" className="item">*/}
+          {/*Help*/}
+        {/*</a>*/}
         <Link id={'login'} to={'/login'} className="item" onClick={() => this.props.setPath('login')}>
           Login
         </Link>

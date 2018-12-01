@@ -86,10 +86,13 @@ export const downloadSong = song => {
   }
 };
 
-export const playSong = song => {
+export const songOrder = ({song, status}) => {
   return {
-    type: 'SONG_PLAYED',
-    payload: song,
+    type: 'SONG_ORDERED',
+    payload: {
+      song,
+      status
+    }
   }
 };
 

@@ -1,14 +1,27 @@
 import React, {Fragment} from 'react';
 import {connect} from 'react-redux';
-import {addSongToPlaylist, downloadSong, playSong, deleteSongFromPlaylist} from "../../actions/index";
+import {addSongToPlaylist, downloadSong, songOrder, deleteSongFromPlaylist} from "../../actions/index";
 import '../../styles/MediaButtons.css';
 
 class MediaButtons extends React.Component {
 
   onSearchPlayButtonClick(song){
-    this.props.playSong(song);
+    const order = {
+      song,
+      status : 'play'
+    };
+    this.props.songOrder(order);
     this.props.addSongToPlaylist(song);
   }
+
+  onPlaylistPlayButtonClick(song){
+    const order = {
+      song,
+      status : 'play'
+    };
+    this.props.songOrder(order);
+  }
+
 
   renderSearchButtons(){
     return(
@@ -39,7 +52,7 @@ class MediaButtons extends React.Component {
       <div className={'mediabuttons playlist six wide column'}>
         <a
           href="#"
-          onClick={() => this.props.playSong(this.props.song)}>
+          onClick={() => this.onPlaylistPlayButtonClick(this.props.song)}>
           <img src="images/mediabuttons/play.png" alt="play button"/>
         </a>
         <a
@@ -80,5 +93,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  {addSongToPlaylist, downloadSong, playSong, deleteSongFromPlaylist}
+  {addSongToPlaylist, downloadSong, songOrder, deleteSongFromPlaylist}
 )(MediaButtons);
