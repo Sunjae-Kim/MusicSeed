@@ -1,0 +1,25 @@
+.ui.medium.circular.image.on_lp{
+    position: absolute;
+    left: 334px;
+    top: 355px;
+}
+
+div.on_lp {
+    display: flex;
+    width: 500px;
+    height: 90px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    left: 240px;
+    top: 225px;
+}
+
+div.on_lp a {
+    color: #D4D4E2;
+}
+
+div.on_lp h1 {
+    margin: 0;
+}

@@ -1,4 +1,8 @@
 import {combineReducers} from 'redux';
+import {
+  setTitleSongReducer
+} from "./uploadAlbum";
+import {setArtist} from "../actions";
 
 const songsReducer = () => {
   return [
@@ -47,12 +51,12 @@ const downloadedSongReducer = (downloadedSong = null, action) => {
   }
 };
 
-const playedSongReducer = (playedSong = null, action) => {
+const orderSongReducer = (order = null, action) => {
   switch (action.type) {
-    case 'SONG_PLAYED':
+    case 'SONG_ORDERED':
       return action.payload;
     default:
-      return playedSong;
+      return order;
   }
 };
 
@@ -65,6 +69,7 @@ const getPathReducer = (getPath = null, action) => {
   }
 };
 
+// ********************* USER
 const checkedEmailReducer = (checkedEmail = '', action) => {
   switch (action.type) {
     case 'CHECKED_EMAIL':
@@ -92,6 +97,26 @@ const confirmedPasswordReducer = (confirmedPassword = '', action) => {
   }
 };
 
+const checkNameReducer = (checkedName = '', action) => {
+  switch (action.type) {
+    case 'CHECKED_NAME':
+      return action.payload;
+    default:
+      return checkedName;
+  }
+};
+
+const checkNicknameReducer = (checkedNickname = '', action) => {
+  switch (action.type) {
+    case 'CHECKED_NICKNAME':
+      return action.payload;
+    default:
+      return checkedNickname;
+  }
+};
+
+
+// ********************* PLAYER
 const playerStateReducer = (playerState = true, action) => {
   switch (action.type) {
     case 'CHANGE_PLAYER_STATE':
@@ -101,16 +126,59 @@ const playerStateReducer = (playerState = true, action) => {
   }
 };
 
+const addTrackInAlbumReducer = (numberOfTracks=1, action) => {
+  switch (action.type) {
+    case 'ADD_TRACK':
+      return action.payload;
+    default:
+      return numberOfTracks;
+  }
+};
+
+const commentsReducer = (comment = [], action) => {
+  switch (action.type) {
+    case 'ADD_COMMENT':
+      return comment.concat([action.payload]);
+    case 'DELETE_COMMENT':
+      return comment;
+    default:
+      return comment;
+  }
+};
+
+const typeCommentReducer = (text = '', action) =>  {
+  switch (action.type) {
+    case 'TYPE_COMMENT':
+      return action.payload;
+    default:
+      return text;
+  }
+};
+
+// ********************* UPLOAD SONG
+
+
+
+
+
+
+
 export default combineReducers({
   searchedSongs: songsReducer,
   selectedSong: selectedSongReducer,
   searchedKeyword: searchedKeywordReducer,
   playlist: playlistReducer,
   downloadedSong: downloadedSongReducer,
-  playedSong: playedSongReducer,
+  songOrdered: orderSongReducer,
   getPath: getPathReducer,
   checkedEmail: checkedEmailReducer,
   checkedPassword: checkedPasswordReducer,
   confirmedPassword: confirmedPasswordReducer,
+  checkedName: checkNameReducer,
+  checkedNickname: checkNicknameReducer,
   playerState: playerStateReducer,
+  numberOfTracks: addTrackInAlbumReducer,
+  comments: commentsReducer,
+  commentTyped: typeCommentReducer,
+  titleSong: setTitleSongReducer,
 });

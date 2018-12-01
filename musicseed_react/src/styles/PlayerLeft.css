@@ -1,0 +1,22 @@
+/*.lpplayer {*/
+    /*position: absolute;*/
+    /*top: 20.5vh;*/
+    /*left: 29vh;*/
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*align-items: center;*/
+/*}*/
+
+/*.lpplayer h1, h2, h3, h4, p, span, a {*/
+    /*color: #D4D4E2;*/
+/*}*/
+/*.lpplayer h2 {*/
+    /*margin-top: 0;*/
+/*}*/
+
+/*.lpplayer .ui.medium.image {*/
+    /*border: 1px solid black;*/
+    /*width: 40vh;*/
+    /*margin: 3vh;*/
+/*}*/
+
