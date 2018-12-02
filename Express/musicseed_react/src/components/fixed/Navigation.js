@@ -6,6 +6,19 @@ import '../../styles/Navigation.css';
 
 class Navigation extends React.Component {
 
+    renderLogin() {
+        console.log("asdfasdf");
+        console.log(this.props.auth);
+        switch(this.props.auth) {
+            case null:
+                return <Link id={'login'} to={'/login'} className="item" onClick={() => this.props.setPath('login')}>
+                    Login
+                </Link>;
+            default:
+                return <a href="/api/users/logout">Logout</a>
+        }
+    }
+
   getChildNodes() {
     const siblings = Array.prototype.slice.call(document.querySelector('.navigation').parentNode.children);
     const [{childNodes}] = siblings;
@@ -33,9 +46,9 @@ class Navigation extends React.Component {
         document.querySelector(`#player`).classList.add('active'); break;
       default:
         document.querySelector(`#${this.props.getPath}`).classList.add('active');
-        this.getChildNodes().forEach(item => {
-          if (item.id !== this.props.getPath) item.classList.remove('active');
-        })
+          this.getChildNodes().forEach(item => {
+              if (item.id !== this.props.getPath) item.classList.remove('active');
+          })
     }
   }
 
@@ -51,9 +64,10 @@ class Navigation extends React.Component {
         <a id={'help'} href="#" className="item">
           Help
         </a>
-        <Link id={'login'} to={'/login'} className="item" onClick={() => this.props.setPath('login')}>
-          Login
-        </Link>
+        {/*<Link id={'login'} to={'/login'} className="item" onClick={() => this.props.setPath('login')}>*/}
+          {/*Login*/}
+        {/*</Link>*/}
+          { this.renderLogin() }
         <Link id={'register'} to={"/register"} className="item" onClick={() => this.props.setPath('register')}>
           Register
         </Link>
@@ -75,7 +89,8 @@ class Navigation extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    getPath: state.getPath
+    getPath: state.getPath,
+    auth: state.auth,
   }
 };
 

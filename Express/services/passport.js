@@ -1,10 +1,10 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const mongoose = require('mongoose');
-//const { User } = require('../models/User');
+// const mongoose = require('mongoose');
+const { User } = require('../models/user');
 
 passport.serializeUser((user, done) => {
-    done(null, user.id); // set-cookie(serialized(user.id))
+    done(null, user.email); // set-cookie(serialized(user.id))
 });
 
 passport.deserializeUser((id, done) => {
@@ -23,19 +23,29 @@ passport.use(new GoogleStrategy(
         proxy: true
     },
     (accessToken, refreshToken, profile, done) => {
-        // let user = User.findOne({ googleID: profile.id })
-        //     .then(existingUser => {
-        //         if(existingUser) { // User exists
-        //             done(null, existingUser);
-        //         } else { // New user
-        //             new User({ googleID: profile.id })
-        //                 .save()
-        //                 .then(newUser => done(null, newUser))
-        //                 .catch(error => console.error(error.message));
-        //         }
-        //     })
-        //     .catch(error => console.error(error.message));
+        let user = User.findOne({ email: profile.emails[0].value })
+            .then(existingUser => {
+                if(existingUser) { // User exists
+                    done(null, existingUser);
+                } else { // New user
+                    console.log("saving user");
+                    new User({
+                        email: profile.emails[0].value,
+                        name: profile.displayName,
+                        nickname: profile.displayName,
+                        oauth: true,
+                    })
+                        .save()
+                        .then(newUser => done(null, newUser))
+                        .catch(error => console.error(error.message));
+                }
+            })
+            .catch(error => console.error(error.message));
+        console.log(accessToken);
+        console.log(refreshToken);
+        console.log(profile.emails[0].value);
         console.log(profile);
-        done();
+
+        //done(null);
     }
 ));

@@ -9,6 +9,15 @@ const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
 
+/* DB Connect */
+mongoose
+    .connect(
+        "mongodb://localhost/MusicSeedTest",
+        { useNewUrlParser: true }
+    )
+    .then(() => console.log("Connected to MongoDB"))
+    .catch(error => console.error(error));
+
 /* Routes */
 const playlists = require('./routes/playlists');
 const users = require('./routes/users');
@@ -20,14 +29,7 @@ const auth = require('./routes/auth');
 
 require('./services/passport');
 
-/* DB Connect */
-mongoose
-  .connect(
-    "mongodb://localhost/MusicSeedTest",
-    { useNewUrlParser: true }
-  )
-  .then(() => console.log("Connected to MongoDB"))
-  .catch(error => console.error(error));
+
 
 /* Middleware */
 app.use(helmet());
@@ -38,6 +40,8 @@ if(app.get('env') === 'development'){
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
+
+app.use(passport.initialize());
 
 app.use('/api/playlists', playlists);
 app.use('/api/users', users);

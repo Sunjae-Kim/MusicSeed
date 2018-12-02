@@ -17,7 +17,7 @@ const music_schema = new mongoose.Schema({
   comment: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }]
 });
 
-const Music = mongoose.model("Music", music_schema, 'Musics ');
+const Music = mongoose.model("Music", music_schema);
 
 function validate_music(music) {
   const schema = {

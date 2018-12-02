@@ -1,4 +1,5 @@
 import {combineReducers} from 'redux';
+import authReducer from './authReducer';
 
 const songsReducer = () => {
   return [
@@ -178,4 +179,5 @@ export default combineReducers({
   titleSong: setTitleSongReducer,
   comments: commentsReducer,
   commentTyped: typeCommentReducer,
+  auth: authReducer,
 });
