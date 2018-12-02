@@ -37,12 +37,12 @@ class MediaButtons extends React.Component {
         >
           <img src="images/mediabuttons/addtoplaylist.png" alt="add to playlist button"/>
         </a>
-        <a
-          href="#"
-          onClick={() => this.props.downloadSong(this.props.song)}
-        >
-          <img src="images/mediabuttons/download.png" alt="download button"/>
-        </a>
+        {/*<a*/}
+          {/*href="#"*/}
+          {/*onClick={() => this.props.downloadSong(this.props.song)}*/}
+        {/*>*/}
+          {/*<img src="images/mediabuttons/download.png" alt="download button"/>*/}
+        {/*</a>*/}
       </div>
     );
   }

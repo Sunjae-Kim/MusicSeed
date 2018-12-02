@@ -1,15 +1,14 @@
 import {combineReducers} from 'redux';
 import {
-  setTitleSongReducer
+  setTitleSongReducer, albumReducer, albumDescriptionReducer, albumDetailReducer
 } from "./uploadAlbum";
-import {setArtist} from "../actions";
 
 const songsReducer = () => {
   return [
-    {id: 1, title: 'Happy Hacking 1', artist: 'neo', duration: '9 to 6'},
-    {id: 2, title: 'Happy Hacking 2', artist: 'neo', duration: '9 to 6'},
-    {id: 3, title: 'Happy Hacking 3', artist: 'neo', duration: '9 to 6'},
-    {id: 4, title: 'Happy Hacking 4', artist: 'neo', duration: '9 to 6'},
+    {id: 1, title: 'Happy Hacking 1', artist: 'neo', duration: '3:56'},
+    {id: 2, title: 'Happy Hacking 2', artist: 'neo', duration: '3:56'},
+    {id: 3, title: 'Happy Hacking 3', artist: 'neo', duration: '3:56'},
+    {id: 4, title: 'Happy Hacking 4', artist: 'neo', duration: '3:56'},
   ];
 };
 
@@ -174,4 +173,7 @@ export default combineReducers({
   comments: commentsReducer,
   commentTyped: typeCommentReducer,
   titleSong: setTitleSongReducer,
+  getAlbum: albumReducer,
+  getAlbumDescription: albumDescriptionReducer,
+  getAlbumDetail: albumDetailReducer,
 });

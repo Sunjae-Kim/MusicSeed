@@ -1,9 +1,8 @@
 import React, {Component, Fragment} from 'react';
 import {Form, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import {addTrackInAlbum} from "../../actions/index";
+import {addTrackInAlbum, setAlbum, setAlbumDescription} from "../../actions/index";
 import _ from 'underscore';
-
 import '../../styles/UnderDiv.css';
 import Track from "../../components/under/Track";
 
@@ -12,7 +11,7 @@ class UploadAlbumUnder extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      album : [{
+      tracks : [{
         index: 1,
         title: '',
         artist: '',
@@ -25,6 +24,7 @@ class UploadAlbumUnder extends Component {
       }]
     };
 
+
     this.onChange.onTitleChange = this.onChange.onTitleChange.bind(this);
     this.onChange.onArtistChange = this.onChange.onArtistChange.bind(this);
     this.onChange.onFileInputChange = this.onChange.onFileInputChange.bind(this);
@@ -33,8 +33,15 @@ class UploadAlbumUnder extends Component {
     this.onChange.onParticipantsRoleChange = this.onChange.onParticipantsRoleChange.bind(this);
   }
 
-  onSubmit = (event) => {
+  onSubmit = async (event) => {
     event.preventDefault();
+    await this.props.setAlbum(
+      this.state.tracks,
+      this.props.titleSong,
+      this.props.getAlbumDescription,
+      this.props.getAlbumDetail,
+    );
+    console.log(this.props.getAlbum);
   };
 
   addTrack = () => {
@@ -51,15 +58,15 @@ class UploadAlbumUnder extends Component {
         role: ''
       }
     };
-    this.state.album.push(newTrack);
-    this.setState({ album: this.state.album })
+    this.state.tracks.push(newTrack);
+    this.setState({ tracks: this.state.tracks })
   };
 
   componentDidUpdate(){
-    console.log(this.state.album);
   }
 
   render() {
+    if(!this.props.getAlbumDetail) return <Fragment></Fragment>;
     const children = [];
 
     for (let i = 1; i < this.props.numberOfTracks+1; i += 1) {
@@ -86,51 +93,51 @@ class UploadAlbumUnder extends Component {
 
   onChange = {
     onTitleChange(event, index){
-      const copy = _.identity(this.state.album);
+      const copy = _.identity(this.state.tracks);
       copy[index-1].title = event.target.value;
-      this.setState({album: copy});
+      this.setState({tracks: copy});
     },
     onArtistChange(event, index){
-      const copy = _.identity(this.state.album);
+      const copy = _.identity(this.state.tracks);
       copy[index-1].artist = event.target.value;
-      this.setState({album: copy});
+      this.setState({tracks: copy});
     },
     onFileInputChange(event, index) {
-      const copy = _.identity(this.state.album);
+      const copy = _.identity(this.state.tracks);
       const fullName = event.target.value;
       copy[index-1].file = fullName.substring(fullName.indexOf('\\', 3)+1, fullName.length);
-      this.setState({album: copy});
+      this.setState({tracks: copy});
     },
     async onGenresChange(index){
-      const copy = _.identity(this.state.album);
-      await this.setState({album: copy});
+      const copy = _.identity(this.state.tracks);
+      await this.setState({tracks: copy});
       this.getChildNodes(index)
         .then(test => {
           copy[index-1].genres  = test.map(element => {
             return element.text;
           });
-          this.setState({album: copy});
+          this.setState({tracks: copy});
         });
     },
     onParticipantsNameChange(event, index){
-      const copy = _.identity(this.state.album);
+      const copy = _.identity(this.state.tracks);
       copy[index-1].participants = {
         name: event.target.value,
-        role: this.state.album[index-1].participants.role
+        role: this.state.tracks[index-1].participants.role
       };
-      this.setState({album: copy});
+      this.setState({tracks: copy});
     },
     onParticipantsRoleChange(event, index){
       if(!event.target.querySelector('.text')) {
         alert('Error: an error occurred, Please choose again..');
         return;
       }
-      const copy = _.identity(this.state.album);
+      const copy = _.identity(this.state.tracks);
       copy[index-1].participants = {
-        name: this.state.album[index-1].participants.name,
+        name: this.state.tracks[index-1].participants.name,
         role: event.target.querySelector('.text').innerHTML
       };
-      this.setState({album: copy});
+      this.setState({tracks: copy});
     }
   };
   async getChildNodes(index) {
@@ -143,22 +150,28 @@ class UploadAlbumUnder extends Component {
       <Fragment>
         <h2>Album Description</h2>
           <div className={'description'}>
-            <Form.TextArea className={'text_area'}/>
+            <textarea
+              className={'text_area'}
+              onChange={e => this.props.setAlbumDescription(e.target.value)}
+              value={this.props.getAlbumDescription}
+            />
           </div>
       </Fragment>
     )
   };
 }
 
-
-
 const mapStateToProps = state => {
   return {
     numberOfTracks: state.numberOfTracks,
+    getAlbum: state.getAlbum,
+    titleSong: state.titleSong,
+    getAlbumDescription: state.getAlbumDescription,
+    getAlbumDetail: state.getAlbumDetail,
   }
 };
 
 export default connect(
   mapStateToProps,
-  { addTrackInAlbum }
+  { addTrackInAlbum, setAlbum, setAlbumDescription }
 )(UploadAlbumUnder);

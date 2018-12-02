@@ -42,6 +42,7 @@ class TrackList extends React.Component {
                   <div className="content">
                     <div className="header">{song.title}</div>
                     {song.artist}
+                    <span className="duration">{song.duration}</span>
                   </div>
                   <div className="right float content">
                   </div>

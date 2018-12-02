@@ -111,6 +111,31 @@ export const setTitleSong = index => {
   }
 };
 
+export const setAlbum = (tracks, titleSong, albumDescription, albumDetail) => {
+  return {
+    type: 'SET_ALBUM',
+    payload: {
+      tracks,
+      titleSong,
+      albumDescription,
+      albumDetail,
+    }
+  }
+};
+
+export const setAlbumDescription = (description) => {
+  return {
+    type: 'SET_ALBUM_DESCRIPTION',
+    payload: description
+  }
+};
+
+export const setAlbumDetail = detail => {
+  return{
+    type: 'SET_ALBUM_DETAIL',
+    payload: detail,
+  }
+};
 
 export const addComment = comment => {
   return {

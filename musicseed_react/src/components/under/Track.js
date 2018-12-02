@@ -44,11 +44,11 @@ class Track extends Component {
         </Grid.Column>
         <Grid.Column width={8}>
           <input placeholder={'Track Title'}
-                 value={this.props.state.album[index-1].title}
+                 value={this.props.state.tracks[index-1].title}
                  onChange={e => this.props.onChange.onTitleChange(e, index)}
           />
           <input placeholder={'Artist Name'}
-                 value={this.props.state.album[index-1].artist}
+                 value={this.props.state.tracks[index-1].artist}
                  onChange={e => this.props.onChange.onArtistChange(e, index)}
           />
           <Dropdown
@@ -66,7 +66,7 @@ class Track extends Component {
               onChange={e => this.props.onChange.onFileInputChange(e, index)}
             />
             <label className="custom-file-label" htmlFor="customFile">
-              { this.props.state.album[index-1].file || 'Click to choose the file' }
+              { this.props.state.tracks[index-1].file || 'Click to choose the file' }
             </label>
           </div>
           <Grid>
@@ -74,7 +74,7 @@ class Track extends Component {
               <input
                 placeholder={'Name'}
                 onChange={e => this.props.onChange.onParticipantsNameChange(e,index)}
-                value={this.props.state.album[index-1].participants.name}
+                value={this.props.state.tracks[index-1].participants.name}
               />
             </Grid.Column>
             <Grid.Column width={8}>

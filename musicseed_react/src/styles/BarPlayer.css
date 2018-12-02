@@ -34,6 +34,10 @@
     justify-content: space-evenly;
 }
 
+.barplayer h1, .barplayer h2, .barplayer h3, .barplayer h4 {
+    color: #D4D4E2;
+}
+
 
 #barPlayerRow {
     padding: 0px;
