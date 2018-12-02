@@ -156,13 +156,6 @@ const typeCommentReducer = (text = '', action) =>  {
 };
 
 // ********************* UPLOAD SONG
-
-
-
-
-
-
-
 export default combineReducers({
   searchedSongs: songsReducer,
   selectedSong: selectedSongReducer,
