@@ -7,8 +7,13 @@ router.get('/login', (req, res) => {
 
 });
 
-router.get('/logout', (req, res) => {
+router.get('/test', (req, res) => {
+    res.send('testing');
+})
 
+router.get('/logout', (req, res) => {
+    req.logout();
+    res.redirect('/');
 });
 
 router.get('/google', passport.authenticate('google', { scope: ['email','profile'] }));
