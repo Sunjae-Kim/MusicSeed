@@ -53,17 +53,22 @@ class UploadAlbumUnder extends Component {
   }
 
   onSubmit = async (event) => {
+
+    
     event.preventDefault();
-    const _path = 'temporary/path'
-    const tracks = this.state.tracks.map(track => {
+    const tracks = this.state.tracks.map( async track => {
+      const source = await document.querySelector('#dummy_audio > source');
+      await source.setAttribute('src', `songs/${track.fileStatus.selectedFile.name}`);
+      await source.setAttribute('type', `${track.fileStatus.selectedFile.type}`);
       return {
         title: track.title,
-        music_path: `${_path}${track.file}`,
+        music_path: `${track.file}`,
         artwork_path: `${this.props.getAlbumDetail.artwork}`,
         genre: track.genres,
         award: this.props.getAlbumDetail.rewards,
         title_song: this.props.titleSong === track.index,
-        main_artist_id: this.props.auth._id
+        main_artist_id: this.props.auth._id,
+        playtime: this.getDuration(track.fileStatus.selectedFile)
       }
     })
 
@@ -117,6 +122,7 @@ class UploadAlbumUnder extends Component {
 
     return (
       <Form className={'under_div'}>
+      <audio id="dummy_audio"><source src="" type="" /></audio>
         <div className={'under_field tracks'}>
           { children }
           <div className="under_button_area">
@@ -146,6 +152,7 @@ class UploadAlbumUnder extends Component {
       this.setState({tracks: copy});
     },
     onFileInputChange(event, index) {
+      console.log(event.target.files[0]);
       const copy = _.identity(this.state.tracks);
       const fullName = event.target.value;
       copy[index-1].fileStatus.selectedFile = event.target.files[0];
