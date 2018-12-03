@@ -9,6 +9,12 @@ const router = express.Router();
 
 /* CRUD Operation */
 /* Read */
+router.get('/current', async (req, res) => {
+    //show login page
+    console.log(req.user);
+    res.send(req.user);
+});
+
 router.get("/", async (req, res) => {
   // Find
   const users = await User.find()
@@ -99,11 +105,7 @@ router.delete("/:id", async (req, res) => {
   res.send(user);
 });
 
-router.get('/current', async (req, res) => {
-    //show login page
-    console.log(req.user);
-    res.send(req.user);
-});
+
 
 
 router.post('/login', async (req, res) => {

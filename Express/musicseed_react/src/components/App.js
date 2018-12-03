@@ -1,5 +1,7 @@
 import React from "react";
 import '../styles/App.css';
+import { connect } from 'react-redux';
+import * as actions from '../actions'
 
 import Navigation from "./fixed/Navigation";
 import LP from "./left/LP";
@@ -13,6 +15,9 @@ import MypageUnder from "../pages/Mypage/MypageUnder";
 import AlbumDetailUnder from "../pages/AlbumDetail/AlbumDetailUnder";
 
 class App extends React.Component {
+    componentDidMount() {
+        this.props.fetchUser();
+    }
 
   render() {
     return(
@@ -35,4 +40,4 @@ class App extends React.Component {
     )
   }
 }
-export default App;
+export default connect(null, actions)(App);

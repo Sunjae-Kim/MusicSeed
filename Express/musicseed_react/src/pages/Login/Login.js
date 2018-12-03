@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { setPath, checkEmail, checkPassword } from "../../actions/index";
-import { fetchUser } from "../../actions/Login";
 import '../../styles/Login.css';
 
 class Login extends Component {
@@ -43,7 +42,6 @@ const mapStateToProps = state => {
   return {
     checkedEmail: state.checkedEmail,
     checkedPassword: state.checkedPassword,
-    auth: state.auth,
   }
 };
 

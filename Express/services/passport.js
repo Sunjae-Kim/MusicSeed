@@ -41,10 +41,6 @@ passport.use(new GoogleStrategy(
                 }
             })
             .catch(error => console.error(error.message));
-        console.log(accessToken);
-        console.log(refreshToken);
-        console.log(profile.emails[0].value);
-        console.log(profile);
 
         //done(null);
     }

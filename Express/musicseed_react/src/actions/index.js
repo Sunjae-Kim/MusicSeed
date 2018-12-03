@@ -1,4 +1,7 @@
 // Main
+import types from "./types";
+import axios from "axios";
+
 export const setPath = path => {
   return {
     type: 'SET_PATH',
@@ -119,4 +122,11 @@ export const typeComment = text => {
     type: 'TYPE_COMMENT',
     payload: text
   }
+};
+
+export const fetchUser = () => async dispatch => {
+    dispatch({
+        type: types.FETCH_USER,
+        payload: await axios.get("/api/users/current")
+    });
 };

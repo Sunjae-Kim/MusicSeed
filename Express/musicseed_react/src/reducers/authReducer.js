@@ -1,8 +1,9 @@
-import { FETCH_USER } from '../actions/types';
+import types from '../actions/types';
 
 const auth = (state=null, action) => {
     switch (action.type) {
-        case FETCH_USER:
+        case types.FETCH_USER:
+            console.log("FETCH_USER");
             return action.payload.data || false;
         default:
             return state;

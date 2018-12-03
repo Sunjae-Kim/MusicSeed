@@ -7,7 +7,6 @@ import '../../styles/Navigation.css';
 class Navigation extends React.Component {
 
     renderLogin() {
-        console.log("asdfasdf");
         console.log(this.props.auth);
         switch(this.props.auth) {
             case null:
@@ -15,7 +14,9 @@ class Navigation extends React.Component {
                     Login
                 </Link>;
             default:
-                return <a href="/api/users/logout">Logout</a>
+                return <Link id={'login'} to={'/login'} className="item" onClick={() => this.props.setPath('login')}>
+                    Logout
+                </Link>;
         }
     }
 
@@ -32,6 +33,7 @@ class Navigation extends React.Component {
         document.querySelector(`#player`).classList.add('active');
         this.props.setPath(path);
         break;
+
       default:
         document.querySelector(`#${path}`).classList.add('active');
         this.getChildNodes().forEach(menu => {
@@ -45,10 +47,10 @@ class Navigation extends React.Component {
       case 'albumDetail':
         document.querySelector(`#player`).classList.add('active'); break;
       default:
-        document.querySelector(`#${this.props.getPath}`).classList.add('active');
-          this.getChildNodes().forEach(item => {
-              if (item.id !== this.props.getPath) item.classList.remove('active');
-          })
+        // document.querySelector(`#${this.props.getPath}`).classList.add('active');
+        //   this.getChildNodes().forEach(item => {
+        //       if (item.id !== this.props.getPath) item.classList.remove('active');
+        //   })
     }
   }
 
