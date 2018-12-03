@@ -9,7 +9,7 @@ router.post('/upload', async (req, res, next) => {
   type = type.substring(0, (type.indexOf('/')))
   const path = type === 'image' ? 'artwork' : 'songs';
   uploadFile.mv(
-    `public/${path}/${fileName}`,
+    `musicseed_react/public/${path}/${fileName}`,
     function (err) {
       if (err) {
         console.log(err);

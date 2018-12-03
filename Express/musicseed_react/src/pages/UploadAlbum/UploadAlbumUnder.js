@@ -59,10 +59,11 @@ class UploadAlbumUnder extends Component {
       return {
         title: track.title,
         music_path: `${_path}${track.file}`,
-        artwork_path: `${_path}${this.props.getAlbumDetail.artwork}`,
+        artwork_path: `${this.props.getAlbumDetail.artwork}`,
         genre: track.genres,
         award: this.props.getAlbumDetail.rewards,
         title_song: this.props.titleSong === track.index,
+        main_artist_id: this.props.auth._id
       }
     })
 
@@ -70,6 +71,8 @@ class UploadAlbumUnder extends Component {
       album: {
         title: this.props.getAlbumDetail.title,
         upload_date: new Date(),
+        user_id: this.props.auth._id,
+        user_name: this.props.auth.name,
         description: this.props.getAlbumDescription,
       },
       musics: tracks
@@ -226,6 +229,7 @@ const mapStateToProps = state => {
     titleSong: state.titleSong,
     getAlbumDescription: state.getAlbumDescription,
     getAlbumDetail: state.getAlbumDetail,
+    auth: state.auth
   }
 };
 

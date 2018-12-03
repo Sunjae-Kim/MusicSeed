@@ -9,16 +9,12 @@ class BarPlayer extends React.Component {
     return (
       <Fragment>
         <audio controls>
-          <source src={this.setPath()} type="audio/mpeg" />
+          <source src={"songs/song-1.mp3"} type="audio/mpeg" />
           Your browser does not support the audio element.
         </audio>
         {this.renderSong(this.props.order)}
       </Fragment>
     );
-  }
-
-  setPath() {
-    return "http://tegos.kz/new/mp3_full/Redfoo_-_New_Thang.mp3";
   }
 
   onButtonClick() {
