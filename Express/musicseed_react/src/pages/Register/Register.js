@@ -1,12 +1,16 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { checkEmail, checkPassword, confirmPassword, checkName, checkNickname } from "../../actions/index";
+import axios from "axios";
 
 class Register extends Component {
 
   confirmPasswordOnChange(){
-    if(this.props.checkedPassword === this.props.confirmedPassword){
-      // console.log('OK');
+    if(this.props.checkedPassword === this.props.confirmedPassword) {
+        // console.log('OK');
+        return true;
+    }else{
+        return false;
     }
   }
 
@@ -14,9 +18,24 @@ class Register extends Component {
     this.confirmPasswordOnChange();
   }
 
+
+    onFormSubmit = async (event) => {
+        event.preventDefault();
+        if(this.confirmPasswordOnChange()){
+            let user = {
+                email: this.props.checkedEmail,
+                pw: this.props.checkedPassword,
+                name: this.props.checkedName,
+                nickname: this.props.checkedNickname,
+            }
+            await axios.post('/api/users', user);
+        }
+
+    };
+
   render() {
     return (
-      <form className="ui form" onSubmit={e => onFormSubmit(e) }>
+      <form className="ui form" onSubmit={e => this.onFormSubmit(e) }>
         <div className="field">
           <h1>Register</h1>
           <input
@@ -64,9 +83,6 @@ class Register extends Component {
   }
 }
 
-const onFormSubmit = (event) => {
-  event.preventDefault();
-};
 
 const mapStateToProps = state => {
   return {

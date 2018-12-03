@@ -49,12 +49,15 @@ router.post("/", async (req, res) => {
   if (error) return res.status(400).send(error.message);
 
   // Make and Save
+  console.log(req.body);
   let user = new User(req.body);
   user = await user.save();
 
   // Response
-  res.send(user);
+  // res.send(user);
+    res.redirect('/');
 });
+
 
 /* Update */
 router.patch("/:id", async (req, res) => {
