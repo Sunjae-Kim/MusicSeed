@@ -8,6 +8,7 @@
     "http-proxy-middleware": "^0.19.1",
     "moment": "^2.22.2",
     "react": "^16.6.3",
+    "react-cl-audio-player": "^2.2.0",
     "react-dom": "^16.6.3",
     "react-redux": "^5.1.1",
     "react-router-dom": "^4.3.1",

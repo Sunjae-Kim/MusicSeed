@@ -1,4 +1,5 @@
 /* Modules */
+const expressFileupload = require('express-fileupload');
 const passport = require('passport');
 const cookieSession = require('cookie-session');
 const GoogleStrategy = require('passport-google-oauth20');
@@ -39,7 +40,7 @@ if(app.get('env') === 'development'){
   debug('MORGAN을 실행합니다.');
   app.use(morgan('dev'));
 }
-
+app.use(expressFileupload());
 app.use(
     cookieSession({ // req.session == user.id
         name: 'USER Session',
@@ -47,7 +48,6 @@ app.use(
         keys: ['key1']
     })
 );
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));

@@ -42,3 +42,8 @@
 #barPlayerRow {
     padding: 0px;
 }
+
+audio {
+    visibility: hidden;
+    height: 0px;
+}

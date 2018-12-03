@@ -5,6 +5,7 @@ import {addTrackInAlbum, setAlbum, setAlbumDescription} from "../../actions/inde
 import _ from 'underscore';
 import '../../styles/UnderDiv.css';
 import Track from "../../components/under/Track";
+import axios from 'axios';
 
 class UploadAlbumUnder extends Component {
 
@@ -17,6 +18,10 @@ class UploadAlbumUnder extends Component {
         artist: '',
         genres: [],
         file: '',
+        fileStatus: { 
+          selectedFile: null, 
+          loaded: 0, 
+        },
         participants: {
           name: '',
           role: ''
@@ -35,11 +40,29 @@ class UploadAlbumUnder extends Component {
 
   onSubmit = async (event) => {
     event.preventDefault();
+    const _path = 'temporary/path'
+    const tracks = this.state.tracks.map(track => {
+      return {
+        title: track.title,
+        music_path: `${_path}${track.file}`,
+        artwork_path: `${_path}${this.props.getAlbumDetail.artwork}`,
+        genre: track.genres,
+        award: this.props.getAlbumDetail.rewards,
+        title_song: this.props.titleSong === track.index,
+      }
+    })
+
+    const album = {
+      album: {
+        title: this.props.getAlbumDetail.title,
+        upload_date: new Date(),
+        description: this.props.getAlbumDescription,
+      },
+      musics: tracks
+    }
+
     await this.props.setAlbum(
-      this.state.tracks,
-      this.props.titleSong,
-      this.props.getAlbumDescription,
-      this.props.getAlbumDetail,
+      album
     );
     console.log(this.props.getAlbum);
   };
@@ -53,6 +76,10 @@ class UploadAlbumUnder extends Component {
       artist: '',
       genres: [],
       file: '',
+      fileStatus: { 
+        selectedFile: null, 
+        loaded: 0, 
+      },
       participants: {
         name: '',
         role: ''
@@ -105,8 +132,26 @@ class UploadAlbumUnder extends Component {
     onFileInputChange(event, index) {
       const copy = _.identity(this.state.tracks);
       const fullName = event.target.value;
+      copy[index-1].fileStatus.selectedFile = event.target.files[0];
+      copy[index-1].fileStatus.loaded = 0;
       copy[index-1].file = fullName.substring(fullName.indexOf('\\', 3)+1, fullName.length);
       this.setState({tracks: copy});
+
+      const data = new FormData()
+      data.append('file', this.state.tracks[index-1].fileStatus.selectedFile, this.state.tracks[index-1].fileStatus.selectedFile.name);
+      axios
+        .post('/api/files/upload', data, {
+          onUploadProgress: ProgressEvent => {
+            const copy = _.identity(this.state.tracks);
+            copy[index-1].fileStatus.loaded = (ProgressEvent.loaded / ProgressEvent.total*100);
+            this.setState({
+              tracks: copy,
+            })
+          },
+        })
+        .then(res => {
+          console.log(res.statusText)
+        })
     },
     async onGenresChange(index){
       const copy = _.identity(this.state.tracks);

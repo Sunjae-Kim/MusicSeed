@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "PORT=4000 node App.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",
@@ -19,6 +19,7 @@
     "mongoose": "^5.3.12",
     "morgan": "~1.9.0",
     "passport": "^0.4.0",
-    "passport-google-oauth20": "^1.0.0"
+    "passport-google-oauth20": "^1.0.0",
+    "underscore": "^1.9.1"
   }
 }
