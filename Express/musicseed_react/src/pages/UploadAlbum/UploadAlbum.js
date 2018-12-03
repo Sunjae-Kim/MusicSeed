@@ -42,7 +42,6 @@ class UploadAlbum extends Component {
     const detail = _.identity(this.state.albumDetail);
     const fullName = e.target.value;
     detail.artwork = fullName.substring(fullName.indexOf('\\', 3)+1, fullName.length);
-    console.log(e.target.files[0]);
     this.setState({ selectedFile: e.target.files[0], loaded: 0, })
     this.setState({ albumDetail: detail })
   }
@@ -73,7 +72,7 @@ class UploadAlbum extends Component {
             <div className="custom-file">
               <input type="file" className="custom-file-input" id="customFile" onChange={this.onArtworkChange}/>
               <label className="custom-file-label" htmlFor="customFile">
-                { Math.round(this.state.loaded,2) || 'Click to choose the Artwork' }
+                { this.state.albumDetail.artwork || 'Click to choose the Artwork' }
               </label>
             </div>
           </Form.Field>
@@ -105,9 +104,9 @@ class UploadAlbum extends Component {
 
 
     const data = new FormData()
-    data.append('file', this.state.selectedFile, this.state.selectedFile.name)
+    data.append('file', this.state.selectedFile, this.state.selectedFile.name);
     axios
-      .post('/api/files', data, {
+      .post('/api/files/upload', data, {
         onUploadProgress: ProgressEvent => {
           this.setState({
             loaded: (ProgressEvent.loaded / ProgressEvent.total*100),

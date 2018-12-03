@@ -114,15 +114,10 @@ export const setTitleSong = index => {
   };
 };
 
-export const setAlbum = (tracks, titleSong, albumDescription, albumDetail) => {
+export const setAlbum = (album) => {
   return {
     type: "SET_ALBUM",
-    payload: {
-      tracks,
-      titleSong,
-      albumDescription,
-      albumDetail
-    }
+    payload: album
   };
 };
 
