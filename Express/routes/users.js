@@ -49,7 +49,6 @@ router.post("/", async (req, res) => {
   if (error) return res.status(400).send(error.message);
 
   // Make and Save
-  console.log(req.body);
   let user = new User(req.body);
   user = await user.save();
 
@@ -106,17 +105,6 @@ router.delete("/:id", async (req, res) => {
 
   // Response
   res.send(user);
-});
-
-
-
-
-router.post('/login', async (req, res) => {
-
-});
-
-router.get('/logout', async (req, res) => {
-
 });
 
 module.exports = router;

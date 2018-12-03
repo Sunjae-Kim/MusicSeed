@@ -1,10 +1,15 @@
 const passport = require('passport');
 
+const { User } = require('../models/user');
+
 const express = require("express");
 const router = express.Router();
 
 router.get('/login', (req, res) => {
+    User.find(req.body)
+        .then(user => {
 
+        });
 });
 
 router.get('/test', (req, res) => {

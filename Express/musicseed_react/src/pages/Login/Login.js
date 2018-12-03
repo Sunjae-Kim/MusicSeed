@@ -5,9 +5,18 @@ import { setPath, checkEmail, checkPassword } from "../../actions/index";
 import '../../styles/Login.css';
 
 class Login extends Component {
+    onFormSubmit = (event) => {
+        event.preventDefault();
+        let user = {
+            email: this.props.checkedEmail,
+            pw: this.props.checkedPassword,
+        }
+
+    };
+
   render() {
     return (
-      <form className="login ui form" onSubmit={e => onFormSubmit(e) }>
+      <form className="login ui form" onSubmit={e => this.onFormSubmit(e) }>
         <div className="field">
           <h1>Login</h1>
           <input
@@ -34,9 +43,7 @@ class Login extends Component {
   }
 }
 
-const onFormSubmit = (event) => {
-  event.preventDefault();
-};
+
 
 const mapStateToProps = state => {
   return {

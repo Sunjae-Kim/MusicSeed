@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom'
 import { checkEmail, checkPassword, confirmPassword, checkName, checkNickname } from "../../actions/index";
 import axios from "axios";
 
@@ -27,10 +28,10 @@ class Register extends Component {
                 pw: this.props.checkedPassword,
                 name: this.props.checkedName,
                 nickname: this.props.checkedNickname,
-            }
+            };
             await axios.post('/api/users', user);
+            return <Redirect to='/' />
         }
-
     };
 
   render() {

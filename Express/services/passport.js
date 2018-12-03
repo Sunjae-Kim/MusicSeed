@@ -4,6 +4,13 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const { User } = require('../models/user');
 
 passport.serializeUser((user, done) => {
+    let user_object = {
+        id: user._id,
+        email: user.email,
+        seed: user.seed,
+        name: user.name,
+        nickname: user.nickname
+    };
     done(null, user.email); // set-cookie(serialized(user.id))
 });
 
