@@ -155,3 +155,10 @@ export const fetchUser = () => async dispatch => {
     payload: await axios.get("/api/users/current")
   });
 };
+
+export const insertUser = () => async dispatch => {
+    dispatch({
+        type: types.REGISTER_USER,
+        payload: await axios.get("/api/users/current")
+    });
+};

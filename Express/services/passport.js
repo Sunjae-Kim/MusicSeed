@@ -7,8 +7,8 @@ passport.serializeUser((user, done) => {
     done(null, user.email); // set-cookie(serialized(user.id))
 });
 
-passport.deserializeUser((id, done) => {
-    User.findById(id)
+passport.deserializeUser((email, done) => {
+    User.findOne({ email: email })
         .then(user => {
             done(null, user)
         })
@@ -26,6 +26,7 @@ passport.use(new GoogleStrategy(
         let user = User.findOne({ email: profile.emails[0].value })
             .then(existingUser => {
                 if(existingUser) { // User exists
+                    console.log("existingUser");
                     done(null, existingUser);
                 } else { // New user
                     console.log("saving user");
@@ -41,7 +42,5 @@ passport.use(new GoogleStrategy(
                 }
             })
             .catch(error => console.error(error.message));
-
-        //done(null);
     }
 ));

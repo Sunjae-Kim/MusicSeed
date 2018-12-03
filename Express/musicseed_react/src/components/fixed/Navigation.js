@@ -4,21 +4,21 @@ import {setPath} from '../../actions/index';
 import {Link} from 'react-router-dom';
 import '../../styles/Navigation.css';
 import _ from 'underscore';
+import axios from "axios";
 
 class Navigation extends React.Component {
 
     renderLogin() {
         console.log(this.props.auth);
         switch(this.props.auth) {
+            case undefined:
             case null:
             case false:
                 return <Link id={'login'} to={'/login'} className="item" onClick={() => this.props.setPath('login')}>
                     Login
                 </Link>;
             default:
-                return <Link id={'login'} to={'/login'} className="item" onClick={() => this.props.setPath('login')}>
-                    Logout
-                </Link>;
+                return <a href="/auth/logout" className="item">Logout</a>
         }
     }
 
@@ -38,16 +38,20 @@ class Navigation extends React.Component {
 
   componentDidUpdate() {
     const path = this.props.getPath;
-    if(_.contains(this.navMenus, path)){
-      document.querySelector(`#${this.props.getPath}`).classList.add('active');
-      this.getChildNodes().forEach(item => {
-        if (item.id !== path) item.classList.remove('active');
-      });
-    }else {
-      document.querySelector(`#player`).classList.add('active');
-      this.getChildNodes().forEach(item => {
-        if (item.id !== 'player') item.classList.remove('active');
-      });
+    try{
+        if(_.contains(this.navMenus, path)){
+          document.querySelector(`#${this.props.getPath}`).classList.add('active');
+          this.getChildNodes().forEach(item => {
+            if (item.id !== path) item.classList.remove('active');
+          });
+        }else {
+          document.querySelector(`#player`).classList.add('active');
+          this.getChildNodes().forEach(item => {
+            if (item.id !== 'player') item.classList.remove('active');
+          });
+        }
+    } catch (e) {
+
     }
   }
 

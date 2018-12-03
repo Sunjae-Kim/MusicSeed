@@ -3,5 +3,5 @@
 
 export default {
     FETCH_USER: 'FETCH_USER',
-    INSERT_USER: 'INSERT_USER'
+    REGISTER_USER: 'REGISTER_USER',
 }
