@@ -26,6 +26,7 @@ const musics = require('./routes/musics');
 const comments = require('./routes/comments');
 const receipts = require('./routes/receipts');
 const auth = require('./routes/auth');
+const files = require('./routes/files');
 
 require('./services/passport');
 
@@ -49,6 +50,7 @@ app.use('/api/albums', albums);
 app.use('/api/musics', musics);
 app.use('/api/comments', comments);
 app.use('/api/receipts', receipts);
+app.use('/api/files', files);
 app.use('/auth', auth);
 
 /*

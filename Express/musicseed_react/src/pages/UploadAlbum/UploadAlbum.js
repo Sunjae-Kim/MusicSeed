@@ -4,6 +4,7 @@ import {Form, Select} from 'semantic-ui-react';
 import '../../styles/UploadAlbum.css';
 import _ from 'underscore';
 import {setAlbumDetail} from '../../actions'
+import axios from 'axios';
 
 const options = [
   { key: 'o1', text: 'Option 1', value: 'option1' },
@@ -19,6 +20,10 @@ class UploadAlbum extends Component {
         title: '',
         artwork: '',
         rewards: '',
+      },
+      file: { 
+        selectedFile: null, 
+        loaded: 0, 
       }
     };
 
@@ -37,6 +42,8 @@ class UploadAlbum extends Component {
     const detail = _.identity(this.state.albumDetail);
     const fullName = e.target.value;
     detail.artwork = fullName.substring(fullName.indexOf('\\', 3)+1, fullName.length);
+    console.log(e.target.files[0]);
+    this.setState({ selectedFile: e.target.files[0], loaded: 0, })
     this.setState({ albumDetail: detail })
   }
 
@@ -66,7 +73,7 @@ class UploadAlbum extends Component {
             <div className="custom-file">
               <input type="file" className="custom-file-input" id="customFile" onChange={this.onArtworkChange}/>
               <label className="custom-file-label" htmlFor="customFile">
-                { this.state.albumDetail.artwork || 'Click to choose the Artwork' }
+                { Math.round(this.state.loaded,2) || 'Click to choose the Artwork' }
               </label>
             </div>
           </Form.Field>
@@ -95,6 +102,21 @@ class UploadAlbum extends Component {
   onAlbumSubmit = async (event) => {
     event.preventDefault();
     await this.props.setAlbumDetail(this.state.albumDetail);
+
+
+    const data = new FormData()
+    data.append('file', this.state.selectedFile, this.state.selectedFile.name)
+    axios
+      .post('/api/files', data, {
+        onUploadProgress: ProgressEvent => {
+          this.setState({
+            loaded: (ProgressEvent.loaded / ProgressEvent.total*100),
+          })
+        },
+      })
+      .then(res => {
+        console.log(res.statusText)
+      })
   };
 }
 

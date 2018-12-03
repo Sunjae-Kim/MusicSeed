@@ -10,7 +10,7 @@ import BarPlayer from "./fixed/BarPlayer";
 import Logo from "./fixed/Logo";
 import {LeftDiv, RightDiv} from "../pages/";
 import UploadAlbumUnder from "../pages/UploadAlbum/UploadAlbumUnder";
-import {Route, Switch} from "react-router-dom";
+import {Route, Switch, withRouter} from "react-router-dom";
 import MypageUnder from "../pages/Mypage/MypageUnder";
 import AlbumDetailUnder from "../pages/AlbumDetail/AlbumDetailUnder";
 
@@ -40,4 +40,4 @@ class App extends React.Component {
     )
   }
 }
-export default connect(null, actions)(App);
+export default withRouter(connect(null, actions)(App));
