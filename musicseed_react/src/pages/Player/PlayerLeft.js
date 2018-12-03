@@ -8,7 +8,7 @@ import faker from "faker";
 
 class LPDiv extends React.Component {
   render() {
-    if (!this.props.playedSong) {
+    if (!this.props.order) {
       return (
         <div className={'on_lp'}>
         </div>
@@ -32,7 +32,7 @@ class LPDiv extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    playedSong: state.playedSong
+    order: state.songOrdered
   }
 };
 

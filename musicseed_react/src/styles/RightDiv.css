@@ -6,6 +6,10 @@
     height: 100vh;
 }
 
-.rightsidediv h1, h2, h3, h4, p, div {
+.rightsidediv h1, .rightsidediv h2, .rightsidediv h3, .rightsidediv h4, .rightsidediv p, .rightsidediv div{
     color: #D4D4E2;
+}
+
+.rightsidediv input {
+    color: #D4D4E2 !important;
 }

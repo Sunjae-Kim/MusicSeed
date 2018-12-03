@@ -3,26 +3,34 @@ import {connect} from 'react-redux';
 import {changePlayerState} from "../../actions/index";
 import '../../styles/TrackList.css';
 import MediaButtons from "./MediaButtons";
+import {filterSonglist} from "../../utility";
 
 class TrackList extends React.Component {
 
   songs;
 
-  setPlayer(){
+  setSonglist(){
     switch (this.props.playerState) {
       case true:
-        this.songs = this.props.searchedSongs; break;
+        this.songs =
+          this.props.searchedKeyword !== ''
+          ? filterSonglist(this.props.searchedSongs, this.props.searchedKeyword)
+          : this.props.searchedSongs;
+        break;
       default:
-        this.songs = this.props.playlist; break;
+        this.songs =
+          this.props.searchedKeyword !== ''
+            ? filterSonglist(this.props.playlist, this.props.searchedKeyword)
+            : this.props.playlist;
     }
   }
 
   componentDidUpdate(){
-    this.setPlayer();
+    this.setSonglist();
   }
 
   renderList() {
-    this.setPlayer();
+    this.setSonglist();
     return this.songs.map((song, index) => {
       return (
         <div key={index} className={'tracklist ui grid'}>
@@ -34,6 +42,7 @@ class TrackList extends React.Component {
                   <div className="content">
                     <div className="header">{song.title}</div>
                     {song.artist}
+                    <span className="duration">{song.duration}</span>
                   </div>
                   <div className="right float content">
                   </div>
@@ -54,11 +63,16 @@ class TrackList extends React.Component {
       </Fragment>
     )
   }
+
+
+
+
 }
 
 const mapStateToProps = state => {
   return {
     searchedSongs: state.searchedSongs,
+    searchedKeyword: state.searchedKeyword,
     playlist: state.playlist,
     playerState: state.playerState,
   }

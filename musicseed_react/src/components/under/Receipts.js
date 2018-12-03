@@ -1,5 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import {Icon, Menu, Table} from "semantic-ui-react";
+import moment from 'moment';
 
 class Receipts extends Component {
   render() {
@@ -17,10 +18,11 @@ class Receipts extends Component {
         <Table singleLine>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell>Name</Table.HeaderCell>
-              <Table.HeaderCell>Registration Date</Table.HeaderCell>
-              <Table.HeaderCell>E-mail address</Table.HeaderCell>
-              <Table.HeaderCell>Premium Plan</Table.HeaderCell>
+              <Table.HeaderCell>Time</Table.HeaderCell>
+              <Table.HeaderCell>From</Table.HeaderCell>
+              <Table.HeaderCell>To</Table.HeaderCell>
+              <Table.HeaderCell>Amount</Table.HeaderCell>
+              <Table.HeaderCell>Details</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
 
@@ -30,11 +32,13 @@ class Receipts extends Component {
               <Table.Cell>September 14, 2013</Table.Cell>
               <Table.Cell>jhlilk22@yahoo.com</Table.Cell>
               <Table.Cell>No</Table.Cell>
+              <Table.Cell>No</Table.Cell>
             </Table.Row>
             <Table.Row>
               <Table.Cell>Jamie Harington</Table.Cell>
               <Table.Cell>January 11, 2014</Table.Cell>
               <Table.Cell>jamieharingonton@yahoo.com</Table.Cell>
+              <Table.Cell>Yes</Table.Cell>
               <Table.Cell>Yes</Table.Cell>
             </Table.Row>
             <Table.Row>
@@ -42,11 +46,12 @@ class Receipts extends Component {
               <Table.Cell>May 11, 2014</Table.Cell>
               <Table.Cell>jilsewris22@yahoo.com</Table.Cell>
               <Table.Cell>Yes</Table.Cell>
+              <Table.Cell>Yes</Table.Cell>
             </Table.Row>
           </Table.Body>
           <Table.Footer>
             <Table.Row>
-              <Table.HeaderCell colSpan='4'>
+              <Table.HeaderCell colSpan='5'>
                 <Menu floated='right' pagination>
                   <Menu.Item as='a' icon>
                     <Icon name='chevron left' />
@@ -54,7 +59,6 @@ class Receipts extends Component {
                   <Menu.Item as='a'>1</Menu.Item>
                   <Menu.Item as='a'>2</Menu.Item>
                   <Menu.Item as='a'>3</Menu.Item>
-                  <Menu.Item as='a'>4</Menu.Item>
                   <Menu.Item as='a' icon>
                     <Icon name='chevron right' />
                   </Menu.Item>
