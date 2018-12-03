@@ -1,5 +1,6 @@
 /* Modules */
 const passport = require('passport');
+const cookieSession = require('cookie-session');
 const GoogleStrategy = require('passport-google-oauth20');
 const dumpdata = require('./public/dumpdata');
 const helmet = require('helmet');
@@ -38,11 +39,21 @@ if(app.get('env') === 'development'){
   debug('MORGAN을 실행합니다.');
   app.use(morgan('dev'));
 }
+
+app.use(
+    cookieSession({ // req.session == user.id
+        name: 'USER Session',
+        maxAge: (30 * 24 * 60 * 60 * 1000),
+        keys: ['key1']
+    })
+);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/api/playlists', playlists);
 app.use('/api/users', users);

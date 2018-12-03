@@ -11,6 +11,7 @@ const router = express.Router();
 /* Read */
 router.get('/current', async (req, res) => {
     //show login page
+    console.log(req);
     console.log(req.user);
     res.send(req.user);
 });
