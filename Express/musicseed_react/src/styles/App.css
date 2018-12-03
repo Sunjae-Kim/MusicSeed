@@ -1,9 +1,14 @@
 .pusher {
     background: linear-gradient( to right, #BDC3C7, #2C3E50 );
+    position: relative;
+    overflow: hidden;
 }
 
 .main_page {
     height: 100vh;
+}
+
+html {
 }
 
 body ::-webkit-scrollbar {

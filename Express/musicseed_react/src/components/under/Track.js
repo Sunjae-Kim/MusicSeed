@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react';
-import {Dropdown, Grid, Image, Select, Form} from "semantic-ui-react";
+import {Dropdown, Form, Grid, Image, Select} from "semantic-ui-react";
 import {connect} from 'react-redux';
-import {setTitleSong} from '../../actions/index'
+import {setTitleSong} from '../../actions'
 
 class Track extends Component {
 
@@ -40,19 +40,42 @@ class Track extends Component {
           <h1>Artist</h1>
           <h1>Genre</h1>
           <h1>File</h1>
-          <h1>Participants</h1>
+          <h1>Participant</h1>
         </Grid.Column>
         <Grid.Column width={8}>
-          <input placeholder={'Track Title'} />
-          <input placeholder={'Artist Name'} />
-          <Dropdown placeholder='Genre' fluid multiple search selection options={this.genreOptions} />
+          <input placeholder={'Track Title'}
+                 value={this.props.state.tracks[index-1].title}
+                 onChange={e => this.props.onChange.onTitleChange(e, index)}
+          />
+          <input placeholder={'Artist Name'}
+                 value={this.props.state.tracks[index-1].artist}
+                 onChange={e => this.props.onChange.onArtistChange(e, index)}
+          />
+          <Dropdown
+            placeholder='Genre'
+            fluid multiple search selection
+            options={this.genreOptions}
+            onChange={() => this.props.onChange.onGenresChange(index)}
+            id={`genreSelector${index}`}
+          />
           <div className="custom-file">
-            <input type="file" className="custom-file-input" id="customFile"/>
-            <label className="custom-file-label" htmlFor="customFile">&nbsp;&nbsp;Click to choose the file</label>
+            <input
+              type="file"
+              className="custom-file-input"
+              id="customFile"
+              onChange={e => this.props.onChange.onFileInputChange(e, index)}
+            />
+            <label className="custom-file-label" htmlFor="customFile">
+              { this.props.state.tracks[index-1].file || 'Click to choose the file' }
+            </label>
           </div>
           <Grid>
             <Grid.Column width={8}>
-              <input placeholder={'Name'}/>
+              <input
+                placeholder={'Name'}
+                onChange={e => this.props.onChange.onParticipantsNameChange(e,index)}
+                value={this.props.state.tracks[index-1].participants.name}
+              />
             </Grid.Column>
             <Grid.Column width={8}>
               <Form.Field
@@ -60,7 +83,7 @@ class Track extends Component {
                 options={this.roleOptions}
                 placeholder='Role'
                 search
-                searchInput={{ id: 'form-select-control-gender' }}
+                onChange={e => this.props.onChange.onParticipantsRoleChange(e, index)}
               />
             </Grid.Column>
           </Grid>
@@ -80,7 +103,7 @@ class Track extends Component {
 
 const mapStateToProps = state => {
   return {
-    titleSong: state.titleSong,
+    titleSong: state.titleSong
   }
 };
 

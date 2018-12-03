@@ -33,6 +33,9 @@ div.rightsidediv > form > div > div > div > div.visible.menu.transition {
     color: rgba(191,191,191,.87);
     border-radius: .25rem;
     background: #4A496F;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 

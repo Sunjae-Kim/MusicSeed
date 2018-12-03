@@ -1,7 +1,7 @@
 .lp {
     pointer-events: none;
     position: absolute;
-    left: 10vh;
-    bottom: 3vh;
-    max-width: 85vh;
+    left: 100px;
+    top: 100px;
+    max-width: 790px;
 }

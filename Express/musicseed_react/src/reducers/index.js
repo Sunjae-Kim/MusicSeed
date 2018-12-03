@@ -1,12 +1,16 @@
 import {combineReducers} from 'redux';
 import authReducer from './authReducer';
 
+import {
+  setTitleSongReducer, albumReducer, albumDescriptionReducer, albumDetailReducer
+} from "./uploadAlbum";
+
 const songsReducer = () => {
   return [
-    {id: 1, title: 'Happy Hacking 1', artist: 'neo', duration: '9 to 6'},
-    {id: 2, title: 'Happy Hacking 2', artist: 'neo', duration: '9 to 6'},
-    {id: 3, title: 'Happy Hacking 3', artist: 'neo', duration: '9 to 6'},
-    {id: 4, title: 'Happy Hacking 4', artist: 'neo', duration: '9 to 6'},
+    {id: 1, title: 'Happy Hacking 1', artist: 'neo', duration: '3:56'},
+    {id: 2, title: 'Happy Hacking 2', artist: 'neo', duration: '3:56'},
+    {id: 3, title: 'Happy Hacking 3', artist: 'neo', duration: '3:56'},
+    {id: 4, title: 'Happy Hacking 4', artist: 'neo', duration: '3:56'},
   ];
 };
 
@@ -48,12 +52,12 @@ const downloadedSongReducer = (downloadedSong = null, action) => {
   }
 };
 
-const playedSongReducer = (playedSong = null, action) => {
+const orderSongReducer = (order = null, action) => {
   switch (action.type) {
-    case 'SONG_PLAYED':
+    case 'SONG_ORDERED':
       return action.payload;
     default:
-      return playedSong;
+      return order;
   }
 };
 
@@ -132,15 +136,6 @@ const addTrackInAlbumReducer = (numberOfTracks=1, action) => {
   }
 };
 
-const setTitleSongReducer = (index=null, action) => {
-  switch (action.type) {
-    case 'SET_TITLE_SONG':
-      return action.payload;
-    default:
-      return index;
-  }
-};
-
 const commentsReducer = (comment = [], action) => {
   switch (action.type) {
     case 'ADD_COMMENT':
@@ -161,13 +156,14 @@ const typeCommentReducer = (text = '', action) =>  {
   }
 };
 
+// ********************* UPLOAD SONG
 export default combineReducers({
   searchedSongs: songsReducer,
   selectedSong: selectedSongReducer,
   searchedKeyword: searchedKeywordReducer,
   playlist: playlistReducer,
   downloadedSong: downloadedSongReducer,
-  playedSong: playedSongReducer,
+  songOrdered: orderSongReducer,
   getPath: getPathReducer,
   checkedEmail: checkedEmailReducer,
   checkedPassword: checkedPasswordReducer,
@@ -176,8 +172,11 @@ export default combineReducers({
   checkedNickname: checkNicknameReducer,
   playerState: playerStateReducer,
   numberOfTracks: addTrackInAlbumReducer,
-  titleSong: setTitleSongReducer,
   comments: commentsReducer,
   commentTyped: typeCommentReducer,
   auth: authReducer,
+  titleSong: setTitleSongReducer,
+  getAlbum: albumReducer,
+  getAlbumDescription: albumDescriptionReducer,
+  getAlbumDetail: albumDetailReducer,
 });

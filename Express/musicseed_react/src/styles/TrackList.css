@@ -33,3 +33,9 @@
     width: 4vh;
     pointer-events: none;
 }
+
+.tracklist .duration {
+    margin-left: 30px;
+    font-size: 13px;
+    color: grey;
+}

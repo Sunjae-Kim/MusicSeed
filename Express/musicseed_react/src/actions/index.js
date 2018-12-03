@@ -89,10 +89,13 @@ export const downloadSong = song => {
   }
 };
 
-export const playSong = song => {
+export const songOrder = ({song, status}) => {
   return {
-    type: 'SONG_PLAYED',
-    payload: song,
+    type: 'SONG_ORDERED',
+    payload: {
+      song,
+      status
+    }
   }
 };
 
@@ -103,10 +106,37 @@ export const addTrackInAlbum = number => {
   }
 };
 
+// upload song
 export const setTitleSong = index => {
   return {
     type: 'SET_TITLE_SONG',
-    payload: index,
+    payload: index
+  }
+};
+
+export const setAlbum = (tracks, titleSong, albumDescription, albumDetail) => {
+  return {
+    type: 'SET_ALBUM',
+    payload: {
+      tracks,
+      titleSong,
+      albumDescription,
+      albumDetail,
+    }
+  }
+};
+
+export const setAlbumDescription = (description) => {
+  return {
+    type: 'SET_ALBUM_DESCRIPTION',
+    payload: description
+  }
+};
+
+export const setAlbumDetail = detail => {
+  return{
+    type: 'SET_ALBUM_DETAIL',
+    payload: detail,
   }
 };
 
