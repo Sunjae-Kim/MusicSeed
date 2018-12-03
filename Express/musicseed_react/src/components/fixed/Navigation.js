@@ -10,6 +10,7 @@ class Navigation extends React.Component {
         console.log(this.props.auth);
         switch(this.props.auth) {
             case null:
+            case false:
                 return <Link id={'login'} to={'/login'} className="item" onClick={() => this.props.setPath('login')}>
                     Login
                 </Link>;
