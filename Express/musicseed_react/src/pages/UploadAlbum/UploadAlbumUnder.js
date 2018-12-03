@@ -1,7 +1,8 @@
 import React, {Component, Fragment} from 'react';
 import {Form, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import {addTrackInAlbum, setAlbum, setAlbumDescription} from "../../actions/index";
+import {addTrackInAlbum, setAlbum, setAlbumDescription, setPath} from "../../actions/index";
+import { Link, Redirect  } from "react-router-dom";
 import _ from 'underscore';
 import '../../styles/UnderDiv.css';
 import Track from "../../components/under/Track";
@@ -12,6 +13,7 @@ class UploadAlbumUnder extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      redirect: false,
       tracks : [{
         index: 1,
         title: '',
@@ -36,6 +38,18 @@ class UploadAlbumUnder extends Component {
     this.onChange.onGenresChange = this.onChange.onGenresChange.bind(this);
     this.onChange.onParticipantsNameChange = this.onChange.onParticipantsNameChange.bind(this);
     this.onChange.onParticipantsRoleChange = this.onChange.onParticipantsRoleChange.bind(this);
+  }
+
+  setRedirect = () => {
+    this.setState({
+      redirect: true
+    })
+  }
+
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to='/albumDetail' />
+    }
   }
 
   onSubmit = async (event) => {
@@ -65,6 +79,7 @@ class UploadAlbumUnder extends Component {
       album
     );
     console.log(this.props.getAlbum);
+    this.setRedirect();
   };
 
   addTrack = () => {
@@ -89,9 +104,6 @@ class UploadAlbumUnder extends Component {
     this.setState({ tracks: this.state.tracks })
   };
 
-  componentDidUpdate(){
-  }
-
   render() {
     if(!this.props.getAlbumDetail) return <Fragment></Fragment>;
     const children = [];
@@ -101,7 +113,7 @@ class UploadAlbumUnder extends Component {
     }
 
     return (
-      <Form className={'under_div'} onSubmit={e => this.onSubmit(e) }>
+      <Form className={'under_div'}>
         <div className={'under_field tracks'}>
           { children }
           <div className="under_button_area">
@@ -112,7 +124,8 @@ class UploadAlbumUnder extends Component {
           { this.renderDescription() }
         </div>
         <div className={'under_button_area'}>
-          <Button className="ui large button" >UPLOAD</Button>
+          <Link to="/albumDetail" className="ui large button" onClick={e => this.onSubmit(e)}>UPLOAD </Link>
+          {this.renderRedirect()}
         </div>
       </Form>
     );
@@ -218,5 +231,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { addTrackInAlbum, setAlbum, setAlbumDescription }
+  { addTrackInAlbum, setAlbum, setAlbumDescription, setPath }
 )(UploadAlbumUnder);

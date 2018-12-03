@@ -8,7 +8,7 @@ class BarPlayer extends React.Component {
   render() {
     return (
       <Fragment>
-        <audio controls autoPlay={true}>
+        <audio controls>
           <source src={this.setPath()} type="audio/mpeg" />
           Your browser does not support the audio element.
         </audio>
@@ -27,19 +27,24 @@ class BarPlayer extends React.Component {
     audio.pause();
   }
 
-  setSongStatus = (order, button) => {
+  setSongStatus = async (order, button) => {
     const newOrder = {
       song: order.song
     };
+    const audio = document.querySelector('audio');
     switch (button) {
       case buttonPaths.pause:
         newOrder.status = "pause";
+        audio.pause();
         break;
       case buttonPaths.play:
         newOrder.status = "play";
+        audio.play();
         break;
       case buttonPaths.stop:
         newOrder.status = "stop";
+        await audio.load();
+        audio.pause();
         break;
       default:
     }
