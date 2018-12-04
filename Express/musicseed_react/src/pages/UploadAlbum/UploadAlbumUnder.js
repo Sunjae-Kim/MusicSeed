@@ -53,10 +53,8 @@ class UploadAlbumUnder extends Component {
   }
 
   onSubmit = async (event) => {
-
-    
     event.preventDefault();
-    const tracks = this.state.tracks.map( async track => {
+    const tracks = await this.state.tracks.map( async track => {
       const source = await document.querySelector('#dummy_audio > source');
       await source.setAttribute('src', `songs/${track.fileStatus.selectedFile.name}`);
       await source.setAttribute('type', `${track.fileStatus.selectedFile.type}`);
@@ -68,7 +66,7 @@ class UploadAlbumUnder extends Component {
         award: this.props.getAlbumDetail.rewards,
         title_song: this.props.titleSong === track.index,
         main_artist_id: this.props.auth._id,
-        playtime: this.getDuration(track.fileStatus.selectedFile)
+        playtime: ''
       }
     })
 
@@ -86,6 +84,7 @@ class UploadAlbumUnder extends Component {
     await this.props.setAlbum(
       album
     );
+    await axios.post('/api/albums/', album);
     console.log(this.props.getAlbum);
     this.setRedirect();
   };

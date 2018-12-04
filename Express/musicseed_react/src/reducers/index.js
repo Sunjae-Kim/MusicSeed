@@ -7,10 +7,10 @@ import {
 
 const songsReducer = () => {
   return [
-    {id: 1, title: 'Happy Hacking 1', artist: 'neo', duration: '3:56'},
-    {id: 2, title: 'Happy Hacking 2', artist: 'neo', duration: '3:56'},
-    {id: 3, title: 'Happy Hacking 3', artist: 'neo', duration: '3:56'},
-    {id: 4, title: 'Happy Hacking 4', artist: 'neo', duration: '3:56'},
+    {id: 1, title: 'Happy Hacking 1', artist: 'neo', duration: '3:56', file: 'songs/song-1.mp3' },
+    {id: 2, title: 'Happy Hacking 2', artist: 'neo', duration: '3:56', file: 'http://tegos.kz/new/mp3_full/Redfoo_-_New_Thang.mp3' },
+    {id: 3, title: 'Happy Hacking 3', artist: 'neo', duration: '3:56', file: 'songs/song-1.mp3' },
+    {id: 4, title: 'Happy Hacking 4', artist: 'neo', duration: '3:56', file: 'songs/song-1.mp3' },
   ];
 };
 

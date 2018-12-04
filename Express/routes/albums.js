@@ -40,14 +40,16 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
 
   // Validation test for Album
-  const { a_error } = validate(req.body.album);
-  if (a_error) return res.status(400).send(error.message);
+  // const { a_error } = validate(req.body.album);
+  // if (a_error) return res.status(400).send(error.message);
 
   // Validation test for Musics
-  req.body.musics.forEach(music => {
-    const { m_error } = validate(music);
-    if (m_error) return res.status(400).send(error.message);
-  });
+  // req.body.musics.forEach(music => {
+  //   const { m_error } = validate(music);
+  //   if (m_error) return res.status(400).send(error.message);
+  // });
+
+  console.log(req.body);
 
   // Find User
   let user = await User.findById(req.body.album.user_id);

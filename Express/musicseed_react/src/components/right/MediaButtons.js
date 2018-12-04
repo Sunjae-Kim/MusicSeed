@@ -1,25 +1,34 @@
 import React, {Fragment} from 'react';
 import {connect} from 'react-redux';
 import {addSongToPlaylist, downloadSong, songOrder, deleteSongFromPlaylist} from "../../actions/index";
+import{playTheSong} from '../../utility';
 import '../../styles/MediaButtons.css';
 
 class MediaButtons extends React.Component {
 
-  onSearchPlayButtonClick(song){
+  async onSearchPlayButtonClick(song){
     const order = {
       song,
       status : 'play'
     };
-    this.props.songOrder(order);
-    this.props.addSongToPlaylist(song);
+    await this.props.songOrder(order);
+    await this.props.addSongToPlaylist(song);
+    // const audio = await document.querySelector('#audioPlayer');
+    // audio.play()
   }
 
-  onPlaylistPlayButtonClick(song){
+  async onPlaylistPlayButtonClick(song){
     const order = {
       song,
       status : 'play'
     };
-    this.props.songOrder(order);
+    await this.props.songOrder(order);
+    // const audio = await document.querySelector('#audioPlayer');
+    // audio.play()
+  }
+
+  componentDidUpdate(){
+    console.log(this.props.order);
   }
 
 
@@ -87,7 +96,8 @@ class MediaButtons extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    playerState: state.playerState
+    playerState: state.playerState,
+    order: state.songOrdered
   }
 };
 

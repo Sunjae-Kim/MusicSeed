@@ -17,9 +17,9 @@ class LPDiv extends React.Component {
       return (
         <Fragment>
           <TextOnLp
-            first={ faker.lorem.words() }
+            first={ this.props.order.song.title }
             firstLink={'albumDetail'}
-            second={ faker.name.firstName() }
+            second={ this.props.order.song.artist }
             secondLink={'mypage'}
           />
           <ImgOnLp image={'images/album1.jpg'}/>

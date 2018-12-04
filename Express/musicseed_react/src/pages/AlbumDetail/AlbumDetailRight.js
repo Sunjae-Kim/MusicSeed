@@ -8,6 +8,7 @@ class TrackList extends React.Component {
 
   renderList() {
     return this.props.getAlbum.musics.map((song, index) => {
+      song.artist = this.props.getAlbum.album.user_name;
       return (
         <div key={index} className={'tracklist ui grid'}>
           <div className="row">
