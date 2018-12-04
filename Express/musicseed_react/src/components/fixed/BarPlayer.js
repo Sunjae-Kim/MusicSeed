@@ -25,7 +25,9 @@ class BarPlayer extends React.Component {
       console.log(audio.paused);
       audio.load();
       audio.play();
-      axios.post('/'+this.props.auth.id+'/seed/'+5, {artist_id:this.props.order.song.main_artist_id});
+      console.log(this.props.auth);
+      axios.post('/api/users/'+this.props.auth._id+'/seed/'+5, {artist_id:this.props.order.song.main_artist_id});
+
     }
   }
 
@@ -106,7 +108,8 @@ class BarPlayer extends React.Component {
 const mapStateToProps = state => {
   return {
     order: state.songOrdered,
-    path: state.getPath
+    path: state.getPath,
+      auth: state.auth,
   };
 };
 
