@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { songOrder } from "../../actions";
 import "../../styles/BarPlayer.css";
 import { buttonPaths } from "../../utility";
+import axios from "axios";
 
 class BarPlayer extends React.Component {
   render() {
@@ -18,11 +19,11 @@ class BarPlayer extends React.Component {
   }
 
   componentDidUpdate(){
-    console.log(123);
     if(this.props.order && this.props.order.status === 'play'){
       const audio = document.querySelector('#audioPlayer');
       console.log(audio);
       audio.play();
+      axios.post('/'+this.props.auth.id+'/seed/'+5, {artist_id:this.props.order.song.main_artist_id});
     }
   }
 
