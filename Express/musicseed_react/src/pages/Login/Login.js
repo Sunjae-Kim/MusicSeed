@@ -12,7 +12,14 @@ class Login extends Component {
             email: this.props.checkedEmail,
             pw: this.props.checkedPassword,
         };
-        await axios.post('/auth/login', user);
+        await axios.post('/auth/login', user)
+            .then(function (response) {
+            if (response.data.redirect == '/') {
+                window.location = "/";
+            } else{
+                window.location = '/login';
+            }
+        });
     };
 
   render() {
