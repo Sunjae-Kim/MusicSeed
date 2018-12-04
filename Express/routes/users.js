@@ -54,7 +54,7 @@ router.post("/", async (req, res) => {
 
   // Response
   // res.send(user);
-    res.redirect('/');
+    res.send({redirect:'/'});
 });
 
 

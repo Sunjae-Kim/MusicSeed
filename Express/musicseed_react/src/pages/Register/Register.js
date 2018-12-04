@@ -29,8 +29,14 @@ class Register extends Component {
                 name: this.props.checkedName,
                 nickname: this.props.checkedNickname,
             };
-            await axios.post('/api/users', user);
-            return <Redirect to='/' />
+            await axios.post('/api/users', user)
+                .then(function (response) {
+                    if (response.data.redirect == '/') {
+                        window.location = "/";
+                    } else{
+                        window.location = '/register';
+                    }
+                });
         }
     };
 
