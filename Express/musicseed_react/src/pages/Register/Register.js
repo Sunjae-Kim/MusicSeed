@@ -31,8 +31,8 @@ class Register extends Component {
             };
             await axios.post('/api/users', user)
                 .then(function (response) {
-                    if (response.data.redirect == '/') {
-                        window.location = "/";
+                    if (response.data.redirect == '/login') {
+                        window.location = "/login";
                     } else{
                         window.location = '/register';
                     }
