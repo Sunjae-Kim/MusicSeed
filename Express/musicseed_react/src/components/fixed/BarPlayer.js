@@ -9,7 +9,7 @@ class BarPlayer extends React.Component {
     return (
       <Fragment>
         <audio controls id="audioPlayer">
-          <source src={ this.props.order ? this.props.order.song.file : ''} type="audio/mpeg" />
+          <source src={ !this.props.order ? null : this.props.order.song.file} type="audio/mpeg" />
           Your browser does not support the audio element.
         </audio>
         {this.renderSong(this.props.order)}
@@ -21,10 +21,22 @@ class BarPlayer extends React.Component {
     console.log(123);
     if(this.props.order && this.props.order.status === 'play'){
       const audio = document.querySelector('#audioPlayer');
-      console.log(audio);
-      console.log(audio.paused);
-      audio.load();
-      audio.play();
+      const source = document.querySelector('source');
+      const src = this.props.order.song.file || this.props.order.song.music_path;
+      if(!source.hasAttribute('src')){
+        source.setAttribute('src', src );
+      }
+      if(this.props.order.status === 'pause'){
+        audio.play();
+      }
+      if(this.props.order.status === 'stop'){
+        audio.load();
+        audio.play();
+      }
+      if(audio.currentSrc !== src){
+        audio.load();
+        audio.play();
+      }
     }
   }
 

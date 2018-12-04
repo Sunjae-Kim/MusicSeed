@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import {Icon, Menu, Table} from "semantic-ui-react";
 import moment from 'moment';
+import faker from 'faker';
 
 class Receipts extends Component {
   render() {
@@ -28,25 +29,25 @@ class Receipts extends Component {
 
           <Table.Body>
             <Table.Row>
-              <Table.Cell>John Lilki</Table.Cell>
-              <Table.Cell>September 14, 2013</Table.Cell>
-              <Table.Cell>jhlilk22@yahoo.com</Table.Cell>
-              <Table.Cell>No</Table.Cell>
-              <Table.Cell>No</Table.Cell>
+              <Table.Cell>September 14, 2018</Table.Cell>
+              <Table.Cell>{faker.name.firstName()}</Table.Cell>
+              <Table.Cell>{faker.name.firstName()}</Table.Cell>
+              <Table.Cell>10</Table.Cell>
+              <Table.Cell>play</Table.Cell>
             </Table.Row>
             <Table.Row>
-              <Table.Cell>Jamie Harington</Table.Cell>
-              <Table.Cell>January 11, 2014</Table.Cell>
-              <Table.Cell>jamieharingonton@yahoo.com</Table.Cell>
-              <Table.Cell>Yes</Table.Cell>
-              <Table.Cell>Yes</Table.Cell>
+              <Table.Cell>January 11, 2018</Table.Cell>
+              <Table.Cell>{faker.name.firstName()}</Table.Cell>
+              <Table.Cell>{faker.name.firstName()}</Table.Cell>
+              <Table.Cell>10</Table.Cell>
+              <Table.Cell>play</Table.Cell>
             </Table.Row>
             <Table.Row>
-              <Table.Cell>Jill Lewis</Table.Cell>
-              <Table.Cell>May 11, 2014</Table.Cell>
-              <Table.Cell>jilsewris22@yahoo.com</Table.Cell>
-              <Table.Cell>Yes</Table.Cell>
-              <Table.Cell>Yes</Table.Cell>
+              <Table.Cell>May 11, 2018</Table.Cell>
+              <Table.Cell>{faker.name.firstName()}</Table.Cell>
+              <Table.Cell>{faker.name.firstName()}</Table.Cell>
+              <Table.Cell>10</Table.Cell>
+              <Table.Cell>play</Table.Cell>
             </Table.Row>
           </Table.Body>
           <Table.Footer>

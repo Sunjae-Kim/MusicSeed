@@ -54,13 +54,10 @@ class UploadAlbumUnder extends Component {
 
   onSubmit = async (event) => {
     event.preventDefault();
-    const tracks = await this.state.tracks.map( async track => {
-      const source = await document.querySelector('#dummy_audio > source');
-      await source.setAttribute('src', `songs/${track.fileStatus.selectedFile.name}`);
-      await source.setAttribute('type', `${track.fileStatus.selectedFile.type}`);
+    const tracks = this.state.tracks.map( track => {
       return {
         title: track.title,
-        music_path: `${track.file}`,
+        music_path: `songs/${track.file}`,
         artwork_path: `${this.props.getAlbumDetail.artwork}`,
         genre: track.genres,
         award: this.props.getAlbumDetail.rewards,

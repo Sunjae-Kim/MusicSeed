@@ -11,8 +11,12 @@ const songsReducer = () => {
     artwork: ''},
     {id: 2, title: 'New Thang', artist: 'Redfoo', duration: '4:02', file: 'http://tegos.kz/new/mp3_full/Redfoo_-_New_Thang.mp3', 
     artwork: 'https://upload.wikimedia.org/wikipedia/en/thumb/1/1b/Redfoo_-_New_Thang_%28cover%29.jpg/220px-Redfoo_-_New_Thang_%28cover%29.jpg' },
-    {id: 3, title: 'Happy Hacking 3', artist: 'neo', duration: '3:56', file: 'songs/song-1.mp3' , artwork: ''},
-    {id: 4, title: 'Happy Hacking 4', artist: 'neo', duration: '3:56', file: 'songs/song-1.mp3' , artwork: ''},
+    {id: 3, title: 'Summer Love', artist: 'Justin Timberlake', duration: '4:12', file: 'http://claymore.france.free.fr/momo/summer%20love.mp3' , 
+    artwork: 'http://myuvn.com/wp-content/uploads/2015/07/justin-timberlake-pusher-love-girl.jpg'},
+    {id: 4, title: 'Thunder', artist: 'Imagine Dragons', duration: '3:09', file: 'http://audeliver.com/mp3cloud/ohR2qXGxgdDFl3.mp3' , 
+    artwork: 'https://3.bp.blogspot.com/-n7i80k5OmP0/WnXhKe4Wr2I/AAAAAAAAFHc/o1r2iQs2qEgFZOX26SZpDoI5rdmPsybXgCLcBGAs/s1600/imagine_dragons_-_thunder_remix_1.jpg'},
+    {id: 5, title: 'PPAP', artist: 'PIKOTARO', duration: '2:39', file: 'songs/PPAP.mp3' , 
+    artwork: 'https://images-na.ssl-images-amazon.com/images/I/61A6Df8Fu5L._SS500.jpg'},
   ];
 };
 

@@ -162,3 +162,10 @@ export const insertUser = () => async dispatch => {
         payload: await axios.get("/api/users/current")
     });
 };
+
+export const addSongToList = (song) => {
+  return {
+    type: "TOLIST",
+    payload: song
+  };
+}
