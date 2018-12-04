@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { songOrder } from "../../actions";
 import "../../styles/BarPlayer.css";
 import { buttonPaths } from "../../utility";
+import axios from "axios";
 
 class BarPlayer extends React.Component {
   render() {
@@ -18,7 +19,6 @@ class BarPlayer extends React.Component {
   }
 
   componentDidUpdate(){
-    console.log(123);
     if(this.props.order && this.props.order.status === 'play'){
       const audio = document.querySelector('#audioPlayer');
       const source = document.querySelector('source');
@@ -117,7 +117,8 @@ class BarPlayer extends React.Component {
 const mapStateToProps = state => {
   return {
     order: state.songOrdered,
-    path: state.getPath
+    path: state.getPath,
+      auth: state.auth,
   };
 };
 

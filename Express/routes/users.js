@@ -42,6 +42,18 @@ router.get("/:id", async (req, res) => {
   res.send(user);
 });
 
+router.post("/:id/seed/:amount", async (req, res) => {
+    // Find
+    console.log("seed 추가");
+    const user = await User.findOneAndUpdate({_id: req.params.id}, { $inc: { seed: req.params.amount }}, (err, data) => {
+      if(err){
+          res.send('err');
+      }
+
+    });
+
+});
+
 /* Create */
 router.post("/", async (req, res) => {
   // Validation test
