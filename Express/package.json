@@ -6,6 +6,7 @@
     "start": "PORT=4000 node App.js"
   },
   "dependencies": {
+    "connect-flash": "^0.1.1",
     "cookie-parser": "~1.4.3",
     "cookie-session": "^2.0.0-beta.3",
     "cors": "^2.8.5",
@@ -20,6 +21,7 @@
     "morgan": "~1.9.0",
     "passport": "^0.4.0",
     "passport-google-oauth20": "^1.0.0",
+    "passport-local": "^1.0.0",
     "underscore": "^1.9.1"
   }
 }

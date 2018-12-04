@@ -3,15 +3,16 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { setPath, checkEmail, checkPassword } from "../../actions/index";
 import '../../styles/Login.css';
+import axios from "axios";
 
 class Login extends Component {
-    onFormSubmit = (event) => {
+    onFormSubmit = async (event) => {
         event.preventDefault();
         let user = {
             email: this.props.checkedEmail,
             pw: this.props.checkedPassword,
-        }
-
+        };
+        await axios.post('/auth/login', user);
     };
 
   render() {
