@@ -22,7 +22,7 @@ class LPDiv extends React.Component {
             second={ this.props.order.song.artist }
             secondLink={'mypage'}
           />
-          <ImgOnLp image={'images/album1.jpg'}/>
+          <ImgOnLp image={this.props.order.song.artwork}/>
         </Fragment>
       )
     }

@@ -46,6 +46,9 @@ class Navigation extends React.Component {
             >
               My Page
             </Link>
+            <a className="item">
+            {`${this.props.auth.name}님의 Seed : ${this.props.auth.seed}`}
+            </a>
           </Fragment>
         );
     }

@@ -38,7 +38,7 @@ class TrackList extends React.Component {
             <div className="ten wide column">
               <div className="ui big divided list">
                 <div className="item">
-                  <img className="ui tiny image" src="images/album1.jpg" alt="artwork"/>
+                  <img className="ui tiny image" src={song.artwork || 'images/LP.png'} alt="artwork"/>
                   <div className="content">
                     <div className="header">{song.title}</div>
                     {song.artist}
