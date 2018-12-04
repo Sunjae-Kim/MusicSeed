@@ -3,6 +3,7 @@ const expressFileupload = require('express-fileupload');
 const passport = require('passport');
 const cookieSession = require('cookie-session');
 const GoogleStrategy = require('passport-google-oauth20');
+var flash = require('connect-flash');
 const dumpdata = require('./public/dumpdata');
 const helmet = require('helmet');
 const debug = require('debug')('app:development');
@@ -52,6 +53,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 

@@ -5,16 +5,14 @@ const { User } = require('../models/user');
 const express = require("express");
 const router = express.Router();
 
-router.get('/login', (req, res) => {
-    User.find(req.body)
-        .then(user => {
-
-        });
-});
+router.post('/login', passport.authenticate('local', {failureRedirect: '/register', failureFlash: true}),
+    function (req, res) {
+        res.send({redirect:'/'});
+    });
 
 router.get('/test', (req, res) => {
     res.send('testing');
-})
+});
 
 router.get('/logout', (req, res) => {
     req.logout();
