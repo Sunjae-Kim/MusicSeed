@@ -7,10 +7,12 @@ import {
 
 const songsReducer = () => {
   return [
-    {id: 1, title: 'Happy Hacking 1', artist: 'neo', duration: '3:56', file: 'songs/song-1.mp3' },
-    {id: 2, title: 'Happy Hacking 2', artist: 'neo', duration: '3:56', file: 'http://tegos.kz/new/mp3_full/Redfoo_-_New_Thang.mp3' },
-    {id: 3, title: 'Happy Hacking 3', artist: 'neo', duration: '3:56', file: 'songs/song-1.mp3' },
-    {id: 4, title: 'Happy Hacking 4', artist: 'neo', duration: '3:56', file: 'songs/song-1.mp3' },
+    {id: 1, title: '축배를 들어라', artist: '달빛요정', duration: '3:15', file: 'songs/song-1.mp3', 
+    artwork: ''},
+    {id: 2, title: 'New Thang', artist: 'Redfoo', duration: '4:02', file: 'http://tegos.kz/new/mp3_full/Redfoo_-_New_Thang.mp3', 
+    artwork: 'https://upload.wikimedia.org/wikipedia/en/thumb/1/1b/Redfoo_-_New_Thang_%28cover%29.jpg/220px-Redfoo_-_New_Thang_%28cover%29.jpg' },
+    {id: 3, title: 'Happy Hacking 3', artist: 'neo', duration: '3:56', file: 'songs/song-1.mp3' , artwork: ''},
+    {id: 4, title: 'Happy Hacking 4', artist: 'neo', duration: '3:56', file: 'songs/song-1.mp3' , artwork: ''},
   ];
 };
 

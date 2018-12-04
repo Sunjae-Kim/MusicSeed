@@ -22,6 +22,8 @@ class BarPlayer extends React.Component {
     if(this.props.order && this.props.order.status === 'play'){
       const audio = document.querySelector('#audioPlayer');
       console.log(audio);
+      console.log(audio.paused);
+      audio.load();
       audio.play();
       axios.post('/'+this.props.auth.id+'/seed/'+5, {artist_id:this.props.order.song.main_artist_id});
     }
