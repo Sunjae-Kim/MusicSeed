@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { songOrder } from "../../actions";
 import "../../styles/BarPlayer.css";
 import { buttonPaths } from "../../utility";
+import _ from 'underscore';
+import moment from 'moment';
 import axios from "axios";
 
 class BarPlayer extends React.Component {
@@ -10,7 +12,10 @@ class BarPlayer extends React.Component {
     return (
       <Fragment>
         <audio controls id="audioPlayer">
-          <source src={ !this.props.order ? null : this.props.order.song.file} type="audio/mpeg" />
+          <source
+            src={!this.props.order ? null : this.props.order.song.file}
+            type="audio/mpeg"
+          />
           Your browser does not support the audio element.
         </audio>
         {this.renderSong(this.props.order)}
@@ -18,24 +23,29 @@ class BarPlayer extends React.Component {
     );
   }
 
-  componentDidUpdate(){
-    if(this.props.order && this.props.order.status === 'play'){
-      const audio = document.querySelector('#audioPlayer');
-      const source = document.querySelector('source');
-      const src = this.props.order.song.file || this.props.order.song.music_path;
-      if(!source.hasAttribute('src')){
-        source.setAttribute('src', src );
-      }
-      if(this.props.order.status === 'pause'){
-        audio.play();
-      }
-      if(this.props.order.status === 'stop'){
-        audio.load();
-        audio.play();
-      }
-      if(audio.currentSrc !== src){
-        audio.load();
-        audio.play();
+  componentDidUpdate() {
+    const audio = document.querySelector("#audioPlayer");
+    console.log(this.props.order);
+    if (this.props.order) {
+      console.log('in')
+      switch (this.props.order.status) {
+        case "load":
+          audio.load();
+          const order = _.identity(this.props.order)
+          order.status = 'play';
+          this.props.songOrder(order);
+          break;
+        case "play":
+          audio.play();
+          break;
+        case "pause":
+          audio.pause();
+          break;
+        case "stop":
+          audio.load();
+          audio.pause();
+          break;
+        default:
       }
     }
   }
@@ -44,20 +54,16 @@ class BarPlayer extends React.Component {
     const newOrder = {
       song: order.song
     };
-    const audio = document.querySelector('#audioPlayer');
+    const audio = document.querySelector("#audioPlayer");
     switch (button) {
       case buttonPaths.pause:
         newOrder.status = "pause";
-        audio.pause();
         break;
       case buttonPaths.play:
         newOrder.status = "play";
-        audio.play();
         break;
       case buttonPaths.stop:
         newOrder.status = "stop";
-        await audio.load();
-        audio.pause();
         break;
       default:
     }
@@ -118,7 +124,7 @@ const mapStateToProps = state => {
   return {
     order: state.songOrdered,
     path: state.getPath,
-      auth: state.auth,
+    auth: state.auth
   };
 };
 

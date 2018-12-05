@@ -9,28 +9,29 @@ class MediaButtons extends React.Component {
   async onSearchPlayButtonClick(song){
     const order = {
       song,
-      status : 'play'
+      status : 'load'
     };
-    await this.props.songOrder(order);
-    await this.props.addSongToPlaylist(song);
-    // const audio = await document.querySelector('#audioPlayer');
-    // audio.play()
+    const source = await document.querySelector('source');
+    const src = order.song.file;
+    if(!source.hasAttribute('src')){
+      source.setAttribute('src', src );
+    }
+    this.props.songOrder(order);
+    this.props.addSongToPlaylist(song);
   }
 
   async onPlaylistPlayButtonClick(song){
     const order = {
       song,
-      status : 'play'
+      status : 'load'
     };
-    await this.props.songOrder(order);
-    // const audio = await document.querySelector('#audioPlayer');
-    // audio.play()
+    const source = await document.querySelector('source');
+    const src = order.song.file;
+    if(!source.hasAttribute('src')){
+      source.setAttribute('src', src );
+    }
+    this.props.songOrder(order);
   }
-
-  componentDidUpdate(){
-    console.log(this.props.order);
-  }
-
 
   renderSearchButtons(){
     return(
