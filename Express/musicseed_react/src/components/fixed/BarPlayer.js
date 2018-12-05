@@ -3,15 +3,17 @@ import { connect } from "react-redux";
 import { songOrder } from "../../actions";
 import "../../styles/BarPlayer.css";
 import { buttonPaths } from "../../utility";
-import _ from 'underscore';
-import moment from 'moment';
+import _ from "underscore";
+import moment from "moment";
 import axios from "axios";
 
 class BarPlayer extends React.Component {
   render() {
     return (
       <Fragment>
-        <audio controls id="audioPlayer">
+        <audio controls id="audioPlayer" 
+        onDurationChange={e => this.setState({ audioDuration: e.currentTarget.duration })}
+        >
           <source
             src={!this.props.order ? null : this.props.order.song.file}
             type="audio/mpeg"
@@ -23,22 +25,30 @@ class BarPlayer extends React.Component {
     );
   }
 
+  constructor(props){
+    super(props);
+
+    this.state = {
+      audioDuration: 0,
+    }
+  }
+
   componentDidUpdate() {
     const audio = document.querySelector("#audioPlayer");
     console.log(this.props.order);
     if (this.props.order) {
-      console.log('in')
       switch (this.props.order.status) {
         case "load":
           audio.load();
-          const order = _.identity(this.props.order)
-          order.status = 'play';
+          this.audioDuration = audio.duration;
+          const order = _.identity(this.props.order);
+          order.status = "play";
           this.props.songOrder(order);
           break;
-        case "play":
+          case "play":
           audio.play();
           break;
-        case "pause":
+          case "pause":
           audio.pause();
           break;
         case "stop":
@@ -108,7 +118,16 @@ class BarPlayer extends React.Component {
                   <h3>{order.song.title}</h3>
                 </div>
                 <div className="right float content">
-                  <h4>{order.song.artist}</h4>
+                  <h4>
+                    {order.song.artist}{" "}
+                    <span className="duration">
+                      {" "}
+                      {moment()
+                        .startOf("day")
+                        .seconds(this.state.audioDuration)
+                        .format("mm:ss")}
+                    </span>
+                  </h4>
                 </div>
               </div>
               <Fragment>{this.renderButtons(order)}</Fragment>
