@@ -1,4 +1,4 @@
-export const setTitleSongReducer = (index=1, action) => {
+export const getTitleSong = (index=1, action) => {
   switch (action.type) {
     case 'SET_TITLE_SONG':
       return action.payload;
@@ -7,7 +7,7 @@ export const setTitleSongReducer = (index=1, action) => {
   }
 };
 
-export const albumReducer = (album=null, action) => {
+export const getAlbum = (album=null, action) => {
   switch(action.type){
     case 'SET_ALBUM':
       return action.payload;
@@ -16,7 +16,7 @@ export const albumReducer = (album=null, action) => {
   }
 };
 
-export const albumDescriptionReducer = (description='', action) => {
+export const getAlbumDescription = (description='', action) => {
   switch(action.type){
     case 'SET_ALBUM_DESCRIPTION':
       return action.payload;
@@ -25,7 +25,7 @@ export const albumDescriptionReducer = (description='', action) => {
   }
 };
 
-export const albumDetailReducer = (albumDetail=null, action) => {
+export const getAlbumDetail = (albumDetail=null, action) => {
   switch(action.type){
     case 'SET_ALBUM_DETAIL':
       return action.payload;
