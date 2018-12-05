@@ -63,10 +63,6 @@ class TrackList extends React.Component {
       </Fragment>
     )
   }
-
-
-
-
 }
 
 const mapStateToProps = state => {

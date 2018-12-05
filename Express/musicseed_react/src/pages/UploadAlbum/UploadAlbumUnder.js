@@ -20,6 +20,7 @@ class UploadAlbumUnder extends Component {
         artist: '',
         genres: [],
         file: '',
+        duration: 0,
         fileStatus: { 
           selectedFile: null, 
           loaded: 0, 
@@ -35,6 +36,7 @@ class UploadAlbumUnder extends Component {
     this.onChange.onTitleChange = this.onChange.onTitleChange.bind(this);
     this.onChange.onArtistChange = this.onChange.onArtistChange.bind(this);
     this.onChange.onFileInputChange = this.onChange.onFileInputChange.bind(this);
+    this.onChange.onAudioDurationChange = this.onChange.onAudioDurationChange.bind(this);
     this.onChange.onGenresChange = this.onChange.onGenresChange.bind(this);
     this.onChange.onParticipantsNameChange = this.onChange.onParticipantsNameChange.bind(this);
     this.onChange.onParticipantsRoleChange = this.onChange.onParticipantsRoleChange.bind(this);
@@ -57,13 +59,13 @@ class UploadAlbumUnder extends Component {
     const tracks = this.state.tracks.map( track => {
       return {
         title: track.title,
-        music_path: `songs/${track.file}`,
-        artwork_path: `${this.props.getAlbumDetail.artwork}`,
+        file: `songs/${track.file}`,
+        artwork: `${this.props.getAlbumDetail.artwork}`,
         genre: track.genres,
-        award: this.props.getAlbumDetail.rewards,
+        reward: this.props.getAlbumDetail.rewards,
         title_song: this.props.titleSong === track.index,
         main_artist_id: this.props.auth._id,
-        playtime: ''
+        duration: track.duration
       }
     })
 
@@ -81,7 +83,7 @@ class UploadAlbumUnder extends Component {
     await this.props.setAlbum(
       album
     );
-    await axios.post('/api/albums/', album);
+    // await axios.post('/api/albums/', album);
     console.log(this.props.getAlbum);
     this.setRedirect();
   };
@@ -95,6 +97,7 @@ class UploadAlbumUnder extends Component {
       artist: '',
       genres: [],
       file: '',
+      duration: 0,
       fileStatus: { 
         selectedFile: null, 
         loaded: 0, 
@@ -118,7 +121,6 @@ class UploadAlbumUnder extends Component {
 
     return (
       <Form className={'under_div'}>
-      <audio id="dummy_audio"><source src="" type="" /></audio>
         <div className={'under_field tracks'}>
           { children }
           <div className="under_button_area">
@@ -148,7 +150,6 @@ class UploadAlbumUnder extends Component {
       this.setState({tracks: copy});
     },
     onFileInputChange(event, index) {
-      console.log(event.target.files[0]);
       const copy = _.identity(this.state.tracks);
       const fullName = event.target.value;
       copy[index-1].fileStatus.selectedFile = event.target.files[0];
@@ -169,8 +170,16 @@ class UploadAlbumUnder extends Component {
           },
         })
         .then(res => {
-          console.log(res.statusText)
+          const source = document.querySelector(`#dummy_source${index}`)
+          const audio = document.querySelector(`#dummy_audio${index}`)
+          source.setAttribute('src', `songs/${copy[index-1].file}`);
+          audio.load();
         })
+    },
+    onAudioDurationChange(event, index){
+      const copy = _.identity(this.state.tracks);
+      copy[index-1].duration = event.currentTarget.duration;
+      this.setState({tracks: copy});
     },
     async onGenresChange(index){
       const copy = _.identity(this.state.tracks);

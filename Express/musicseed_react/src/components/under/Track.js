@@ -67,6 +67,12 @@ class Track extends Component {
             />
             <label className="custom-file-label" htmlFor="customFile">
               { this.props.state.tracks[index-1].file || 'Click to choose the file' }
+              <audio 
+                id={`dummy_audio${index}`}
+                onDurationChange={ e => this.props.onChange.onAudioDurationChange(e, index)}
+              >
+                <source id={`dummy_source${index}`} src="" type="audio/mpeg" />
+              </audio>
             </label>
           </div>
           <Grid>
