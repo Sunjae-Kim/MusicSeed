@@ -70,7 +70,7 @@ class MediaButtons extends React.Component {
         </a>
         <a
           href="#"
-          onClick={() => this.props.deleteSongFromPlaylist(this.props.song)}
+          onClick={() => this.props.deleteSongFromPlaylist(this.props.index)}
         >
           <img src="images/mediabuttons/deletefromplaylist.png" alt="delete button"/>
         </a>

@@ -75,10 +75,10 @@ export const addSongToPlaylist = song => {
   };
 };
 
-export const deleteSongFromPlaylist = song => {
+export const deleteSongFromPlaylist = index => {
   return {
     type: "DELETE_FROM_PLAYLIST",
-    payload: song
+    payload: index
   };
 };
 
