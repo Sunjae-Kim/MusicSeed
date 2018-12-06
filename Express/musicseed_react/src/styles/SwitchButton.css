@@ -14,13 +14,20 @@
     width: 3vh;
 }
 
-.switch_button a {
+.switch_button button, .switch_button a {
     color: #5E5D83;
     display: flex;
     flex-direction: column;
     align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
 }
 
-.switch_button a:hover {
+.switch_button button:focus {
+    outline:0;
+}
+
+.switch_button button:hover, .switch_button a:hover {
     color: #D4D4E2;
 }

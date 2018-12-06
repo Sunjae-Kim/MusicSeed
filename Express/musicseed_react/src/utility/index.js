@@ -1,5 +1,3 @@
-import _ from 'underscore';
-
 export const commentsSort = comments => {
   const newComments = comments;
   newComments.sort((a, b) => {
@@ -30,11 +28,3 @@ export const filterSonglist = (songlist, keyword) => {
     return flag;
   })
 };
-
-export const playTheSong = async (path) => {
-  const audio = await document.querySelector('#audioPlayer');
-  const source = await document.querySelector('#audioPlayer > source');
-  await source.setAttribute('src', `songs/${path}`);
-  console.log(audio);
-  audio.play();
-}

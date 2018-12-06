@@ -22,12 +22,11 @@ class SwitchButton extends Component {
     this.setButton();
     return(
       <div className={'switch_button'}>
-        <a
-          href={'#'}
+        <button
           onClick={() => this.props.changePlayerState(!this.props.playerState)}
         >
           <img src="images/mediabuttons/switch.png" alt="switch button"/> <span>&nbsp; {this.button} </span>
-        </a>
+        </button>
       </div>
     )
   }

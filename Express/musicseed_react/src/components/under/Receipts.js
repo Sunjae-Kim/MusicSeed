@@ -1,6 +1,5 @@
 import React, {Component, Fragment} from 'react';
 import {Icon, Menu, Table} from "semantic-ui-react";
-import moment from 'moment';
 import faker from 'faker';
 
 class Receipts extends Component {

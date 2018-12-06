@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom'
 import { checkEmail, checkPassword, confirmPassword, checkName, checkNickname } from "../../actions/index";
 import axios from "axios";
 
@@ -31,7 +30,7 @@ class Register extends Component {
             };
             await axios.post('/api/users', user)
                 .then(function (response) {
-                    if (response.data.redirect == '/login') {
+                    if (response.data.redirect === '/login') {
                         window.location = "/login";
                     } else{
                         window.location = '/register';

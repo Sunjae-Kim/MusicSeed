@@ -14,7 +14,7 @@ class Login extends Component {
         };
         await axios.post('/auth/login', user)
             .then(function (response) {
-            if (response.data.redirect == '/') {
+            if (response.data.redirect === '/') {
                 window.location = "/";
             } else{
                 window.location = '/login';
