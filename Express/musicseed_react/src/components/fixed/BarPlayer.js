@@ -27,7 +27,6 @@ class BarPlayer extends React.Component {
 
   constructor(props){
     super(props);
-
     this.state = {
       audioDuration: 0,
     }
@@ -62,9 +61,9 @@ class BarPlayer extends React.Component {
 
   setSongStatus = async (order, button) => {
     const newOrder = {
-      song: order.song
+      song: order.song,
+      index: order.index,
     };
-    const audio = document.querySelector("#audioPlayer");
     switch (button) {
       case buttonPaths.pause:
         newOrder.status = "pause";
@@ -143,7 +142,7 @@ const mapStateToProps = state => {
   return {
     order: state.songOrdered,
     path: state.getPath,
-    auth: state.auth
+    getPlaylist: state.getPlaylist,
   };
 };
 

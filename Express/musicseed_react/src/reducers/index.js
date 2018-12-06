@@ -90,7 +90,7 @@ export default combineReducers({
   searchedSongs: songsReducer,
   selectedSong: getSelectedSong,
   searchedKeyword: getSearchedKeyword,
-  playlist: getPlaylist,
+  getPlaylist: getPlaylist,
   downloadedSong: getDownloadedSong,
   songOrdered: getOrderedSong,
   getPath: getPath,

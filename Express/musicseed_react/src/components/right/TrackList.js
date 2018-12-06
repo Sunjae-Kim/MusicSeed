@@ -20,8 +20,8 @@ class TrackList extends React.Component {
       default:
         this.songs =
           this.props.searchedKeyword !== ''
-            ? filterSonglist(this.props.playlist, this.props.searchedKeyword)
-            : this.props.playlist;
+            ? filterSonglist(this.props.getPlaylist, this.props.searchedKeyword)
+            : this.props.getPlaylist;
     }
   }
 
@@ -49,7 +49,7 @@ class TrackList extends React.Component {
                 </div>
               </div>
             </div>
-            <MediaButtons song={song}/>
+            <MediaButtons song={song} index={index}/>
           </div>
         </div>
       )
@@ -69,7 +69,7 @@ const mapStateToProps = state => {
   return {
     searchedSongs: state.searchedSongs,
     searchedKeyword: state.searchedKeyword,
-    playlist: state.playlist,
+    getPlaylist: state.getPlaylist,
     playerState: state.playerState,
   }
 };

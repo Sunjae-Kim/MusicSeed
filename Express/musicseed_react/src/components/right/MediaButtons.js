@@ -6,9 +6,11 @@ import '../../styles/MediaButtons.css';
 class MediaButtons extends React.Component {
 
   async onSearchPlayButtonClick(song){
+    this.props.addSongToPlaylist(song);
     const order = {
       song,
-      status : 'load'
+      status : 'load',
+      index : this.props.getPlaylist.length
     };
     const source = await document.querySelector('source');
     const src = order.song.file;
@@ -16,13 +18,14 @@ class MediaButtons extends React.Component {
       source.setAttribute('src', src );
     }
     this.props.songOrder(order);
-    this.props.addSongToPlaylist(song);
+    console.log(this.props.order);
   }
 
   async onPlaylistPlayButtonClick(song){
     const order = {
       song,
-      status : 'load'
+      status : 'load',
+      index : this.props.index,
     };
     const source = await document.querySelector('source');
     const src = order.song.file;
@@ -30,6 +33,7 @@ class MediaButtons extends React.Component {
       source.setAttribute('src', src );
     }
     this.props.songOrder(order);
+    console.log(this.props.order);
   }
 
   renderSearchButtons(){
@@ -97,7 +101,8 @@ class MediaButtons extends React.Component {
 const mapStateToProps = state => {
   return {
     playerState: state.playerState,
-    order: state.songOrdered
+    order: state.songOrdered,
+    getPlaylist: state.getPlaylist,
   }
 };
 
