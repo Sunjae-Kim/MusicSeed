@@ -14,9 +14,7 @@ class BarPlayer extends React.Component {
         <audio
           controls
           id="audioPlayer"
-          onDurationChange={e =>
-            this.setState({ audioDuration: e.currentTarget.duration })
-          }
+          onDurationChange={e => this.onAudioDurationChange(e)}
         >
           <source
             src={!this.props.order ? null : this.props.order.song.file}
@@ -34,6 +32,12 @@ class BarPlayer extends React.Component {
     this.state = {
       audioDuration: 0
     };
+  }
+
+  onAudioDurationChange(e) {
+    if (this.props.order.status !== "stop") {
+      this.setState({ audioDuration: e.currentTarget.duration });
+    }
   }
 
   componentDidUpdate() {
@@ -96,8 +100,10 @@ class BarPlayer extends React.Component {
           newOrder.song = this.props.getPlaylist[order.index - 1];
           newOrder.index = order.index - 1;
         } else {
-          newOrder.song = this.props.getPlaylist[this.props.getPlaylist.length-1];
-          newOrder.index = this.props.getPlaylist.length-1;
+          newOrder.song = this.props.getPlaylist[
+            this.props.getPlaylist.length - 1
+          ];
+          newOrder.index = this.props.getPlaylist.length - 1;
         }
         newOrder.status = "load";
         break;
@@ -111,7 +117,7 @@ class BarPlayer extends React.Component {
       order.status === "play" ? buttonPaths.pause : buttonPaths.play;
     return (
       <div className="three wide column">
-        <a 
+        <a
           href={"#"}
           onClick={() => this.setSongStatus(order, buttonPaths.prev)}
         >
@@ -132,10 +138,7 @@ class BarPlayer extends React.Component {
         >
           <img src={buttonPaths.next} alt="next button" />
         </a>
-        <a 
-          href={"#"}
-          
-        >
+        <a href={"#"}>
           <img src={buttonPaths.list} alt="list button" />
         </a>
       </div>
