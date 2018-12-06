@@ -47,3 +47,8 @@ audio {
     visibility: hidden;
     height: 0px;
 }
+
+.barplayer .fa {
+    font-size: 15px;
+    margin-left: 20px;
+}

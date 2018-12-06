@@ -15,6 +15,7 @@ class BarPlayer extends React.Component {
           controls
           id="audioPlayer"
           onDurationChange={e => this.onAudioDurationChange(e)}
+          onEnded={this.onAudioEnded}
         >
           <source
             src={!this.props.order ? null : this.props.order.song.file}
@@ -30,14 +31,35 @@ class BarPlayer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      audioDuration: 0
+      audioDuration: 0,
+      isMuted: false,
     };
+
+    this.onAudioEnded = this.onAudioEnded.bind(this);
+    this.onMuteButtonChange = this.onMuteButtonChange.bind(this);
+    this.renderMuteButton = this.renderMuteButton.bind(this);
   }
 
   onAudioDurationChange(e) {
     if (this.props.order.status !== "stop") {
       this.setState({ audioDuration: e.currentTarget.duration });
     }
+  }
+
+  onAudioEnded() {
+    console.log('song ended');
+    const order = this.props.order;
+    const newOrder = {};
+    const flag = this.props.getPlaylist[order.index + 1] ? true : false;
+    if (flag) {
+      newOrder.song = this.props.getPlaylist[order.index + 1];
+      newOrder.index = order.index + 1;
+    } else {
+      newOrder.song = this.props.getPlaylist[0];
+      newOrder.index = 0;
+    }
+    newOrder.status = "load";
+    this.props.songOrder(newOrder);
   }
 
   componentDidUpdate() {
@@ -165,6 +187,10 @@ class BarPlayer extends React.Component {
                         .seconds(this.state.audioDuration)
                         .format("mm:ss")}
                     </span>
+                    <i 
+                      className={this.renderMuteButton()}
+                      onClick={this.onMuteButtonChange}
+                    />
                   </h4>
                 </div>
               </div>
@@ -175,7 +201,19 @@ class BarPlayer extends React.Component {
       );
     }
   };
+  onMuteButtonChange = async () => {
+    const audio = document.querySelector("#audioPlayer");
+    await this.setState({ isMuted : !this.state.isMuted })
+    this.state.isMuted ? audio.muted = true : audio.muted = false;
+  }
+  renderMuteButton = () => {
+    const button = this.state.isMuted ? 'fa fa-volume-mute' : 'fa fa-volume-up';
+    return button;
+  }
 }
+
+
+
 
 const mapStateToProps = state => {
   return {
