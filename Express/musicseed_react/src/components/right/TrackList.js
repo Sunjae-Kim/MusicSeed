@@ -32,8 +32,12 @@ class TrackList extends React.Component {
   renderList() {
     this.setSonglist();
     return this.songs.map((song, index) => {
+      let isPlaying = '';
+      if(this.props.order && !this.props.playerState){
+        isPlaying = this.props.order.index === index ? 'playing' : '';
+      }
       return (
-        <div key={index} className={'tracklist ui grid'}>
+        <div key={index} className={`tracklist ui grid ${isPlaying}`}>
           <div className="row">
             <div className="ten wide column">
               <div className="ui big divided list">
@@ -71,6 +75,7 @@ const mapStateToProps = state => {
     searchedKeyword: state.searchedKeyword,
     getPlaylist: state.getPlaylist,
     playerState: state.playerState,
+    order: state.songOrdered,
   }
 };
 
