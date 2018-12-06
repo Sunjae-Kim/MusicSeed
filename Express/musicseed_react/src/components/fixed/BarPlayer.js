@@ -11,8 +11,12 @@ class BarPlayer extends React.Component {
   render() {
     return (
       <Fragment>
-        <audio controls id="audioPlayer" 
-        onDurationChange={e => this.setState({ audioDuration: e.currentTarget.duration })}
+        <audio
+          controls
+          id="audioPlayer"
+          onDurationChange={e =>
+            this.setState({ audioDuration: e.currentTarget.duration })
+          }
         >
           <source
             src={!this.props.order ? null : this.props.order.song.file}
@@ -25,11 +29,11 @@ class BarPlayer extends React.Component {
     );
   }
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-      audioDuration: 0,
-    }
+      audioDuration: 0
+    };
   }
 
   componentDidUpdate() {
@@ -44,10 +48,10 @@ class BarPlayer extends React.Component {
           order.status = "play";
           this.props.songOrder(order);
           break;
-          case "play":
+        case "play":
           audio.play();
           break;
-          case "pause":
+        case "pause":
           audio.pause();
           break;
         case "stop":
@@ -62,8 +66,9 @@ class BarPlayer extends React.Component {
   setSongStatus = async (order, button) => {
     const newOrder = {
       song: order.song,
-      index: order.index,
+      index: order.index
     };
+    let flag;
     switch (button) {
       case buttonPaths.pause:
         newOrder.status = "pause";
@@ -73,6 +78,28 @@ class BarPlayer extends React.Component {
         break;
       case buttonPaths.stop:
         newOrder.status = "stop";
+        break;
+      case buttonPaths.next:
+        flag = this.props.getPlaylist[order.index + 1] ? true : false;
+        if (flag) {
+          newOrder.song = this.props.getPlaylist[order.index + 1];
+          newOrder.index = order.index + 1;
+        } else {
+          newOrder.song = this.props.getPlaylist[0];
+          newOrder.index = 0;
+        }
+        newOrder.status = "load";
+        break;
+      case buttonPaths.prev:
+        flag = this.props.getPlaylist[order.index - 1] ? true : false;
+        if (flag) {
+          newOrder.song = this.props.getPlaylist[order.index - 1];
+          newOrder.index = order.index - 1;
+        } else {
+          newOrder.song = this.props.getPlaylist[this.props.getPlaylist.length-1];
+          newOrder.index = this.props.getPlaylist.length-1;
+        }
+        newOrder.status = "load";
         break;
       default:
     }
@@ -84,7 +111,10 @@ class BarPlayer extends React.Component {
       order.status === "play" ? buttonPaths.pause : buttonPaths.play;
     return (
       <div className="three wide column">
-        <a href={"#"}>
+        <a 
+          href={"#"}
+          onClick={() => this.setSongStatus(order, buttonPaths.prev)}
+        >
           <img src={buttonPaths.prev} alt="previous button" />
         </a>
         <a href={"#"} onClick={() => this.setSongStatus(order, buttonPath)}>
@@ -96,10 +126,16 @@ class BarPlayer extends React.Component {
         >
           <img src={buttonPaths.stop} alt="stop button" />
         </a>
-        <a href={"#"}>
+        <a
+          href={"#"}
+          onClick={() => this.setSongStatus(order, buttonPaths.next)}
+        >
           <img src={buttonPaths.next} alt="next button" />
         </a>
-        <a href={"#"}>
+        <a 
+          href={"#"}
+          
+        >
           <img src={buttonPaths.list} alt="list button" />
         </a>
       </div>
@@ -142,7 +178,7 @@ const mapStateToProps = state => {
   return {
     order: state.songOrdered,
     path: state.getPath,
-    getPlaylist: state.getPlaylist,
+    getPlaylist: state.getPlaylist
   };
 };
 
