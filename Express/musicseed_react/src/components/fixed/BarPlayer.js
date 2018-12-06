@@ -32,7 +32,7 @@ class BarPlayer extends React.Component {
     super(props);
     this.state = {
       audioDuration: 0,
-      isMuted: false,
+      isMuted: false
     };
 
     this.onAudioEnded = this.onAudioEnded.bind(this);
@@ -47,7 +47,7 @@ class BarPlayer extends React.Component {
   }
 
   onAudioEnded() {
-    console.log('song ended');
+    console.log("song ended");
     const order = this.props.order;
     const newOrder = {};
     const flag = this.props.getPlaylist[order.index + 1] ? true : false;
@@ -187,7 +187,7 @@ class BarPlayer extends React.Component {
                         .seconds(this.state.audioDuration)
                         .format("mm:ss")}
                     </span>
-                    <i 
+                    <i
                       className={this.renderMuteButton()}
                       onClick={this.onMuteButtonChange}
                     />
@@ -201,19 +201,17 @@ class BarPlayer extends React.Component {
       );
     }
   };
+  
   onMuteButtonChange = async () => {
     const audio = document.querySelector("#audioPlayer");
-    await this.setState({ isMuted : !this.state.isMuted })
-    this.state.isMuted ? audio.muted = true : audio.muted = false;
-  }
+    await this.setState({ isMuted: !this.state.isMuted });
+    this.state.isMuted ? (audio.muted = true) : (audio.muted = false);
+  };
   renderMuteButton = () => {
-    const button = this.state.isMuted ? 'fa fa-volume-mute' : 'fa fa-volume-up';
+    const button = this.state.isMuted ? "fa fa-volume-mute" : "fa fa-volume-up";
     return button;
-  }
+  };
 }
-
-
-
 
 const mapStateToProps = state => {
   return {

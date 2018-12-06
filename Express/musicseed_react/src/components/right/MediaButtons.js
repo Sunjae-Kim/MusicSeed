@@ -2,6 +2,7 @@ import React, {Fragment} from 'react';
 import {connect} from 'react-redux';
 import {addSongToPlaylist, downloadSong, songOrder, deleteSongFromPlaylist} from "../../actions/index";
 import '../../styles/MediaButtons.css';
+import _ from 'underscore';
 
 class MediaButtons extends React.Component {
 
@@ -60,6 +61,13 @@ class MediaButtons extends React.Component {
     );
   }
 
+  onDeleteFromListButtonClick(){
+    const newOrder = _.identity(this.props.order);
+    newOrder.index = newOrder.index > 0 ? newOrder.index -1 : newOrder.index = 0;
+    this.props.deleteSongFromPlaylist(this.props.index);
+    this.props.songOrder(newOrder);
+  }
+
   renderPlaylistButtons(){
     return(
       <div className={'mediabuttons playlist six wide column'}>
@@ -70,7 +78,7 @@ class MediaButtons extends React.Component {
         </a>
         <a
           href="#"
-          onClick={() => this.props.deleteSongFromPlaylist(this.props.index)}
+          onClick={() => this.onDeleteFromListButtonClick(this.props.index)}
         >
           <img src="images/mediabuttons/deletefromplaylist.png" alt="delete button"/>
         </a>
