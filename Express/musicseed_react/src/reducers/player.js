@@ -21,9 +21,15 @@ export const getPlaylist = (playlist = [], action) => {
     case "ADD_TO_PLAYLIST":
       return playlist.concat([action.payload]);
     case "DELETE_FROM_PLAYLIST":
-      return playlist.filter((song, index) => {
+      const newList = playlist.filter((song, index) => {
+        console.log(`index: ${index}`);
+        console.log(`action.payload: ${action.payload}`);
         return index !== action.payload;
       });
+      console.log(newList);
+      return newList;
+    case "SET_PLAYLIST":
+      return action.payload;
     default:
       return playlist;
   }

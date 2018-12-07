@@ -75,6 +75,13 @@ export const addSongToPlaylist = song => {
   };
 };
 
+export const setPlaylist = list => {
+  return {
+    type: "SET_PLAYLIST",
+    payload: list,
+  }
+}
+
 export const deleteSongFromPlaylist = index => {
   return {
     type: "DELETE_FROM_PLAYLIST",

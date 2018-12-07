@@ -50,12 +50,18 @@ class BarPlayer extends React.Component {
     console.log("song ended");
     const order = this.props.order;
     const newOrder = {};
-    const flag = this.props.getPlaylist[order.index + 1] ? true : false;
+    const flag = this.props.getPlaylist.find(
+      song => song.index === order.index + 1
+    )
+      ? true
+      : false;
     if (flag) {
-      newOrder.song = this.props.getPlaylist[order.index + 1];
+      newOrder.song = this.props.getPlaylist.find(
+        song => song.index === order.index + 1
+      );
       newOrder.index = order.index + 1;
     } else {
-      newOrder.song = this.props.getPlaylist[0];
+      newOrder.song = this.props.getPlaylist.find(song => song.index === 0);
       newOrder.index = 0;
     }
     newOrder.status = "load";
@@ -106,25 +112,36 @@ class BarPlayer extends React.Component {
         newOrder.status = "stop";
         break;
       case buttonPaths.next:
-        flag = this.props.getPlaylist[order.index + 1] ? true : false;
+        flag = this.props.getPlaylist.find(
+          song => song.index === order.index + 1
+        )
+          ? true
+          : false;
         if (flag) {
-          newOrder.song = this.props.getPlaylist[order.index + 1];
+          newOrder.song = this.props.getPlaylist.find(
+            song => song.index === order.index + 1
+          );
           newOrder.index = order.index + 1;
         } else {
-          newOrder.song = this.props.getPlaylist[0];
+          newOrder.song = this.props.getPlaylist.find(song => song.index === 0);
           newOrder.index = 0;
         }
         newOrder.status = "load";
+        this.props.songOrder(newOrder);
         break;
       case buttonPaths.prev:
-        flag = this.props.getPlaylist[order.index - 1] ? true : false;
+        flag = this.props.getPlaylist.find(
+          song => song.index === order.index - 1
+        ) ? true : false;
         if (flag) {
-          newOrder.song = this.props.getPlaylist[order.index - 1];
+          newOrder.song = this.props.getPlaylist.find(
+            song => song.index === order.index - 1
+          );
           newOrder.index = order.index - 1;
         } else {
-          newOrder.song = this.props.getPlaylist[
-            this.props.getPlaylist.length - 1
-          ];
+          newOrder.song = this.props.getPlaylist.find(
+            song => song.index === this.props.getPlaylist.length - 1
+          );
           newOrder.index = this.props.getPlaylist.length - 1;
         }
         newOrder.status = "load";
@@ -201,7 +218,7 @@ class BarPlayer extends React.Component {
       );
     }
   };
-  
+
   onMuteButtonChange = async () => {
     const audio = document.querySelector("#audioPlayer");
     await this.setState({ isMuted: !this.state.isMuted });
