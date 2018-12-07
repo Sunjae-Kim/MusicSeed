@@ -34,7 +34,7 @@ class TrackList extends React.Component {
     return this.songs.map((song, index) => {
       let isPlaying = '';
       if(this.props.order && !this.props.playerState){
-        isPlaying = this.props.order.index === index ? 'playing' : '';
+        isPlaying = this.props.order.index === song.index ? 'playing' : '';
       }
       return (
         <div key={index} className={`tracklist ui grid ${isPlaying}`}>

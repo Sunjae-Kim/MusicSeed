@@ -7,6 +7,7 @@ import _ from 'underscore';
 class MediaButtons extends React.Component {
 
   async onSearchPlayButtonClick(song){
+    song.index = this.props.getPlaylist.length;
     this.props.addSongToPlaylist(song);
     const order = {
       song,
@@ -37,6 +38,11 @@ class MediaButtons extends React.Component {
     console.log(this.props.order);
   }
 
+  onAddSongToPlaylistClick(song){
+    song.index = this.props.getPlaylist.length;
+    this.props.addSongToPlaylist(song)
+  }
+
   renderSearchButtons(){
     return(
       <div className={'mediabuttons six wide column'}>
@@ -47,7 +53,7 @@ class MediaButtons extends React.Component {
         </a>
         <a
           href="#"
-          onClick={() => this.props.addSongToPlaylist(this.props.song)}
+          onClick={() => this.onAddSongToPlaylistClick(this.props.song)}
         >
           <img src="images/mediabuttons/addtoplaylist.png" alt="add to playlist button"/>
         </a>
@@ -62,10 +68,17 @@ class MediaButtons extends React.Component {
   }
 
   onDeleteFromListButtonClick(){
-    const newOrder = _.identity(this.props.order);
-    newOrder.index = newOrder.index > 0 ? newOrder.index -1 : newOrder.index = 0;
-    this.props.deleteSongFromPlaylist(this.props.index);
-    this.props.songOrder(newOrder);
+      const newOrder = _.identity(this.props.order);
+    // if(this.props.index !== this.props.order.index){
+      newOrder.index = newOrder.index > 0 ? newOrder.index -1 : newOrder.index = 0;
+      this.props.deleteSongFromPlaylist(this.props.index);
+      this.props.songOrder(newOrder);
+    // } else {
+    //   if(this.props.index === this.)
+    //   this.props.deleteSongFromPlaylist(this.props.index);
+    //   newOrder.index = this.props.index
+
+    // }
   }
 
   renderPlaylistButtons(){
