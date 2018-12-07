@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { connect } from "react-redux";
-import { songOrder } from "../../actions";
+import { songOrder, setPlaylist } from "../../actions";
 import "../../styles/BarPlayer.css";
 import { buttonPaths } from "../../utility";
 import _ from "underscore";
@@ -48,29 +48,23 @@ class BarPlayer extends React.Component {
     }
   }
 
+  shuffledList = [];
+
   onAudioEnded() {
     console.log("song ended");
-    const order = this.props.order;
-    const newOrder = {};
-    const flag = this.props.getPlaylist.find(
-      song => song.index === order.index + 1
-    )
-      ? true
-      : false;
-    if (flag) {
-      newOrder.song = this.props.getPlaylist.find(
-        song => song.index === order.index + 1
-      );
-      newOrder.index = order.index + 1;
-    } else {
-      newOrder.song = this.props.getPlaylist.find(song => song.index === 0);
-      newOrder.index = 0;
+
+    if(this.state.isOneSongRepeat){
+
     }
-    newOrder.status = "load";
-    this.props.songOrder(newOrder);
+    else {
+      this.setSongStatus(this.props.order, buttonPaths.next);
+    }
   }
 
   componentDidUpdate() {
+
+    this.shuffledList = _.shuffle(this.props.getPlaylist);
+
     const audio = document.querySelector("#audioPlayer");
     console.log(this.props.order);
     if (this.props.order) {
@@ -114,22 +108,37 @@ class BarPlayer extends React.Component {
         newOrder.status = "stop";
         break;
       case buttonPaths.next:
-        flag = this.props.getPlaylist.find(
-          song => song.index === order.index + 1
-        )
-          ? true
-          : false;
-        if (flag) {
-          newOrder.song = this.props.getPlaylist.find(
+        if(this.state.isShuffled){
+          const nextIndex = this.props.getPlaylist.find(
             song => song.index === order.index + 1
+          ) ? order.index + 1 : 0;
+          newOrder.song = this.shuffledList.find((song, index) => {
+              if(nextIndex === index){
+                newOrder.index = song.index;
+              }
+              return nextIndex === index;
+            }
           );
-          newOrder.index = order.index + 1;
+          newOrder.status = 'load';
+          this.props.songOrder(newOrder);
         } else {
-          newOrder.song = this.props.getPlaylist.find(song => song.index === 0);
-          newOrder.index = 0;
+          flag = this.props.getPlaylist.find(
+            song => song.index === order.index + 1
+          )
+            ? true
+            : false;
+          if (flag) {
+            newOrder.song = this.props.getPlaylist.find(
+              song => song.index === order.index + 1
+            );
+            newOrder.index = order.index + 1;
+          } else {
+            newOrder.song = this.props.getPlaylist.find(song => song.index === 0);
+            newOrder.index = 0;
+          }
+          newOrder.status = "load";
+          this.props.songOrder(newOrder);
         }
-        newOrder.status = "load";
-        this.props.songOrder(newOrder);
         break;
       case buttonPaths.prev:
         flag = this.props.getPlaylist.find(
@@ -232,6 +241,7 @@ class BarPlayer extends React.Component {
     }
   };
 
+
   onMuteButtonChange = async () => {
     const audio = document.querySelector("#audioPlayer");
     await this.setState({ isMuted: !this.state.isMuted });
@@ -253,5 +263,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { songOrder }
+  { songOrder, setPlaylist }
 )(BarPlayer);
