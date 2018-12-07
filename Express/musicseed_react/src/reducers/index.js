@@ -23,7 +23,8 @@ import {
   getDownloadedSong,
   getOrderedSong,
   getPlayerState,
-  getNumberOfTracks
+  getNumberOfTracks,
+  getShuffledList
 } from "./player";
 
 import { getComments, getCommentBody } from "./comment";
@@ -107,5 +108,6 @@ export default combineReducers({
   titleSong: getTitleSong,
   getAlbum: getAlbum,
   getAlbumDescription: getAlbumDescription,
-  getAlbumDetail: getAlbumDetail
+  getAlbumDetail: getAlbumDetail,
+  getShuffledList: getShuffledList,
 });

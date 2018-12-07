@@ -173,3 +173,10 @@ export const addSongToList = (song) => {
     payload: song
   };
 }
+
+export const setShuffledList = list => {
+  return {
+    type: "SET_SHUFFLED_LIST",
+    payload: list,
+  }
+}

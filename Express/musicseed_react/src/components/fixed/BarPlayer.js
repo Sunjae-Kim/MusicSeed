@@ -48,23 +48,16 @@ class BarPlayer extends React.Component {
     }
   }
 
-  shuffledList = [];
-
   onAudioEnded() {
     console.log("song ended");
 
-    if(this.state.isOneSongRepeat){
-
-    }
-    else {
+    if (this.state.isOneSongRepeat) {
+    } else {
       this.setSongStatus(this.props.order, buttonPaths.next);
     }
   }
 
   componentDidUpdate() {
-
-    this.shuffledList = _.shuffle(this.props.getPlaylist);
-
     const audio = document.querySelector("#audioPlayer");
     console.log(this.props.order);
     if (this.props.order) {
@@ -108,18 +101,23 @@ class BarPlayer extends React.Component {
         newOrder.status = "stop";
         break;
       case buttonPaths.next:
-        if(this.state.isShuffled){
-          const nextIndex = this.props.getPlaylist.find(
-            song => song.index === order.index + 1
-          ) ? order.index + 1 : 0;
-          newOrder.song = this.shuffledList.find((song, index) => {
-              if(nextIndex === index){
-                newOrder.index = song.index;
-              }
-              return nextIndex === index;
-            }
-          );
-          newOrder.status = 'load';
+        if (this.state.isShuffled) {
+          const newShuffledList = _.identity(this.props.getShuffledList);
+
+          const nextIndex = newShuffledList.find(
+            song =>
+              song.index ===
+              _.indexOf(newShuffledList, this.props.order.song) + 1
+          )
+            ? _.indexOf(newShuffledList, this.props.order.song) + 1
+            : 0;
+
+          newOrder.song = newShuffledList.find((song, index) => {
+            return nextIndex === index;
+          });
+
+          newOrder.index = newOrder.song.index;
+          newOrder.status = "load";
           this.props.songOrder(newOrder);
         } else {
           flag = this.props.getPlaylist.find(
@@ -133,7 +131,9 @@ class BarPlayer extends React.Component {
             );
             newOrder.index = order.index + 1;
           } else {
-            newOrder.song = this.props.getPlaylist.find(song => song.index === 0);
+            newOrder.song = this.props.getPlaylist.find(
+              song => song.index === 0
+            );
             newOrder.index = 0;
           }
           newOrder.status = "load";
@@ -141,23 +141,44 @@ class BarPlayer extends React.Component {
         }
         break;
       case buttonPaths.prev:
-        flag = this.props.getPlaylist.find(
-          song => song.index === order.index - 1
-        )
-          ? true
-          : false;
-        if (flag) {
-          newOrder.song = this.props.getPlaylist.find(
-            song => song.index === order.index - 1
-          );
-          newOrder.index = order.index - 1;
+        if (this.state.isShuffled) {
+          const newShuffledList = _.identity(this.props.getShuffledList);
+
+          const prevIndex = newShuffledList.find(
+            song =>
+              song.index ===
+              _.indexOf(newShuffledList, this.props.order.song) - 1
+          )
+            ? _.indexOf(newShuffledList, this.props.order.song) - 1
+            : newShuffledList.length - 1;
+
+          newOrder.song = newShuffledList.find((song, index) => {
+            return prevIndex === index;
+          });
+
+          newOrder.index = newOrder.song.index;
+          newOrder.status = "load";
+          this.props.songOrder(newOrder);
         } else {
-          newOrder.song = this.props.getPlaylist.find(
-            song => song.index === this.props.getPlaylist.length - 1
-          );
-          newOrder.index = this.props.getPlaylist.length - 1;
+          flag = this.props.getPlaylist.find(
+            song => song.index === order.index - 1
+          )
+            ? true
+            : false;
+          if (flag) {
+            newOrder.song = this.props.getPlaylist.find(
+              song => song.index === order.index - 1
+            );
+            newOrder.index = order.index - 1;
+          } else {
+            newOrder.song = this.props.getPlaylist.find(
+              song => song.index === this.props.getPlaylist.length - 1
+            );
+            newOrder.index = this.props.getPlaylist.length - 1;
+          }
+          newOrder.status = "load";
         }
-        newOrder.status = "load";
+
         break;
       default:
     }
@@ -185,27 +206,27 @@ class BarPlayer extends React.Component {
           className={`fa fa-random ${isShuffled}`}
           onClick={() => this.setState({ isShuffled: !this.state.isShuffled })}
         />
-          <img
-            src={buttonPaths.prev}
-            alt="previous button"
-            onClick={() => this.setSongStatus(order, buttonPaths.prev)}
-          />
-          <img
-            src={buttonPath}
-            alt="pause button"
-            onClick={() => this.setSongStatus(order, buttonPath)}
-          />
-          <img
-            src={buttonPaths.stop}
-            alt="stop button"
-            onClick={() => this.setSongStatus(order, buttonPaths.stop)}
-          />
-          <img
-            src={buttonPaths.next}
-            alt="next button"
-            onClick={() => this.setSongStatus(order, buttonPaths.next)}
-          />
-          <img src={buttonPaths.list} alt="list button" />
+        <img
+          src={buttonPaths.prev}
+          alt="previous button"
+          onClick={() => this.setSongStatus(order, buttonPaths.prev)}
+        />
+        <img
+          src={buttonPath}
+          alt="pause button"
+          onClick={() => this.setSongStatus(order, buttonPath)}
+        />
+        <img
+          src={buttonPaths.stop}
+          alt="stop button"
+          onClick={() => this.setSongStatus(order, buttonPaths.stop)}
+        />
+        <img
+          src={buttonPaths.next}
+          alt="next button"
+          onClick={() => this.setSongStatus(order, buttonPaths.next)}
+        />
+        <img src={buttonPaths.list} alt="list button" />
       </div>
     );
   };
@@ -241,7 +262,6 @@ class BarPlayer extends React.Component {
     }
   };
 
-
   onMuteButtonChange = async () => {
     const audio = document.querySelector("#audioPlayer");
     await this.setState({ isMuted: !this.state.isMuted });
@@ -257,7 +277,8 @@ const mapStateToProps = state => {
   return {
     order: state.songOrdered,
     path: state.getPath,
-    getPlaylist: state.getPlaylist
+    getPlaylist: state.getPlaylist,
+    getShuffledList: state.getShuffledList
   };
 };
 

@@ -36,6 +36,7 @@ class TrackList extends React.Component {
       if(this.props.order && !this.props.playerState){
         isPlaying = this.props.order.index === song.index ? 'playing' : '';
       }
+      console.log(isPlaying);
       return (
         <div key={index} className={`tracklist ui grid ${isPlaying}`}>
           <div className="row">

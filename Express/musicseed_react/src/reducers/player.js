@@ -70,3 +70,12 @@ export const getNumberOfTracks = (numberOfTracks = 1, action) => {
       return numberOfTracks;
   }
 };
+
+export const getShuffledList = (list = [], action) => {
+  switch (action.type) {
+    case "SET_SHUFFLED_LIST":
+      return action.payload;
+    default:
+      return list;
+  }
+}
