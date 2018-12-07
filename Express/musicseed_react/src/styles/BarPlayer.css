@@ -26,7 +26,15 @@
 
 .barplayer .right.floated.column img {
     width: 19px;
+    margin-left: 20px;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.barplayer .right.floated.column img:last-child {
+    width: 19px;
     margin-left: 30px;
+    margin-right: 0px;
 }
 
 .barplayer .left.floated.column {
@@ -59,4 +67,8 @@ audio {
     font-size: 15px;
     margin-right: 20px;
     color: rgba(212,212,226,0.3);
+}
+
+.fa.fa-random, .fa.fa-random.active{
+    margin-right: 40px;
 }

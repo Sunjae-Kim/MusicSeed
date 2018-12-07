@@ -34,7 +34,7 @@ class BarPlayer extends React.Component {
       audioDuration: 0,
       isMuted: false,
       isShuffled: false,
-      isOneSongRepeat: false,
+      isOneSongRepeat: false
     };
 
     this.onAudioEnded = this.onAudioEnded.bind(this);
@@ -134,7 +134,9 @@ class BarPlayer extends React.Component {
       case buttonPaths.prev:
         flag = this.props.getPlaylist.find(
           song => song.index === order.index - 1
-        ) ? true : false;
+        )
+          ? true
+          : false;
         if (flag) {
           newOrder.song = this.props.getPlaylist.find(
             song => song.index === order.index - 1
@@ -156,44 +158,45 @@ class BarPlayer extends React.Component {
   renderButtons = order => {
     const buttonPath =
       order.status === "play" ? buttonPaths.pause : buttonPaths.play;
+    const isShuffled = this.state.isShuffled ? "active" : "";
+    const isOneSongRepeat = this.state.isOneSongRepeat ? "active" : "";
     return (
       <div className="right floated column">
-                          <i
-                      className={this.renderMuteButton()}
-                      onClick={this.onMuteButtonChange}
-                    />
-                    <i
-                      className={'fa fa-repeat'}
-                      // onClick={this.onMuteButtonChange}
-                    />
-                    <i
-                      className={'fa fa-random'}
-                      // onClick={this.onMuteButtonChange}
-                    />
-        <a
-          href={"#"}
-          onClick={() => this.setSongStatus(order, buttonPaths.prev)}
-        >
-          <img src={buttonPaths.prev} alt="previous button" />
-        </a>
-        <a href={"#"} onClick={() => this.setSongStatus(order, buttonPath)}>
-          <img src={buttonPath} alt="pause button" />
-        </a>
-        <a
-          href={"#"}
-          onClick={() => this.setSongStatus(order, buttonPaths.stop)}
-        >
-          <img src={buttonPaths.stop} alt="stop button" />
-        </a>
-        <a
-          href={"#"}
-          onClick={() => this.setSongStatus(order, buttonPaths.next)}
-        >
-          <img src={buttonPaths.next} alt="next button" />
-        </a>
-        <a href={"#"}>
+        <i
+          className={this.renderMuteButton()}
+          onClick={this.onMuteButtonChange}
+        />
+        <i
+          className={`fa fa-repeat ${isOneSongRepeat}`}
+          onClick={() =>
+            this.setState({ isOneSongRepeat: !this.state.isOneSongRepeat })
+          }
+        />
+        <i
+          className={`fa fa-random ${isShuffled}`}
+          onClick={() => this.setState({ isShuffled: !this.state.isShuffled })}
+        />
+          <img
+            src={buttonPaths.prev}
+            alt="previous button"
+            onClick={() => this.setSongStatus(order, buttonPaths.prev)}
+          />
+          <img
+            src={buttonPath}
+            alt="pause button"
+            onClick={() => this.setSongStatus(order, buttonPath)}
+          />
+          <img
+            src={buttonPaths.stop}
+            alt="stop button"
+            onClick={() => this.setSongStatus(order, buttonPaths.stop)}
+          />
+          <img
+            src={buttonPaths.next}
+            alt="next button"
+            onClick={() => this.setSongStatus(order, buttonPaths.next)}
+          />
           <img src={buttonPaths.list} alt="list button" />
-        </a>
       </div>
     );
   };
