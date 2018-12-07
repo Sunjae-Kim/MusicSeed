@@ -17,18 +17,19 @@
     padding-top: 0;
 }
 
-.barplayer .three.wide.column {
+.barplayer .right.floated.column {
     padding-top: 10px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
 }
 
-.barplayer .three.wide.column img {
+.barplayer .right.floated.column img {
     width: 19px;
+    margin-left: 30px;
 }
 
-.barplayer .thirteen.wide.column {
+.barplayer .left.floated.column {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -48,7 +49,14 @@ audio {
     height: 0px;
 }
 
-.barplayer .fa {
+.fa.fa-volume-mute,  .fa.fa-volume-up, .fa.fa-repeat.active, .fa.fa-random.active{
     font-size: 15px;
-    margin-left: 20px;
+    margin-right: 20px;
+    color:  #D4D4E2;
+}
+
+.fa.fa-repeat, .fa.fa-random{
+    font-size: 15px;
+    margin-right: 20px;
+    color: rgba(212,212,226,0.3);
 }

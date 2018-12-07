@@ -32,7 +32,9 @@ class BarPlayer extends React.Component {
     super(props);
     this.state = {
       audioDuration: 0,
-      isMuted: false
+      isMuted: false,
+      isShuffled: false,
+      isOneSongRepeat: false,
     };
 
     this.onAudioEnded = this.onAudioEnded.bind(this);
@@ -155,7 +157,19 @@ class BarPlayer extends React.Component {
     const buttonPath =
       order.status === "play" ? buttonPaths.pause : buttonPaths.play;
     return (
-      <div className="three wide column">
+      <div className="right floated column">
+                          <i
+                      className={this.renderMuteButton()}
+                      onClick={this.onMuteButtonChange}
+                    />
+                    <i
+                      className={'fa fa-repeat'}
+                      // onClick={this.onMuteButtonChange}
+                    />
+                    <i
+                      className={'fa fa-random'}
+                      // onClick={this.onMuteButtonChange}
+                    />
         <a
           href={"#"}
           onClick={() => this.setSongStatus(order, buttonPaths.prev)}
@@ -189,8 +203,8 @@ class BarPlayer extends React.Component {
       return (
         <div className={"barplayer container"}>
           <div className={"ui grid"}>
-            <div id="barPlayerRow" className="row">
-              <div className="thirteen wide column">
+            <div id="barPlayerRow" className="two column row">
+              <div className="left floated column">
                 <div className="content">
                   <h3>{order.song.title}</h3>
                 </div>
@@ -204,10 +218,6 @@ class BarPlayer extends React.Component {
                         .seconds(this.state.audioDuration)
                         .format("mm:ss")}
                     </span>
-                    <i
-                      className={this.renderMuteButton()}
-                      onClick={this.onMuteButtonChange}
-                    />
                   </h4>
                 </div>
               </div>
