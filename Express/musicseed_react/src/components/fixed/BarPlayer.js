@@ -50,8 +50,10 @@ class BarPlayer extends React.Component {
 
   onAudioEnded() {
     console.log("song ended");
-
     if (this.state.isOneSongRepeat) {
+      const newOrder = _.identity(this.props.order);
+      newOrder.status = 'load';
+      this.props.songOrder(newOrder);
     } else {
       this.setSongStatus(this.props.order, buttonPaths.next);
     }

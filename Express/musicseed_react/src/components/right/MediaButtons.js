@@ -6,7 +6,7 @@ import {
   songOrder,
   deleteSongFromPlaylist,
   setPlaylist,
-  setShuffledList,
+  setShuffledList
 } from "../../actions/index";
 import "../../styles/MediaButtons.css";
 import _ from "underscore";
@@ -19,7 +19,7 @@ class MediaButtons extends React.Component {
     const order = {
       song,
       status: "load",
-      index: this.props.getPlaylist.length-1
+      index: this.props.getPlaylist.length - 1
     };
     const source = await document.querySelector("source");
     const src = order.song.file;
@@ -105,23 +105,36 @@ class MediaButtons extends React.Component {
         await this.props.setPlaylist(newList);
         this.props.songOrder(newOrder);
       } else if (nextSong) {
+        const originalStatus = this.props.order.status;
         newOrder.song = nextSong;
         newOrder.status = "load";
         newList = newList.filter((song, index) => {
           return index !== this.props.song.index;
         });
-        this.props.songOrder(newOrder);
+        await this.props.songOrder(newOrder);
+        if (originalStatus !== "play") {
+          newOrder.status = "pause";
+          await this.props.songOrder(newOrder);
+        }
         newList = newList.map((song, index) => {
           song.index = index;
           return song;
         });
         await this.props.setPlaylist(newList);
       } else {
+        const originalStatus = this.props.order.status;
         await this.props.songOrder({
           song: newList[0],
           index: 0,
           status: "load"
         });
+        if (originalStatus !== "play") {
+          await this.props.songOrder({
+            song: newList[0],
+            index: 0,
+            status: this.props.order.status === "pause"
+          });
+        }
         newList.pop();
         await this.props.setPlaylist(newList);
       }
@@ -179,6 +192,6 @@ export default connect(
     songOrder,
     deleteSongFromPlaylist,
     setPlaylist,
-    setShuffledList,
+    setShuffledList
   }
 )(MediaButtons);
