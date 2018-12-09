@@ -34,12 +34,15 @@ class BarPlayer extends React.Component {
       audioDuration: 0,
       isMuted: false,
       isShuffled: false,
-      isOneSongRepeat: false
+      isOneSongRepeat: false,
+      progressBarClasses: [],
     };
 
     this.onAudioEnded = this.onAudioEnded.bind(this);
     this.onMuteButtonChange = this.onMuteButtonChange.bind(this);
     this.renderMuteButton = this.renderMuteButton.bind(this);
+    this.stretchProgressBar = this.stretchProgressBar.bind(this);
+    this.destretchProgressBar = this.destretchProgressBar.bind(this);
   }
 
   onAudioDurationChange(e) {
@@ -233,36 +236,79 @@ class BarPlayer extends React.Component {
     );
   };
 
+  async stretchProgressBar(){
+    const progress = new Array;
+    progress.push(await document.querySelector('.barplayer.upper'))
+    progress.push(await document.querySelector('.barplayer.upper .ui.top.attached.progress'))
+    progress.push(await document.querySelector('.barplayer.upper .ui.top.attached.progress .bar'))
+    
+    progress.forEach( async (element, index) => {
+      const clone = _.identity(this.state.progressBarClasses);
+      clone[index] = element.getAttribute("class")
+      element.setAttribute("class", this.state.progressBarClasses[index] + " active");
+      await this.setState({ progressBarClasses: clone })
+    })
+
+  }
+
+  async destretchProgressBar(){
+    const progress = new Array;
+    progress.push(await document.querySelector('.barplayer.upper'))
+    progress.push(await document.querySelector('.barplayer.upper .ui.top.attached.progress'))
+    progress.push(await document.querySelector('.barplayer.upper .ui.top.attached.progress .bar'))
+    
+    progress.forEach( async (element, index) => {
+      element.setAttribute("class", this.state.progressBarClasses[index]);
+    })
+
+  }
+
+
   renderSong = order => {
     if (order) {
       return (
-        <div className={"barplayer container"}>
-          <div className={"ui top attached progress"}>
-            <div className={"bar"} style={'transition-duration: 300ms; width: 24%;'} />
-          </div>
-          <div className={"ui grid"}>
-            <div id="barPlayerRow" className="two column row">
-              <div className="left floated column">
-                <div className="content">
-                  <h3>{order.song.title}</h3>
-                </div>
-                <div className="right float content">
-                  <h4>
-                    {order.song.artist}{" "}
-                    <span className="duration">
-                      {" "}
-                      {moment()
-                        .startOf("day")
-                        .seconds(this.state.audioDuration)
-                        .format("mm:ss")}
-                    </span>
-                  </h4>
+        <Fragment>
+          <div 
+            className={"barplayer wrapper"}
+            onMouseOver={this.stretchProgressBar}
+            onMouseOut={this.destretchProgressBar}
+          >
+            <div className={"barplayer upper"}>
+              <div className={"ui top attached progress"}>
+                <div
+                  className={"bar"}
+                  style={{ transitionDuration: "300ms", width: "24%" }}
+                >
+                  <i className={"fa fa-square"} />
                 </div>
               </div>
-              <Fragment>{this.renderButtons(order)}</Fragment>
+            </div>
+            <div className={"barplayer container"}>
+              <div className={"ui grid"}>
+                <div id="barPlayerRow" className="two column row">
+                  <div className="left floated column">
+                    <div className="content">
+                      <h3>{order.song.title}</h3>
+                    </div>
+                    <div className="right float content">
+                      <h4>
+                        {order.song.artist}{" "}
+                        <span className="duration">
+                          {" "}
+                          {moment()
+                            .startOf("day")
+                            .seconds(this.state.audioDuration)
+                            .format("mm:ss")}
+                        </span>
+                      </h4>
+                    </div>
+                  </div>
+                  <Fragment>{this.renderButtons(order)}</Fragment>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        </Fragment>
       );
     }
   };
