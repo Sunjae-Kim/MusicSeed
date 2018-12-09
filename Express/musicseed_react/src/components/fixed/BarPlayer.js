@@ -52,7 +52,7 @@ class BarPlayer extends React.Component {
     console.log("song ended");
     if (this.state.isOneSongRepeat) {
       const newOrder = _.identity(this.props.order);
-      newOrder.status = 'load';
+      newOrder.status = "load";
       this.props.songOrder(newOrder);
     } else {
       this.setSongStatus(this.props.order, buttonPaths.next);
@@ -237,6 +237,9 @@ class BarPlayer extends React.Component {
     if (order) {
       return (
         <div className={"barplayer container"}>
+          <div className={"ui top attached progress"}>
+            <div className={"bar"} style={'transition-duration: 300ms; width: 24%;'} />
+          </div>
           <div className={"ui grid"}>
             <div id="barPlayerRow" className="two column row">
               <div className="left floated column">

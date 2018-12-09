@@ -10,10 +10,10 @@
 .barplayer .ui.grid {
     margin: 0;
     height: inherit;
+    padding: 0 2vh;
 }
 
 .barplayer.container {
-    padding: 0 2vh;
     padding-top: 0;
 }
 
