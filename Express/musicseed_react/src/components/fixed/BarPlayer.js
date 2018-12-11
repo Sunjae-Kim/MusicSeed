@@ -16,7 +16,7 @@ class BarPlayer extends React.Component {
           id="audioPlayer"
           onDurationChange={e => this.onAudioDurationChange(e)}
           onEnded={this.onAudioEnded}
-          onTimeUpdate={e => this.onAudioChange(e)}
+          onTimeUpdate={e => this.onTimeUpdate(e)}
         >
           <source
             src={!this.props.order ? null : this.props.order.song.file}
@@ -38,8 +38,10 @@ class BarPlayer extends React.Component {
       isOneSongRepeat: false,
       progressBarClasses: [],
       playedTime: 0,
-      playedProgress: 0,
+      progress: 0
     };
+
+    this.audio = null;
 
     this.onAudioEnded = this.onAudioEnded.bind(this);
     this.onMuteButtonChange = this.onMuteButtonChange.bind(this);
@@ -49,27 +51,31 @@ class BarPlayer extends React.Component {
     this.setProgress = this.setProgress.bind(this);
   }
 
+  componentDidMount() {
+    this.audio = document.querySelector("#audioPlayer");
+  }
+
   setProgress(e) {
-    const audio = document.querySelector("#audioPlayer");
-    const target = e.target.nodeName === 'DIV' ? e.target.parentNode : e.target;
+    const target = e.target.nodeName === "DIV" ? e.target.parentNode : e.target;
     const width = target.clientWidth;
     const rect = target.getBoundingClientRect();
     const offsetX = e.clientX - rect.left;
-    const duration = audio.duration;
+    const duration = this.audio.duration;
     const currentTime = (duration * offsetX) / width;
     const progress = (currentTime * 100) / duration;
-
-    audio.currentTime = currentTime;
-
+    this.audio.currentTime = currentTime;
     this.setState({
-      playedProgress: progress,
+      progress: progress
     });
-
-    audio.play();
   }
 
-  onAudioChange(e) {
-    this.setState({ playedProgress: ((Math.round(e.target.currentTime / this.state.audioDuration * 1000))/10), playedTime: e.target.currentTime })
+  onTimeUpdate(e) {
+    this.setState({
+      progress:
+        Math.round((e.target.currentTime / this.state.audioDuration) * 1000) /
+        10,
+      playedTime: e.target.currentTime
+    });
   }
 
   onAudioDurationChange(e) {
@@ -90,27 +96,24 @@ class BarPlayer extends React.Component {
   }
 
   componentDidUpdate() {
-    const audio = document.querySelector("#audioPlayer");
-    console.log(this.props.order);
-
     if (this.props.order) {
       switch (this.props.order.status) {
         case "load":
-          audio.load();
-          this.audioDuration = audio.duration;
+          this.audio.load();
+          this.audioDuration = this.audio.duration;
           const order = _.identity(this.props.order);
           order.status = "play";
           this.props.songOrder(order);
           break;
         case "play":
-          audio.play();
+          this.audio.play();
           break;
         case "pause":
-          audio.pause();
+          this.audio.pause();
           break;
         case "stop":
-          audio.load();
-          audio.pause();
+          this.audio.load();
+          this.audio.pause();
           break;
         default:
       }
@@ -264,51 +267,66 @@ class BarPlayer extends React.Component {
     );
   };
 
-  async stretchProgressBar(){
-    const progress = new Array;
-    progress.push(await document.querySelector('.barplayer.upper'))
-    progress.push(await document.querySelector('.barplayer.upper .ui.top.attached.progress'))
-    progress.push(await document.querySelector('.barplayer.upper .ui.top.attached.progress .bar'))
-    
-    progress.forEach( async (element, index) => {
+  async stretchProgressBar() {
+    const progress = new Array();
+    progress.push(await document.querySelector(".barplayer.upper"));
+    progress.push(
+      await document.querySelector(".barplayer.upper .ui.top.attached.progress")
+    );
+    progress.push(
+      await document.querySelector(
+        ".barplayer.upper .ui.top.attached.progress .bar"
+      )
+    );
+
+    progress.forEach(async (element, index) => {
       const clone = _.identity(this.state.progressBarClasses);
-      clone[index] = element.getAttribute("class")
-      element.setAttribute("class", this.state.progressBarClasses[index] + " active");
-      await this.setState({ progressBarClasses: clone })
-    })
-
+      clone[index] = element.getAttribute("class");
+      element.setAttribute(
+        "class",
+        this.state.progressBarClasses[index] + " active"
+      );
+      await this.setState({ progressBarClasses: clone });
+    });
   }
 
-  async destretchProgressBar(){
-    const progress = new Array;
-    progress.push(await document.querySelector('.barplayer.upper'))
-    progress.push(await document.querySelector('.barplayer.upper .ui.top.attached.progress'))
-    progress.push(await document.querySelector('.barplayer.upper .ui.top.attached.progress .bar'))
-    
-    progress.forEach( async (element, index) => {
+  async destretchProgressBar() {
+    const progress = new Array();
+    progress.push(await document.querySelector(".barplayer.upper"));
+    progress.push(
+      await document.querySelector(".barplayer.upper .ui.top.attached.progress")
+    );
+    progress.push(
+      await document.querySelector(
+        ".barplayer.upper .ui.top.attached.progress .bar"
+      )
+    );
+
+    progress.forEach(async (element, index) => {
       element.setAttribute("class", this.state.progressBarClasses[index]);
-    })
-
+    });
   }
-
 
   renderSong = order => {
     if (order) {
       return (
         <Fragment>
-          <div 
+          <div
             className={"barplayer wrapper"}
             onMouseOver={this.stretchProgressBar}
             onMouseOut={this.destretchProgressBar}
           >
             <div className={"barplayer upper"}>
-              <div 
+              <div
                 className={"ui top attached progress"}
                 onClick={this.setProgress}
               >
                 <div
                   className={"bar"}
-                  style={{ transitionDuration: "300ms", width: this.state.playedProgress+'%' }}
+                  style={{
+                    transitionDuration: "300ms",
+                    width: this.state.progress + "%"
+                  }}
                 >
                   <i className={"fa fa-square"} />
                 </div>
@@ -352,9 +370,8 @@ class BarPlayer extends React.Component {
   };
 
   onMuteButtonChange = async () => {
-    const audio = document.querySelector("#audioPlayer");
     await this.setState({ isMuted: !this.state.isMuted });
-    this.state.isMuted ? (audio.muted = true) : (audio.muted = false);
+    this.state.isMuted ? (this.audio.muted = true) : (this.audio.muted = false);
   };
   renderMuteButton = () => {
     const button = this.state.isMuted ? "fa fa-volume-off" : "fa fa-volume-up";
