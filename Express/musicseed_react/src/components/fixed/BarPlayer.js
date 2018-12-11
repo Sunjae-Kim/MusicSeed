@@ -46,6 +46,26 @@ class BarPlayer extends React.Component {
     this.renderMuteButton = this.renderMuteButton.bind(this);
     this.stretchProgressBar = this.stretchProgressBar.bind(this);
     this.destretchProgressBar = this.destretchProgressBar.bind(this);
+    this.setProgress = this.setProgress.bind(this);
+  }
+
+  setProgress(e) {
+    const audio = document.querySelector("#audioPlayer");
+    const target = e.target.nodeName === 'DIV' ? e.target.parentNode : e.target;
+    const width = target.clientWidth;
+    const rect = target.getBoundingClientRect();
+    const offsetX = e.clientX - rect.left;
+    const duration = audio.duration;
+    const currentTime = (duration * offsetX) / width;
+    const progress = (currentTime * 100) / duration;
+
+    audio.currentTime = currentTime;
+
+    this.setState({
+      playedProgress: progress,
+    });
+
+    audio.play();
   }
 
   onAudioChange(e) {
@@ -282,7 +302,10 @@ class BarPlayer extends React.Component {
             onMouseOut={this.destretchProgressBar}
           >
             <div className={"barplayer upper"}>
-              <div className={"ui top attached progress"}>
+              <div 
+                className={"ui top attached progress"}
+                onClick={this.setProgress}
+              >
                 <div
                   className={"bar"}
                   style={{ transitionDuration: "300ms", width: this.state.playedProgress+'%' }}
