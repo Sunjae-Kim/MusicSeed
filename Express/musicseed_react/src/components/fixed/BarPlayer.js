@@ -38,6 +38,7 @@ class BarPlayer extends React.Component {
       isOneSongRepeat: false,
       progressBarClasses: [],
       playedTime: 0,
+      playedProgress: 0,
     };
 
     this.onAudioEnded = this.onAudioEnded.bind(this);
@@ -48,7 +49,7 @@ class BarPlayer extends React.Component {
   }
 
   onAudioChange(e) {
-    this.setState({ playedTime: ((Math.round(e.target.currentTime / this.state.audioDuration * 1000))/10) })
+    this.setState({ playedProgress: ((Math.round(e.target.currentTime / this.state.audioDuration * 1000))/10), playedTime: e.target.currentTime })
   }
 
   onAudioDurationChange(e) {
@@ -284,7 +285,7 @@ class BarPlayer extends React.Component {
               <div className={"ui top attached progress"}>
                 <div
                   className={"bar"}
-                  style={{ transitionDuration: "300ms", width: this.state.playedTime+'%' }}
+                  style={{ transitionDuration: "300ms", width: this.state.playedProgress+'%' }}
                 >
                   <i className={"fa fa-square"} />
                 </div>
@@ -300,6 +301,13 @@ class BarPlayer extends React.Component {
                     <div className="right float content">
                       <h4>
                         {order.song.artist}{" "}
+                        <span className="duration changing">
+                          {" "}
+                          {moment()
+                            .startOf("day")
+                            .seconds(this.state.playedTime)
+                            .format("mm:ss")}
+                        </span>
                         <span className="duration">
                           {" "}
                           {moment()
