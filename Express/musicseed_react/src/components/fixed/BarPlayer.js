@@ -16,6 +16,7 @@ class BarPlayer extends React.Component {
           id="audioPlayer"
           onDurationChange={e => this.onAudioDurationChange(e)}
           onEnded={this.onAudioEnded}
+          onTimeUpdate={e => this.onAudioChange(e)}
         >
           <source
             src={!this.props.order ? null : this.props.order.song.file}
@@ -36,6 +37,7 @@ class BarPlayer extends React.Component {
       isShuffled: false,
       isOneSongRepeat: false,
       progressBarClasses: [],
+      playedTime: 0,
     };
 
     this.onAudioEnded = this.onAudioEnded.bind(this);
@@ -43,6 +45,10 @@ class BarPlayer extends React.Component {
     this.renderMuteButton = this.renderMuteButton.bind(this);
     this.stretchProgressBar = this.stretchProgressBar.bind(this);
     this.destretchProgressBar = this.destretchProgressBar.bind(this);
+  }
+
+  onAudioChange(e) {
+    this.setState({ playedTime: ((Math.round(e.target.currentTime / this.state.audioDuration * 1000))/10) })
   }
 
   onAudioDurationChange(e) {
@@ -65,6 +71,7 @@ class BarPlayer extends React.Component {
   componentDidUpdate() {
     const audio = document.querySelector("#audioPlayer");
     console.log(this.props.order);
+
     if (this.props.order) {
       switch (this.props.order.status) {
         case "load":
@@ -277,7 +284,7 @@ class BarPlayer extends React.Component {
               <div className={"ui top attached progress"}>
                 <div
                   className={"bar"}
-                  style={{ transitionDuration: "300ms", width: "24%" }}
+                  style={{ transitionDuration: "300ms", width: this.state.playedTime+'%' }}
                 >
                   <i className={"fa fa-square"} />
                 </div>
@@ -319,7 +326,7 @@ class BarPlayer extends React.Component {
     this.state.isMuted ? (audio.muted = true) : (audio.muted = false);
   };
   renderMuteButton = () => {
-    const button = this.state.isMuted ? "fa fa-volume-mute" : "fa fa-volume-up";
+    const button = this.state.isMuted ? "fa fa-volume-off" : "fa fa-volume-up";
     return button;
   };
 }

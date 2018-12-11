@@ -64,7 +64,7 @@ audio {
     height: 0px;
 }
 
-.fa.fa-volume-mute,  .fa.fa-volume-up, .fa.fa-repeat.active, .fa.fa-random.active{
+.fa.fa-volume-off,  .fa.fa-volume-up, .fa.fa-repeat.active, .fa.fa-random.active{
     font-size: 15px;
     margin-right: 20px;
     color:  #D4D4E2;
@@ -85,7 +85,7 @@ audio {
     bottom: 60px;
     height: 3px;
     width: 100%;
-    background-color: #131524;
+    background-color: rgb(66, 69, 94);
 }
 
 
