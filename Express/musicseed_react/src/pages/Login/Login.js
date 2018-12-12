@@ -6,13 +6,13 @@ import '../../styles/Login.css';
 import axios from "axios";
 
 class Login extends Component {
-    onFormSubmit = async (event) => {
+    onFormSubmit = (event) => {
         event.preventDefault();
         let user = {
             email: this.props.checkedEmail,
             pw: this.props.checkedPassword,
         };
-        await axios.post('/auth/login', user)
+        axios.post('/auth/login', user)
             .then(function (response) {
             if (response.data.redirect === '/') {
                 window.location = "/";
