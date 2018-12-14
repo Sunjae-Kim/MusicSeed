@@ -1,21 +1,17 @@
-const passport = require('passport');
-
-const { User, validate } = require("../models/user");
-const { Album } = require("../models/album");
-const { Music } = require("../models/music");
-
-const express = require("express");
-const router = express.Router();
+const { User, validate } = require("../../../models/user");
+const { Album } = require("../../../models/album");
+const { Music } = require("../../../models/music");
+const { Comment } = require("../../../models/comment");
 
 /* CRUD Operation */
 /* Read */
-router.get('/current', async (req, res) => {
-    //show login page
-    // console.log(req.user);
-    res.send(req.user);
-});
+exports.current = async (req, res) => {
+  //show login page
+  // console.log(req.user);
+  res.send(req.user);
+};
 
-router.get("/", async (req, res) => {
+exports.getAll = async (req, res) => {
   // Find
   const users = await User.find()
     .populate("album")
@@ -25,9 +21,9 @@ router.get("/", async (req, res) => {
 
   // Response
   res.send(users);
-});
+};
 
-router.get("/:id", async (req, res) => {
+exports.getById = async (req, res) => {
   // Find
   const user = await User.findById(req.params.id)
     .populate("album")
@@ -40,22 +36,10 @@ router.get("/:id", async (req, res) => {
 
   // Response
   res.send(user);
-});
-
-router.post("/:id/seed/:amount", async (req, res) => {
-    // Find
-    console.log("seed 추가");
-    const user = await User.findOneAndUpdate({_id: req.params.id}, { $inc: { seed: req.params.amount }}, (err, data) => {
-      if(err){
-          res.send('err');
-      }
-
-    });
-
-});
+};
 
 /* Create */
-router.post("/", async (req, res) => {
+exports.post = async (req, res) => {
   // Validation test
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.message);
@@ -67,11 +51,11 @@ router.post("/", async (req, res) => {
   // Response
   // res.send(user);
     res.send({redirect:'/login'});
-});
+};
 
 
 /* Update */
-router.patch("/:id", async (req, res) => {
+exports.patch = async (req, res) => {
   // Validation test
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.message);
@@ -85,10 +69,10 @@ router.patch("/:id", async (req, res) => {
 
   // Response
   res.send(user);
-});
+};
 
 /* Delete */
-router.delete("/:id", async (req, res) => {
+exports.delete = async (req, res) => {
   // Find and Delete
   let user = await User.findByIdAndDelete(req.params.id);
 
@@ -117,6 +101,4 @@ router.delete("/:id", async (req, res) => {
 
   // Response
   res.send(user);
-});
-
-module.exports = router;
+};
