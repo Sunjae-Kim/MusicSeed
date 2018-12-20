@@ -72,31 +72,9 @@ exports.login = async (req, res) => {
 };
 
 exports.check = async (req, res) => {
-  // read the token from header or url
-  let token = req.headers["x-access-token"] || req.query.token;
-
-  // token does not exist
-  if (!token) {
-    return res.status(403).json({
-      success: false,
-      message: "not logged in"
-    });
-  }
-
-  // decodes the token
-  try{
-    token = await jwt.verify(token, req.app.get("jwt-secret"));
-  } catch(error) {
-    return res.status(403).json({
-      success: false,
-      message: error.message
-    });
-  }
-
-  // if token is valid, it will respond with its info
   res.json({
     success: true,
-    info: token
+    info: req.decoded
   });
 };
 
