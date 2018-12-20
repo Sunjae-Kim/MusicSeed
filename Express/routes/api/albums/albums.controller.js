@@ -1,21 +1,19 @@
-const { Album, validate } = require("../models/album");
-const { Comment } = require("../models/comment");
-const { Music } = require("../models/music");
-const { User } = require("../models/user");
-const express = require("express");
-const router = express.Router();
+const { Album, validate } = require("../../../models/album");
+const { Comment } = require("../../../models/comment");
+const { Music } = require("../../../models/music");
+const { User } = require("../../../models/user");
 
 /* CRUD Operation */
 /* Read */
-router.get("/", async (req, res) => {
+exports.getAll = async (req, res) => {
   // Find
   const albums = await Album.find();
 
   // Response
   res.send(albums);
-});
+};
 
-router.get("/:id", async (req, res) => {
+exports.getById = async (req, res) => {
   // Find
   const album = await Album.findOne({ _id: req.params.id })
     .populate('musics')
@@ -29,7 +27,7 @@ router.get("/:id", async (req, res) => {
 
   // Response
   res.send(album);
-});
+};
 
 /* 
   Create 
@@ -37,17 +35,18 @@ router.get("/:id", async (req, res) => {
   album을 먼저 만들고 해당 album_is로 music을 만든다.
   music을 저장하고 album을 저장한다.
 */
-router.post("/", async (req, res) => {
+
+exports.post = async (req, res) => {
 
   // Validation test for Album
-  // const { a_error } = validate(req.body.album);
-  // if (a_error) return res.status(400).send(error.message);
+  const { a_error } = validate(req.body.album);
+  if (a_error) return res.status(400).send(error.message);
 
   // Validation test for Musics
-  // req.body.musics.forEach(music => {
-  //   const { m_error } = validate(music);
-  //   if (m_error) return res.status(400).send(error.message);
-  // });
+  req.body.musics.forEach(music => {
+    const { m_error } = validate(music);
+    if (m_error) return res.status(400).send(error.message);
+  });
 
   console.log(req.body);
 
@@ -75,10 +74,10 @@ router.post("/", async (req, res) => {
 
   // Response
   res.send(album);
-});
+};
 
 /* Update */
-router.patch("/:id", async (req, res) => {
+exports.patch = async (req, res) => {
   // Validation test
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.message);
@@ -102,10 +101,10 @@ router.patch("/:id", async (req, res) => {
 
   // Response
   res.send(album);
-});
+};
 
 /* Delete */
-router.delete("/:id", async (req, res) => {
+exports.delete = async (req, res) => {
   // Find Album
   let album = await Album.findByIdAndDelete(req.params.id);
 
@@ -131,6 +130,4 @@ router.delete("/:id", async (req, res) => {
 
   // Response
   res.send([ user.albums, album ]);
-});
-
-module.exports = router;
+};
