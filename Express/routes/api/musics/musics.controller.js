@@ -1,21 +1,19 @@
 const { Music, validate } = require("../models/music");
 const { Album } = require("../models/album");
 const { User } = require("../models/user");
-const express = require("express");
-const router = express.Router();
 
 /* CRUD Operation */
 /* Read */
-router.get("/", async (req, res) => {
+exports.getAll = async (req, res) => {
   // Find
   const musics = await Music.find()
     .sort("title");
 
   // Response
   res.send(musics);
-});
+};
 
-router.get("/:id", async (req, res) => {
+exports.getById = async (req, res) => {
   // Find
   const music = await Music.findById(req.params.id)
     .populate("album_id")
@@ -27,13 +25,13 @@ router.get("/:id", async (req, res) => {
 
   // Response
   res.send(music);
-});
+};
 
 /*
   Create
   기존의 앨범에 새로운 노래를 추가할 때
 */
-router.post("/", async (req, res) => {
+exports.post = async (req, res) => {
   // Validation test
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.message);
@@ -64,10 +62,10 @@ router.post("/", async (req, res) => {
 
   // Response
   res.send({ album, music });
-});
+};
 
 /* Update */
-router.patch("/:id", async (req, res) => {
+exports.patch =  async (req, res) => {
   // Validation test
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.message);
@@ -88,10 +86,10 @@ router.patch("/:id", async (req, res) => {
 
   // Response
   res.send(music);
-});
+};
 
 /* Delete */
-router.delete("/:id", async (req, res) => {
+exports.delete = async (req, res) => {
   // Find
   let music = await Music.findByIdAndDelete(req.params.id);
 
@@ -109,6 +107,4 @@ router.delete("/:id", async (req, res) => {
 
   // Response
   res.send([ music, album ]);
-});
-
-module.exports = router;
+};
