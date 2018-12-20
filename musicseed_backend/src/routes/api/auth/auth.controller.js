@@ -1,10 +1,6 @@
 const jwt = require("jsonwebtoken");
 const { User, validate } = require("../../../models/user");
 
-/*
-    /api/auth
-*/
-
 exports.register = async (req, res) => {
   // Duplication Check
   let user = await User.findOneByEmail(req.body.email);

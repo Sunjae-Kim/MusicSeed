@@ -1,13 +1,15 @@
 /* =======================
     LOAD THE DEPENDENCIES
 ==========================*/
-const bodyParser = require('body-parser');
-const expressFileupload = require('express-fileupload');
-const passport = require('passport');
-const cookieSession = require('cookie-session');
-const flash = require('connect-flash');
-const helmet = require('helmet');
-const morgan = require('morgan');
+const session = require("express-session");
+const RedisStore = require('connect-redis')(session);
+const cookieParser = require("cookie-parser");
+const bodyParser = require("body-parser");
+const expressFileupload = require("express-fileupload");
+const passport = require("passport");
+const flash = require("connect-flash");
+const helmet = require("helmet");
+const morgan = require("morgan");
 const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
@@ -15,31 +17,33 @@ const app = express();
 /* =======================
     LOAD THE CONFIG
 ==========================*/
-const config = require('./config');
+const config = require("./config");
 const port = process.env.PORT || 4000;
-require('./src/services/passport');
+require("./src/services/passport");
 
 /* =======================
     EXPRESS CONFIGURATION
 ==========================*/
 app.use(helmet());
-app.use(morgan('dev'));
-app.use(bodyParser.urlencoded({extended: false}))
-app.use(bodyParser.json())
-app.set('jwt-secret', config.secret)
+app.use(morgan("dev"));
+app.use(cookieParser());
+app.use(session({
+    store: new RedisStore(/*redis config: host, port 등*/), // 세션 저장소를 레디스 서버로 설정
+    secret: config.secret,
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true }
+  }))
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.set("jwt-secret", config.secret);
 app.use(expressFileupload());
-app.use(
-    cookieSession({ // req.session == user.id
-        name: 'USER Session',
-        maxAge: (30 * 24 * 60 * 60 * 1000),
-        keys: ['key1']
-    })
-);
 app.use(express.static("public"));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
-app.use('/api', require('./src/routes/api'));
+app.use("/api", require("./src/routes/api"));
+
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
@@ -48,9 +52,9 @@ app.listen(port, () => {
     CONNECT TO MONGODB SERVER
 ==========================*/
 mongoose
-    .connect(
-        config.mongodbUri,
-        { useNewUrlParser: true }
-    )
-    .then(() => console.log("Connected to MongoDB"))
-    .catch(error => console.error(error));
+  .connect(
+    config.mongodbUri,
+    { useNewUrlParser: true }
+  )
+  .then(() => console.log("Connected to MongoDB"))
+  .catch(error => console.error(error));
