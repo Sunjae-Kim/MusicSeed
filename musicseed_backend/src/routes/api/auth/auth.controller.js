@@ -7,7 +7,7 @@ const { User, validate } = require("../../../models/user");
 
 exports.register = async (req, res) => {
   // Duplication Check
-  let user = await User.findOneByUsername(req.body.email);
+  let user = await User.findOneByEmail(req.body.email);
   if (user) {
     return res.status(409).json({
       message: "email exists"
@@ -22,8 +22,7 @@ exports.register = async (req, res) => {
     });
 
   // Make and Save
-  user = new User(req.body);
-  user = await user.save();
+  user = await User.create(req.body);
 
   // Response
   res.send(user);
@@ -33,22 +32,23 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   const secret = req.app.get("jwt-secret");
   let token = null;
-  const user = await User.findOneByUsername(req.body.email);
+  const user = await User.findOneByEmail(req.body.email);
 
   // check the user info & generate the jwt
-
   if (!user) {
     return res.status(403).json({
       message: "login failed"
     });
   } else {
     // user exists, check the password
-    if (user.verify(user.pw)) {
+    const { pw } = req.body;
+    if (user.verify(pw)) {
       // create a promise that generates jwt asynchronously
       token = await jwt.sign(
         {
           _id: user._id,
-          email: user.email
+          email: user.email,
+          admin: user.admin
         },
         secret,
         {

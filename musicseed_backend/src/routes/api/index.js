@@ -7,10 +7,10 @@ const musics = require('./musics/index');
 const playlists = require('./playlists/index');
 const files = require('./files/index');
 const receipts = require('./receipts/index');
-
+const authMiddleware = require('../../lib/middlewares/auth');
 
 router.use('/auth', auth);
-router.use('/users', users);
+router.use('/users', authMiddleware, users);
 router.use('/albums', albums);
 router.use('./comments', comments);
 router.use('./musics', musics);

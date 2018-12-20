@@ -1,3 +1,4 @@
+const {hashPassword} = require('../lib/hashPassword');
 const Joi = require("joi");
 const mongoose = require("mongoose");
 
@@ -35,23 +36,28 @@ function validate_user(user) {
 }
 
 // create new User document
-User.statics.create = function(newUSer) {
-  const user = new this(newUSer);
+User.statics.create = async function(newUSer) {
+
+  newUSer.pw = await hashPassword(newUSer.pw);
+
+  let user = new this(newUSer);
+  user = await user.save();
 
   // return the Promise
-  return user.save();
+  return user;
 };
 
 // find one user by using email
-User.statics.findOneByUsername = function(email) {
+User.statics.findOneByEmail = function(email) {
   return this.findOne({
     email
   }).exec();
 };
 
 // verify the password of the User documment
-User.methods.verify = function(pw) {
-  return this.pw === pw;
+User.methods.verify = async function(pw) {
+  const encrypted = await hashPassword(pw);
+  return this.pw === encrypted;
 };
 
 User.methods.assignAdmin = function() {

@@ -5,10 +5,7 @@ const authMiddleware = require('../../../lib/middlewares/auth');
 
 router.post("/register", controller.register);
 router.post('/login', controller.login);
-
-router.use('/check', authMiddleware);
-router.get('/check', controller.check);
-
+router.get('/check',authMiddleware ,controller.check);
 
 router.get("/logout", controller.logout);
 router.get("/google", passport.authenticate("google", {scope: ["email", "profile"]}));

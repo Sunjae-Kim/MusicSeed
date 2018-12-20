@@ -12,6 +12,14 @@ exports.current = async (req, res) => {
 };
 
 exports.getAll = async (req, res) => {
+
+  // refuse if not an admin
+  if (!req.decoded.admin) {
+    return res.status(403).json({
+      message: "you are not an admin"
+    });
+  }
+
   // Find
   const users = await User.find()
     .populate("album")
@@ -50,9 +58,26 @@ exports.post = async (req, res) => {
 
   // Response
   // res.send(user);
-    res.send({redirect:'/login'});
+  res.send({ redirect: "/login" });
 };
 
+exports.assignAdmin = (req, res) => {
+  // refuse if not an admin
+  if(!req.decoded.admin) {
+      return res.status(403).json({
+          message: 'you are not an admin'
+      })
+  }
+
+  User.findOneByUsername(req.params.email)
+  .then(
+      user => user.assignAdmin
+  ).then(
+      res.json({
+          success: true
+      })
+  )
+}
 
 /* Update */
 exports.patch = async (req, res) => {
@@ -61,11 +86,9 @@ exports.patch = async (req, res) => {
   if (error) return res.status(400).send(error.message);
 
   // Find Music and Update
-  const user = await User.findByIdAndUpdate(
-    req.params.id,
-    req.body,
-    { new: true }
-  );
+  const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+    new: true
+  });
 
   // Response
   res.send(user);
@@ -77,25 +100,25 @@ exports.delete = async (req, res) => {
   let user = await User.findByIdAndDelete(req.params.id);
 
   // Delete comments on the user
-  user.comment.forEach( async comment_id => {
+  user.comment.forEach(async comment_id => {
     await Comment.findByIdAndDelete(comment_id);
   });
 
   // Find Album and delete logic
-  user.albums.forEach( async album_id => {
+  user.albums.forEach(async album_id => {
     let album = await Album.findByIdAndDelete(album_id);
 
     // Find and delete comments on the album
-    album.comment.forEach( async comment_id => {
+    album.comment.forEach(async comment_id => {
       await Comment.findByIdAndDelete(comment_id);
     });
 
     // Find and delete musics in the album
-    album.musics.forEach( async music_id => {
+    album.musics.forEach(async music_id => {
       const music = await Music.findByIdAndDelete(music_id);
-      music.comment.forEach( async comment_id => {
+      music.comment.forEach(async comment_id => {
         await Comment.findByIdAndDelete(comment_id);
-      })
+      });
     });
   });
 

@@ -6,6 +6,7 @@
     "start": "PORT=4000 node App.js"
   },
   "dependencies": {
+    "bcrypt": "^3.0.2",
     "body-parser": "^1.18.3",
     "connect-flash": "^0.1.1",
     "cookie-parser": "~1.4.3",
