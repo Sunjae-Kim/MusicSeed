@@ -1,32 +1,32 @@
-/* Modules */
+/* =======================
+    LOAD THE DEPENDENCIES
+==========================*/
 const bodyParser = require('body-parser');
 const expressFileupload = require('express-fileupload');
 const passport = require('passport');
 const cookieSession = require('cookie-session');
-var flash = require('connect-flash');
+const flash = require('connect-flash');
 const helmet = require('helmet');
-// const debug = require('debug')('app:development');
 const morgan = require('morgan');
 const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
 
-/* config */
+/* =======================
+    LOAD THE CONFIG
+==========================*/
 const config = require('./config');
 const port = process.env.PORT || 4000;
+require('./src/services/passport');
 
-require('./services/passport');
-
-/* Middleware */
+/* =======================
+    EXPRESS CONFIGURATION
+==========================*/
 app.use(helmet());
-// if(app.get('env') === 'development'){
-//   debug('MORGAN을 실행합니다.');
-  app.use(morgan('dev'));
-// }
+app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 app.set('jwt-secret', config.secret)
-
 app.use(expressFileupload());
 app.use(
     cookieSession({ // req.session == user.id
@@ -35,22 +35,18 @@ app.use(
         keys: ['key1']
     })
 );
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
-
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
-
-app.use('/api', require('./routes/api'));
-
-/* Server */
+app.use('/api', require('./src/routes/api'));
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
 
-/* DB Connect */
+/* =======================
+    CONNECT TO MONGODB SERVER
+==========================*/
 mongoose
     .connect(
         config.mongodbUri,

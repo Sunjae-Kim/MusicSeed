@@ -1,6 +1,6 @@
-const { Music, validate } = require("../models/music");
-const { Album } = require("../models/album");
-const { User } = require("../models/user");
+const { Music, validate } = require("../../../models/music");
+const { Album } = require("../../../models/album");
+const { User } = require("../../../models/user");
 
 /* CRUD Operation */
 /* Read */

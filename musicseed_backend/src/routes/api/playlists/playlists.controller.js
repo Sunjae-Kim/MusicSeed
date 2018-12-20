@@ -1,5 +1,5 @@
-const { Music } = require("../models/music");
-const { User } = require("../models/user");
+const { Music } = require("../../../models/music");
+const { User } = require("../../../models/user");
 
 /* CRUD Operation */
 /* Read */

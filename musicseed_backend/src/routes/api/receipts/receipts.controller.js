@@ -1,4 +1,4 @@
-const { Receipt, validate } = require("../models/receipt");
+const { Receipt, validate } = require("../../../models/receipt");
 
 /* CRUD Operation */
 /* Read */
