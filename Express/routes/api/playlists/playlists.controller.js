@@ -1,11 +1,9 @@
 const { Music } = require("../models/music");
 const { User } = require("../models/user");
-const express = require("express");
-const router = express.Router();
 
 /* CRUD Operation */
 /* Read */
-router.get("/:user_id", async (req, res) => {
+exports.getById = async (req, res) => {
   // Find user
   let user = await User.findById(req.params.user_id);
   if (!user)
@@ -22,13 +20,10 @@ router.get("/:user_id", async (req, res) => {
       res.send(user.playlist);
     }
   });
-});
+};
 
-/*
-  Create
-  기존의 앨범에 새로운 노래를 추가할 때
-*/
-router.post("/:user_id/:music_id", async (req, res) => {
+/* Create */
+exports.post = async (req, res) => {
   // Find Music
   let music = await Music.findById(req.params.music_id);
   if (!music)
@@ -49,10 +44,10 @@ router.post("/:user_id/:music_id", async (req, res) => {
 
   // Response
   res.send(user);
-});
+};
 
 /* Update */
-router.patch("/:user_id/:selected/:target", async (req, res) => {
+exports.patch = async (req, res) => {
 
   // Find User
   let user = await User.findById(req.params.user_id);
@@ -71,10 +66,10 @@ router.patch("/:user_id/:selected/:target", async (req, res) => {
 
   // Response
   res.send(user.playlist);
-});
+};
 
 /* Delete */
-router.delete("/:user_id/:index", async (req, res) => {
+exports.delete = async (req, res) => {
   // Find User
   let user = await User.findById(req.params.user_id);
   if (!user)
@@ -90,6 +85,4 @@ router.delete("/:user_id/:index", async (req, res) => {
 
   // Response
   res.send(user.playlist);
-});
-
-module.exports = router;
+};

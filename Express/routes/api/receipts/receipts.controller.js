@@ -1,19 +1,17 @@
 const { Receipt, validate } = require("../models/receipt");
-const express = require("express");
-const router = express.Router();
 
 /* CRUD Operation */
 /* Read */
-router.get("/", async (req, res) => {
+exports.getAll = async (req, res) => {
   // Find
   const receipts = await Receipt.find()
     .sort("time");
 
   // Response
   res.send(receipts);
-});
+};
 
-router.get("/:id", async (req, res) => {
+exports.getById = async (req, res) => {
   // Find
   const receipt = await Receipt.findById(req.params.id)
     .populate('from')
@@ -27,10 +25,10 @@ router.get("/:id", async (req, res) => {
 
   // Response
   res.send(receipt);
-});
+};
 
 /* Create */
-router.post("/", async (req, res) => {
+exports.post = async (req, res) => {
   // Validation test
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.message);
@@ -41,10 +39,10 @@ router.post("/", async (req, res) => {
 
   // Response
   res.send(receipt);
-});
+}
 
 /* Update */
-router.patch("/:id", async (req, res) => {
+exports.patch = async (req, res) => {
   // Validation test
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.message);
@@ -58,15 +56,13 @@ router.patch("/:id", async (req, res) => {
 
   // Response
   res.send(receipt);
-});
+}
 
 /* Delete */
-router.delete("/:id", async (req, res) => {
+exports.delete = async (req, res) => {
   // Find and Delete
   const receipt = await Receipt.findByIdAndDelete(req.params.id);
 
   // Response
   res.send(receipt);
-});
-
-module.exports = router;
+};

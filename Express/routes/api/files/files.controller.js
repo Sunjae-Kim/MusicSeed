@@ -1,8 +1,4 @@
-const express = require("express");
-const router = express.Router();
-const _ = require('underscore');
-
-router.post('/upload', async (req, res, next) => {
+exports.post = async (req, res, next) => {
   let uploadFile = req.files.file
   const fileName = req.files.file.name
   let type = req.files.file.mimetype;
@@ -21,6 +17,4 @@ router.post('/upload', async (req, res, next) => {
       })
     },
   )
-})
-
-module.exports = router;
+};
