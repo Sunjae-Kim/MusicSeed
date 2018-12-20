@@ -1,7 +1,7 @@
 const Joi = require("joi");
 const mongoose = require("mongoose");
 
-const user_schema = new mongoose.Schema({
+const User = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   pw: { type: String, trim: true },
   name: { type: String, required: true, lowercase: true },
@@ -35,7 +35,7 @@ function validate_user(user) {
 }
 
 // create new User document
-user_schema.statics.create = function(newUSer) {
+User.statics.create = function(newUSer) {
   const user = new this(newUSer);
 
   // return the Promise
@@ -43,24 +43,21 @@ user_schema.statics.create = function(newUSer) {
 };
 
 // find one user by using email
-user_schema.statics.findOneByUsername = function(email) {
+User.statics.findOneByUsername = function(email) {
   return this.findOne({
     email
   }).exec();
 };
 
 // verify the password of the User documment
-user_schema.methods.verify = function(pw) {
+User.methods.verify = function(pw) {
   return this.pw === pw;
 };
 
-user_schema.methods.assignAdmin = function() {
+User.methods.assignAdmin = function() {
   this.admin = true;
   return this.save();
 };
 
-const User = mongoose.model("User", user_schema);
-
-exports.User = User;
+exports.User = mongoose.model("User", User);
 exports.validate = validate_user;
-exports.user_schema = user_schema;
