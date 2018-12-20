@@ -1,22 +1,20 @@
-const { Comment, validate } = require("../models/comment");
-const { User } = require("../models/user");
-const { Album } = require("../models/album");
-const { Music } = require("../models/music");
-const express = require("express");
-const router = express.Router();
+const { Comment, validate } = require("../../../models/comment");
+const { User } = require("../../../models/user");
+const { Album } = require("../../../models/album");
+const { Music } = require("../../../models/music");
 
 /* CRUD Operation */
 /* Read */
-router.get("/", async (req, res) => {
+exports.getAll = async (req, res) => {
   // Find
   const comments = await Comment.find()
     .sort("time");
 
   // Response
   res.send(comments);
-});
+};
 
-router.get("/:id", async (req, res) => {
+exports.getById = async (req, res) => {
   // Find
   const comment = await Comment.findById(req.params.id)
     .populate("commenter_id")
@@ -28,10 +26,10 @@ router.get("/:id", async (req, res) => {
 
   // Response
   res.send(comment);
-});
+};
 
 /* Create */
-router.post("/", async (req, res) => {
+exports.post = async (req, res) => {
   // Validation test
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.message);
@@ -53,16 +51,10 @@ router.post("/", async (req, res) => {
 
   // Response
   res.send(comment);
-});
-
-function findTarget(targetName){
-  if(targetName === "User") return User;
-  if(targetName === "Album") return Album;
-  if(targetName === "Music") return Music;
-}
+};
 
 /* Update */
-router.patch("/:id", async (req, res) => {
+exports.patch = async (req, res) => {
   // Validation test
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.message);
@@ -76,10 +68,10 @@ router.patch("/:id", async (req, res) => {
 
   // Response
   res.send(comment);
-});
+}
 
 /* Delete */
-router.delete("/:id", async (req, res) => {
+exports.delete = async (req, res) => {
   // Find Comment
   let comment = await Comment.findByIdAndDelete(req.params.id);
 
@@ -97,6 +89,10 @@ router.delete("/:id", async (req, res) => {
 
   // Response
   res.send([ target.comment, comment ]);
-});
+}
 
-module.exports = router;
+function findTarget(targetName){
+  if(targetName === "User") return User;
+  if(targetName === "Album") return Album;
+  if(targetName === "Music") return Music;
+}
