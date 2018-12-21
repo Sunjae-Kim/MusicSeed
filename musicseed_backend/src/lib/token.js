@@ -1,8 +1,8 @@
-import jwt from 'jsonwebtoken';
+const jwt = require('jsonwebtoken');
 
 const { SECRET_KEY: secret } = process.env;
 
-export const generate = (payload, options) => {
+exports.generate = (payload, options) => {
   const jwtOptions = {
     issuer: 'velog.io',
     expiresIn: '7d',
@@ -19,7 +19,7 @@ export const generate = (payload, options) => {
   });
 };
 
-export const decode = (token) => {
+exports.decode = (token) => {
   return new Promise((resolve, reject) => {
     if (!secret) throw new Error('jwt secret missing');
     jwt.verify(token, secret, (err, decoded) => {

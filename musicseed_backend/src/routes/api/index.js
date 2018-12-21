@@ -7,7 +7,7 @@ const musics = require('./musics/index');
 const playlists = require('./playlists/index');
 const files = require('./files/index');
 const receipts = require('./receipts/index');
-const authMiddleware = require('../../lib/middlewares/auth');
+const {authMiddleware} = require('../../lib/middlewares/auth');
 
 router.use('/auth', auth);
 router.use('/users', authMiddleware, users);

@@ -54,12 +54,6 @@ User.statics.findOneByEmail = function(email) {
   }).exec();
 };
 
-// verify the password of the User documment
-User.methods.verify = async function(pw) {
-  const encrypted = await hashPassword(pw);
-  return this.pw === encrypted;
-};
-
 User.methods.assignAdmin = function() {
   this.admin = true;
   return this.save();

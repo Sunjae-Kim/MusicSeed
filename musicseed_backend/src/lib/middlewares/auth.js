@@ -1,6 +1,6 @@
 const { decode } = require('../token');
 
-const authMiddleware = async (req, res, next) => {
+exports.authMiddleware = async (req, res, next) => {
   // read the token from header or url
   let token = req.headers["x-access-token"] || req.query.token;
 
@@ -19,4 +19,18 @@ const authMiddleware = async (req, res, next) => {
   next();
 };
 
-module.exports = authMiddleware;
+exports.isLoggedIn = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    next();
+  } else {
+    res.status(403).send('로그인 필요');
+  }
+};
+
+exports.isNotLoggedIn = (req, res, next) => {
+  if (!req.isAuthenticated()) {
+    next();
+  } else {
+    res.redirect('/');
+  }
+}

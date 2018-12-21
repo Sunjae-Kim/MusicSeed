@@ -1,14 +1,16 @@
-const passport = require('passport');
+const passport = require("passport");
 const { User, validate } = require("../../../models/user");
-const { generate } = require('../../../lib/token');
+const { generate } = require("../../../lib/token");
 
 exports.register = async (req, res) => {
   // Duplication Check
   let user = await User.findOneByEmail(req.body.email);
   if (user) {
+    req.flash("joinError", "이미 가입된 이메일입니다.");
     return res.status(409).json({
       message: "email exists"
     });
+    // return res.redirect('/register');
   }
 
   // Validation test
@@ -26,52 +28,35 @@ exports.register = async (req, res) => {
   // res.send({redirect:'/login'});
 };
 
-exports.login = async (req, res) => {
-  let token = null;
-  const user = await User.findOneByEmail(req.body.email);
+exports.login = async (req, res, next) => {
+  passport.authenticate('local', (authError, user, info) => {
+    if (authError) {
+      console.error(authError);
+      return next(authError);
+    }
+    if (!user) {
+      req.flash('loginError', info.message);
+      return res.status(404).json(info.message);
+    }
+    return req.login(user, async (loginError) => {
+      if (loginError) {
+        console.error(loginError);
+        return next(loginError);
+      }
 
-  // check the user info & generate the jwt
-  if (!user) {
-    return res.status(403).json({
-      message: "login failed"
-    });
-  } else {
-    // user exists, check the password
-    const { pw } = req.body;
-    if (user.verify(pw)) {
-
-      //  패스포트 모듈로 인증 시도
-      passport.authenticate("local", function(err, user, info) {
-        var error = err || info;
-        if (error) return res.json(401, error);
-        if (!user)
-          return res.json(404, {
-            message: "Something went wrong, please try again."
-          });
-
-        // 인증된 유저 정보로 응답
-        res.json(req.user);
-      })(req, res, next);
-
-      // create a promise that generates jwt asynchronously
-      token = await generate({
+      const token = await generate({
         _id: user._id,
         email: user.email,
         admin: user.admin
       });
 
-    } else {
-      return res.status(403).json({
-        message: "login failed"
+      return res.json({
+        message: "logged in successfully",
+        user,
+        token
       });
-    }
-  }
-
-  // respond the token
-  res.json({
-    message: "logged in successfully",
-    token
-  });
+    }); 
+  })(req, res, next);
 };
 
 exports.check = async (req, res) => {

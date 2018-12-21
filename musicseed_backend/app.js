@@ -29,7 +29,7 @@ app.use(helmet());
 app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(session({
-    store: new RedisStore(/*redis config: host, port 등*/), // 세션 저장소를 레디스 서버로 설정
+    // store: new RedisStore(/*redis config: host, port 등*/), // 세션 저장소를 레디스 서버로 설정
     secret: config.secret,
     resave: false,
     saveUninitialized: true,
