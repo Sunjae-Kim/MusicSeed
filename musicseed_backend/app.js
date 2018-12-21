@@ -3,7 +3,7 @@
 ==========================*/
 require("dotenv").config();
 const session = require("express-session");
-const RedisStore = require('connect-redis')(session);
+// const RedisStore = require('connect-redis')(session);
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const expressFileupload = require("express-fileupload");
@@ -33,7 +33,7 @@ app.use(session({
     secret: config.secret,
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true }
+    cookie: { secure: false }
   }))
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -43,6 +43,7 @@ app.use(express.static("public"));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
+
 app.use("/api", require("./src/routes/api"));
 
 app.listen(port, () => {

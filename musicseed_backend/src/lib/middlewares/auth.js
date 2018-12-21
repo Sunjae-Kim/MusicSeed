@@ -1,8 +1,10 @@
 const { decode } = require('../token');
+const { getCookie } = require('../getCookie');
 
 exports.authMiddleware = async (req, res, next) => {
   // read the token from header or url
-  let token = req.headers["x-access-token"] || req.query.token;
+  let token = getCookie('x-access-token', req.headers.cookie) || req.query.token;
+  const auth = JSON.parse(getCookie('auth', req.headers.cookie));
 
   // token does not exist
   if (!token) {
@@ -12,10 +14,17 @@ exports.authMiddleware = async (req, res, next) => {
     });
   }
 
-  // decodes the token
-  token = await decode(token);
+  if(!auth){
+    // decodes the token
+    token = await decode(token);
+    req.decoded = token;
+  } else {
+    // tmp code
+    req.decoded = {
+      admin : true
+    }
+  }
 
-  req.decoded = token;
   next();
 };
 

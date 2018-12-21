@@ -71,15 +71,23 @@ exports.logout = (req, res) => {
   res.redirect("/");
 };
 
-exports.googleCallback = (req, res, next) => {
-  passport.authenticate("google", (authError, user, info) => {
+exports.googleCallback = async (req, res, next) => {
+  await passport.authenticate("google", (authError, user, info) => {
     const { accessToken } = info;
-    console.log(info);
 
-    // 쿠키에 토큰 박기
-    req.cookies.token = accessToken;
-    console.log("Cookies: ", req.cookies);
+    res.cookie('x-access-token', accessToken, { maxAge: 900000, httpOnly: true });
+    res.cookie('auth', true, { maxAge: 900000, httpOnly: true });
 
-    res.redirect("/");
+    return req.login(user, async loginError => {
+      if (loginError) {
+        console.error(loginError);
+        return next(loginError);
+      }
+
+      console.log(req.session);
+
+      return res.redirect("/");
+    });
   })(req, res, next);
+
 };

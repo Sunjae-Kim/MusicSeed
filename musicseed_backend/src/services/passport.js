@@ -3,21 +3,22 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const LocalStrategy = require("passport-local").Strategy;
 const { User } = require("../models/user");
 const bcrypt = require("bcrypt");
-const { decode } = require("../lib/token");
 
 // 사용자 정보 객체를 세션에 아이디로 저장
 passport.serializeUser((user, done) => {
-  done(null, user.email);
+  console.log(`serialize : ${user._id}`);
+  done(null, user._id);
 });
 
 // 세션에 저장한 아이디를 통해 사용자 정보 객체 로드
-passport.deserializeUser((email, done) => {
-  User.findOne({ email: email })
-    .then(user => {
-      done(null, user);
-    })
-    .catch(error => done(err));
-});
+passport.deserializeUser((_id, done) => {
+    console.log(`_id : ${_id}`);
+    User.findOne({ _id: _id })
+      .then(user => {
+        done(null, user);
+      })
+      .catch(error => done(err));
+  });
 
 passport.use(
   new LocalStrategy(
@@ -60,8 +61,8 @@ passport.use(
         .then(async existingUser => {
           if (existingUser) {
             // User exists
-            console.log("existingUser");
-            done(null, existingUser, {accessToken});
+            // console.log("existingUser");
+            done(null, existingUser, { accessToken });
           } else {
             // New user
             console.log("saving user");

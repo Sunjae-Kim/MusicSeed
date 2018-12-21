@@ -7,7 +7,13 @@ const { Comment } = require("../../../models/comment");
 /* Read */
 exports.current = async (req, res) => {
   //show login page
-  console.log(`req.user : ${req.user}`);
+  // console.log(req.session);
+
+  console.log(req.user);
+
+
+
+
   res.send(req.user);
 };
 
