@@ -29,16 +29,16 @@ exports.register = async (req, res) => {
 };
 
 exports.login = async (req, res, next) => {
-  passport.authenticate('local', (authError, user, info) => {
+  passport.authenticate("local", (authError, user, info) => {
     if (authError) {
       console.error(authError);
       return next(authError);
     }
     if (!user) {
-      req.flash('loginError', info.message);
+      req.flash("loginError", info.message);
       return res.status(404).json(info.message);
     }
-    return req.login(user, async (loginError) => {
+    return req.login(user, async loginError => {
       if (loginError) {
         console.error(loginError);
         return next(loginError);
@@ -55,7 +55,7 @@ exports.login = async (req, res, next) => {
         user,
         token
       });
-    }); 
+    });
   })(req, res, next);
 };
 
@@ -71,6 +71,15 @@ exports.logout = (req, res) => {
   res.redirect("/");
 };
 
-exports.googleCallback = (req, res) => {
-  res.redirect("/");
+exports.googleCallback = (req, res, next) => {
+  passport.authenticate("google", (authError, user, info) => {
+    const { accessToken } = info;
+    console.log(info);
+
+    // 쿠키에 토큰 박기
+    req.cookies.token = accessToken;
+    console.log("Cookies: ", req.cookies);
+
+    res.redirect("/");
+  })(req, res, next);
 };

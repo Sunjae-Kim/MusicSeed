@@ -19,10 +19,10 @@ exports.generate = (payload, options) => {
   });
 };
 
-exports.decode = (token) => {
+exports.decode = (token, secret_key=secret) => {
   return new Promise((resolve, reject) => {
     if (!secret) throw new Error('jwt secret missing');
-    jwt.verify(token, secret, (err, decoded) => {
+    jwt.verify(token, secret_key, (err, decoded) => {
       if (err) reject(err);
       resolve(decoded);
     });

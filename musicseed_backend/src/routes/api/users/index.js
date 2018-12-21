@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const controller = require("./users.controller");
 
+router.get("/current", controller.current);
 router.get("/", controller.getAll);
 router.get("/:id", controller.getById);
 router.post("/", controller.post);

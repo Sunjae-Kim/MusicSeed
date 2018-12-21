@@ -2,11 +2,12 @@ const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const LocalStrategy = require("passport-local").Strategy;
 const { User } = require("../models/user");
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
+const { decode } = require("../lib/token");
 
 // 사용자 정보 객체를 세션에 아이디로 저장
 passport.serializeUser((user, done) => {
-  done(null, user.email); 
+  done(null, user.email);
 });
 
 // 세션에 저장한 아이디를 통해 사용자 정보 객체 로드
@@ -49,18 +50,18 @@ passport.use(
   new GoogleStrategy(
     {
       clientID:
-        "568719346323-hnjqt6utbqave1q6bcnq3374r09pqbov.apps.googleusercontent.com",
-      clientSecret: "8TwKvrm5pW_I3fx7beBkqB7S",
-      callbackURL: "/auth/google/callback",
+        "695709022283-ka3mduesg48dmb98sm450pgdlnmfp5ft.apps.googleusercontent.com",
+      clientSecret: "5k4juryV2vPv-9uCpUmRMZbu",
+      callbackURL: "/api/auth/google/callback",
       proxy: true
     },
-    (accessToken, refreshToken, profile, done) => {
+    async (accessToken, refreshToken, profile, done) => {
       User.findOne({ email: profile.emails[0].value })
-        .then(existingUser => {
+        .then(async existingUser => {
           if (existingUser) {
             // User exists
             console.log("existingUser");
-            done(null, existingUser);
+            done(null, existingUser, {accessToken});
           } else {
             // New user
             console.log("saving user");
