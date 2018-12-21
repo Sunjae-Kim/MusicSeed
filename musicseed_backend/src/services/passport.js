@@ -27,15 +27,15 @@ passport.use(new LocalStrategy({
     usernameField: 'email',
     passwordField: 'pw',
     passReqToCallback: true //인증을 수행하는 인증 함수로 HTTP request를 그대로  전달할지 여부를 결정한다
-}, function (req, email, pw, done) {
-    let user = User.findOne({ email, pw })
+}, (req, email, pw, done) => {
+    User.findOne({ email, pw })
         .then(user => {
             if(user) { // User exists
                 console.log(user);
                 console.log("user login success");
                 return done(null, user);
             } else { // New user
-                return done(false, null);
+                return done(null, false, {message: 'Fail to login'});
             }
         })
         .catch(error => console.error(error.message));
@@ -49,7 +49,7 @@ passport.use(new GoogleStrategy(
         proxy: true
     },
     (accessToken, refreshToken, profile, done) => {
-        let user = User.findOne({ email: profile.emails[0].value })
+        User.findOne({ email: profile.emails[0].value })
             .then(existingUser => {
                 if(existingUser) { // User exists
                     console.log("existingUser");

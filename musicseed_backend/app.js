@@ -1,6 +1,7 @@
 /* =======================
     LOAD THE DEPENDENCIES
 ==========================*/
+require("dotenv").config();
 const session = require("express-session");
 const RedisStore = require('connect-redis')(session);
 const cookieParser = require("cookie-parser");

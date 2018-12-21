@@ -1,4 +1,4 @@
-const jwt = require("jsonwebtoken");
+const { decode } = require('../token');
 
 const authMiddleware = async (req, res, next) => {
   // read the token from header or url
@@ -13,14 +13,7 @@ const authMiddleware = async (req, res, next) => {
   }
 
   // decodes the token
-  try {
-    token = await jwt.verify(token, req.app.get("jwt-secret"));
-  } catch (error) {
-    return res.status(403).json({
-      success: false,
-      message: error.message
-    });
-  }
+  token = await decode(token);
 
   req.decoded = token;
   next();

@@ -1,5 +1,6 @@
-const jwt = require("jsonwebtoken");
+const passport = require('passport');
 const { User, validate } = require("../../../models/user");
+const { generate } = require('../../../lib/token');
 
 exports.register = async (req, res) => {
   // Duplication Check
@@ -26,7 +27,6 @@ exports.register = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-  const secret = req.app.get("jwt-secret");
   let token = null;
   const user = await User.findOneByEmail(req.body.email);
 
@@ -39,20 +39,27 @@ exports.login = async (req, res) => {
     // user exists, check the password
     const { pw } = req.body;
     if (user.verify(pw)) {
+
+      //  패스포트 모듈로 인증 시도
+      passport.authenticate("local", function(err, user, info) {
+        var error = err || info;
+        if (error) return res.json(401, error);
+        if (!user)
+          return res.json(404, {
+            message: "Something went wrong, please try again."
+          });
+
+        // 인증된 유저 정보로 응답
+        res.json(req.user);
+      })(req, res, next);
+
       // create a promise that generates jwt asynchronously
-      token = await jwt.sign(
-        {
-          _id: user._id,
-          email: user.email,
-          admin: user.admin
-        },
-        secret,
-        {
-          expiresIn: "7d",
-          issuer: "musicseed.com",
-          subject: "userInfo"
-        }
-      );
+      token = await generate({
+        _id: user._id,
+        email: user.email,
+        admin: user.admin
+      });
+
     } else {
       return res.status(403).json({
         message: "login failed"
